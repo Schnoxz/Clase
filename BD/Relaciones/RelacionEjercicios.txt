@@ -1,0 +1,75 @@
+
+=1
+
+Se pide diseñar la base de datos de una tienda, la cual está organizada por departamentos, que contenga información sobre los trabajadores y los artículos que se ofertan.
+Se deben tener en cuenta las siguientes restricciones:
+De todos los trabajadores nos interesa almacenar su DNI, nombre completo y número de teléfono, así como el departamento en el que trabajan.
+Existen tres tipos de trabajadores: gerentes (del que guardaremos el bonus anual), jefes (nos interesa almacenar cuantos vendedores tiene a su cargo) y vendedores (de cada vendedor, guardaremos su sueldo base y la zona donde trabaja).
+Cada departamento lo dirige un gerente, aunque se puede dar el caso que tengamos gerentes que no dirijan ningún departamento, pero nunca dirigirán más de uno.
+Un gerente tiene a su cargo a un cierto número de jefes y éstos a su vez a un cierto número de vendedores.
+En cuanto a los productos nos interesa su código, nombre y precio, y departamento en el que se encuentran.
+Cada producto lo pueden vender muchos vendedores, y cada vendedor, a su vez, puede vender muchos productos. Además, cada vendedor le aplicará un determinado descuento a los productos con los que trabaja. 
+
+
+Entidades: Departamento/Trabajador/Articulo/Jefe/Gerente/Vendedor
+PK: dni/
+FK:
+
+Relaciones:
+
+Trabajador 	  pertenece a 	 Departamento
+Gerente 	     dirije 	 Departamento
+Gerente 	   supervisa     Jefe
+Jefe	       supervisa     Vendedor
+Vendedor         vende       Articulo
+
+				  tiene 
+Departamento   se encuentra  Articulo
+                 pertenece				
+
+
+
+
+Total: La superclase pertenece obligatoriamente a alguna de las subclases. No puede haber un EMPLEADO que no sea ni SECRETARIO ni TECNICO, ni INGENIERO
+
+Parcial: La superclase puede no pertenecer a alguna de las subclases. Podríamos tener un EMPLEADO que no sea ni SECRETARIO ni TECNICO, ni INGENIERO
+
+Disjunta / Exclusiva: La superclase sólo pertenece a una de las subclases. Si un EMPLEADO es un INGENIERO, no puede ser un TECNICO ni SECRETARIO
+
+Solapada: La superclase puede pertenecer a varias de las subclases a la vez. Un EMPLEADO puede ser un INGENIERO, y un TECNICO a la vez 
+
+
+
+
+
+
+
+
+
+
+
+
+= 2
+
+Se desea diseñar una base de datos que contenga la información relativa a todas las carreteras de España. Se pide realizar el diseño del modelo ER sabiendo que:
+Las carreteras se encuentran divididas en tramos.
+
+Un tramo, del que nos interesa su longitud, siempre pertenece a una única carretera y no puede cambiar de carretera.
+
+Un tramo puede pasar por varios términos municipales, siendo un dato de interés el km del tramo por el que entra en dicho término municipal y el km por el que sale.
+
+Existen una serie de áreas en las que se agrupan los tramos, cada uno de los cuales no puede pertenecer a más de un área. 
+
+
+
+
+
+= 3
+
+Por ejemplo, supongamos el siguiente sistema de información sobre una empresa que se dedica al alquiler de bicicletas. 
+
+A los usuarios del servicio, se les entrega una tarjeta que contendrá sus datos personales, así como su saldo disponible. 
+
+Todas las bicicletas tienen un código que las identifica, y se registra su estado actual (ya sea disponible o en uso), y la estación donde se encuentra. 
+
+Cuando un usuario alquila una bicicleta, también se registra cuándo y dónde la recoge y devuelve

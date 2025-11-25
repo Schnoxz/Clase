@@ -1,0 +1,31 @@
+package String;
+import java.util.*;
+
+public class validacionUsuarioPassword {
+	public static final Scanner teclado = new Scanner(System.in);
+	
+	public static void main (String[] args) {
+    
+		String usuario;
+		boolean usrValido = false;
+		
+		do { 
+			System.out.print("Introduce tu usuario; ");
+			usuario = teclado.nextLine();
+			
+			boolean letras = true;
+			
+			if (usuario.length() > 30 || usuario.length() < 0) {
+				letras = false;
+			} else {
+				// Compruebo que las todos los caracteres sean letras via contador
+				for (int i = 0; i < usuario.length(); i++) {
+					if (!Character.isLetter(usuario.charAt(i))) {
+						
+					}
+				}
+			}
+		} while (!usrValido);
+	}
+}
+

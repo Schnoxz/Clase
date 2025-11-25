@@ -1,0 +1,32 @@
+1º ¿Cuántos sistemas de Gestión de Base de Datos hay?
+
+Si hablamos de sistemas como tipos, tenemos 3 tipos principales --> Relacional, No Relacional y Jerárquicas.
+Luego podemos ver que existen tipos de sistemas dirigidos a la Orientación de Objetos o Distribuidos (Datos almacenados en múltiiples ubicaciones físicas).
+Tenemos base de datos en red o en Memoria (En RAM)
+
+En cuanto a programas de gestión tenemos :
+
+-->Relacional: MySQL o Oracle
+-->No relacionales: MongoDB o Amazon Neptune
+-->Jerárquicas: IMS (IBM Information Management)
+-->Red: IDS
+-->Orientación a objetos: ObjectDB o Versant
+-->Memoria: VoltDB o SAP HANA
+
+2º ¿Cuál fue el primero que se desarrolló?
+
+Fue el IDS (Integrated Data Store) Se desarrolló en 1960 gracias a Charles Bachman, 
+se utilizó como base para la gestión de base de datos jerárquicos y en red aunque esta primera se vio sobrepasada por IBM y su Sistema IMS 
+
+3º ¿Cuál es la última versión de postgreSQL y de MariaDB?
+
+La última versión de "postgreSQL" es la 17.6 en fecha del 11 de Agosto del 2025
+La última versión de "MariaDB" es la 12.1.1 en fecha del 7 de Agosto del 2025
+
+4º ¿Cuántas versiones de ORACLE hay?
+
+Ahora mismo Existen 19 versiones, comenzando desde Oracle v2 en 1979, pasando por 9i u 11g en 2001 y 2007 respectivamente, hasta Oracle 23c sacado en el año 2023
+
+
+5º Prepara una pequeña presentación (3 o 4 diapositivas) sobre un sistema de base de datos
+

@@ -1,0 +1,76 @@
+package String;
+import java.util.*;
+
+public class validacionUsuarioPassword {
+	public static final Scanner teclado = new Scanner(System.in);
+	
+	public static void main (String[] args) {
+    
+		String usuario;
+		boolean usrValido = false;
+		
+		do { 
+			System.out.print("Introduce tu usuario; ");
+			usuario = teclado.nextLine();
+			
+			boolean letras = true;
+			
+			if (usuario.length() > 30 || usuario.length() < 0) {
+				letras = false;
+			} else {
+				// Compruebo que las todos los caracteres sean letras via contador
+				for (int i = 0; i < usuario.length(); i++) {
+					if (!Character.isLetter(usuario.charAt(i))) {
+						letras = false;
+						break;
+					}
+				}
+			}
+			if (letras) {
+				usrValido = true;
+			} else {
+				System.out.println("Usuario incorrecto, inténtelo de nuevo");
+			}
+			
+		} while (!usrValido);
+		
+		String password;
+		boolean pasValido = false;
+		
+		do {
+		System.out.print("Introduzca la contraseña ( debe tener al menos 7 caracteres, una letra, un dígito y un caracter especial; ");
+		password = teclado.nextLine();
+
+		if (password.length() < 7) {
+            System.out.println("Contrasñea demasiado corta");
+            continue; 
+        }
+
+        boolean tieneLetra = false;
+        boolean tieneDigito = false;
+        boolean tieneEspecial= false;
+
+        for (int i = 0; i < password.length(); i++) {
+            char c = password.charAt(i);
+            
+            if (Character.isLetter(c)) {
+                tieneLetra = true;
+            } else if (Character.isDigit(c)) { // [cite: 317]
+                tieneDigito = true;
+            } else {
+                // Si no es letra ni dígito, es un carácter especial
+                tieneEspecial = true;
+            }
+        }
+        
+        if (tieneLetra && tieneDigito && tieneEspecial) {
+            pasValido = true;
+        } else {
+            System.out.println("La contraseña no cumple los requisitos.");
+        }
+
+    } while (!pasValido);
+
+    System.out.println("Credenciales creadas correctamente.");
+}
+}

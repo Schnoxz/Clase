@@ -1,0 +1,48 @@
+
+1. Calcular el resultado de las siguientes expresiones lógicas:
+
+7>=27 AND NOT (7<=2) --> FALSE/FALSE
+FALSE
+
+24>5 AND 10<=10 OR 10=5 --> TRUE/TRUE/TRUE 
+TRUE 
+
+(10>=15 OR 23=13) AND NOT (8=8) --> FALSE/FALSE/FALSE
+FALSE
+
+NOT (6/3>3) OR 7>7 --> FALSE OR TRUE
+TRUE
+
+2. Calcular el valor de las siguientes expresiones aritméticas:
+
+27 mod 4 + 15\4 = 3 + 3 = 6
+37\4^2–2 = 9^2-2= 0
+9*2/3*10*3 = 18/3*10*3 = 180
+(7*3–4*4)^2\4*2 = 12
+
+3. Escribir una expresión lógica que cumpla:
+
+a) Debe ser Verdadera si el contenido de la variable entera precio es igual o superior a 60 euros pero
+igual o inferior a 420 euros.
+
+Precio>=60 AND Precio<=420  INT Precio=90
+
+b) Debe ser Verdadera si el numero contenido en la variable entera numero es impar.
+
+INT numero=5     numero%2==1
+
+c) Debe ser Verdadera si las dos variables enteras saldo de una cuenta, y dineroSacar son válidas.
+
+INT saldo_de_una_cuenta=200 INT dineroSacar=100
+saldo_de_una_cuenta>dineroSacar AND dineroSacar<saldo_de_una_cuenta
+
+d) Debe ser Verdadera si las variables enteras hora y minutos son correctas, es decir, que estén
+comprendidas entre 0:0 y 23:59.
+
+INT hora=1  INT minutos=30
+0<hora>59 AND 0<minutos<=59  
+
+e) Debe ser Verdadera si la variable estadoCivil que almacena el estado civil de una persona no es
+correcta (S-Soltero, C-Casado, V-Viudo, D-Divorciado).
+
+NOT (estadoCivil IN ("S", "C", "V", "D"))       

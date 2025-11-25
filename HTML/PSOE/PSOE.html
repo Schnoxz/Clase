@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Metadatos basicos y titulo -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Javier Jimenez Alonso </title> 
+  <meta name="description" content="Partido CORRUPTO" />
+  <!-- Enlace al archivo css para estilos -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<!-- Cabecera -->
+  <header> 
+    <!-- Contenedor dentro de cabecera -->
+    <div style="text-align: center;">
+      <!-- Titulo principal -->
+      <h1>Bienvenido al PSOE</h1>
+      <!-- Enlace indexado al logo principal-->
+      <a href="https://www.poderjudicial.es/cgpj/es/Poder-Judicial/Tribunal-Supremo/Noticias-Judiciales/El-Tribunal-Supremo-confirma-la-prision-provisional-de-Santos-Cerdan-por-riesgo-de-destruccion-de-pruebas-ante-indicios-de-su--papel-directivo--en-la-trama-que-se-investiga">
+        <img src="imagenes/250px-Logo_PSOE_41_Congreso.jpg" alt="PARTIDO POLITICO CORRUPTO">
+      </a>
+<!-- Imagen secundaria -->
+      <div class="header-side">
+        <a href="https://enemigosesp.com/producto/perro-sanchez"> 
+        <img src="imagenes/250px-Homesánchez-removebg-preview.png" alt="">
+        </a>
+      </div>
+    </div>
+  </header>
+<!-- Caja para añadir un nombre, con boton -->
+  <aside id="name-box" aria-label="Introducir nombre">
+    <form onsubmit="event.preventDefault(); alert('Nombre introducido: ' + (this.name.value||'(vacío)'));">
+      <input name="name" type="text" placeholder="Introduzca un nombre" />
+      <button type="submit">Añadir</button>
+    </form>
+  </aside>
+
+
+ 
+  <!-- Banner del dictador -->
+   <section class="hero-banner" style="background: url(imagenes/psoem.png) center top no-repeat; padding:3rem 1rem; color:#fff; text-align:center;">
+    <div style="max-width:900px; margin:0 auto; background:rgba(0,0,0,0.35); padding:1rem;">
+      <h2 style="margin:0 0 .5rem;">Noticias destacadas</h2>
+      <hr style="width:60px; height:4px; background:#e53935; border:0; margin:0 auto;">
+      <p style="opacity:.9; margin-top:.5rem;">Últimas noticias y eventos</p>
+    </div>
+  </section>
+
+  <!-- Definimos 3 figuras que contendrán fotos y texto  -->
+  <section class="news-gallery" style="max-width:1100px; margin:1.5rem auto; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <figure style="flex:1 1 30%; max-width:340px; margin:0; background:#fff; border:1px solid #e6e6e6;">
+      <img src="imagenes/abalos.jpg" alt="Noticia 1" style="width:100%; height:200px; object-fit:cover; display:block;">
+      <figcaption style="padding:.6rem; text-align:center; font-weight:600;">José Luis Ábalos, el hijo de torero, casado tres veces y padre de cinco hijos que lo fue todo en el PSOE</figcaption>
+    </figure>
+
+    <figure style="flex:1 1 30%; max-width:340px; margin:0; background:#fff; border:1px solid #e6e6e6;">
+      <img src="imagenes/simon.jpg"" alt="Noticia 2" style="width:100%; height:200px; object-fit:cover; display:block;">
+      <figcaption style="padding:.6rem; text-align:center; font-weight:600;">De economista de éxito a mendigo digital: Simón Pérez, el gurú de las hipotecas, contempla "dos escenarios" en mitad de su espiral destructiva</figcaption>
+    </figure>
+
+    <figure style="flex:1 1 30%; max-width:340px; margin:0; background:#fff; border:1px solid #e6e6e6;">
+      <img src="imagenes/pedromeme.jpg" alt="Noticia 3" style="width:100%; height:200px; object-fit:cover; display:block;">
+      <figcaption style="padding:2rem; text-align:center; font-weight:600;"> Son las 5 y aun no he comido </figcaption>
+    </figure>
+  </section>
+
+  <main>
+    <section>
+      <div style="text-align: center;">
+        <!-- Título secundario y creamos un div con ul para hacer un listado -->
+        <h2>Imputados del PSOE</h2>
+      </div>
+      <nav>
+      <ul>
+        <li class="lista-nombres">
+          <button>Begoña Gómez</button>
+        <button>Álvaro García Ortiz</button>
+        <button>Santos Cerdán</button>
+        <button>José Luis Ábalos</button>
+        <button>Isabel Pardo de Vera</button>
+        <button>Javier Herrero</button>
+        <button>Manuel Chaves</button>
+        <button>José Antonio Griñán</button>
+        <button>Gaspar Zarrías</button>
+        <button>José Antonio Viera</button>
+        <button>Antonio Fernández</button>
+        <button>Manuel Recio</button>
+        <button>Magdalena Álvarez</button>
+        <button>Francisco Vallejo</button>
+        <button>Martín Soler</button>
+        <button>Carmen Martínez Aguayo</button>
+      </ul>
+      </nav>
+    </section>
+  </main>
+<!-- Pie de página finalizado con texto -->
+  <footer>
+    <p>&copy; U HAVE BEEN PSOED.</p>
+  </footer>
+</body>
+</html>

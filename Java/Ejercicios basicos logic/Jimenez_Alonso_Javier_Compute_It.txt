@@ -1,0 +1,138 @@
+                                  Jimenez_Alonso_Javier_Compute_It
+	
+	1º
+	right()
+	right()        ---> You have to move to the "Right; Right; Right"
+	right()
+	
+	2º
+	down()	
+	right()   
+	up()           ---> You have to move "Down;Right;Up;Left"
+	left()
+	
+	3º
+	down()
+	right()
+	right()
+	right()       ---> You have to move "Down;Right;Up;Left"
+	right()
+	down()
+	
+	4º
+	down() 
+	repeat (3) [ 
+	left()        ---> You have to move "Down;then repeat 3 times the left move; Move down again"
+	] 
+	down()
+	
+	5º
+	right()
+	repeat (9) [  ---> You have to move to the "Right; then repeat 9 times down move; Move right again"
+	down()
+	] 
+	right()
+	
+	6º
+	repeat(4) [ 
+	up ()
+	left()        ---> You have to move "Up and left and u may repeat this action 4 times in a row the whole action; Then move to the right"
+	]
+	down()
+	
+	
+	7º
+	repeat(4) [
+	left()
+	]
+	repeat(4) [
+	up()         ---> You have to move "Left 4 times; Up 4 times; Right 4 times; Down 4 times"
+	]
+	repeat(4) [
+	right()
+	]
+	repeat(4) [
+	down()
+	]
+	
+	
+	8º repeat(4) [
+	repeat(4) [
+	down()       ---> You have to "Repeat the whole action 4 times in a row: "Move Down 4 times and then one to the Right"
+	]
+	right()
+	]
+	
+	
+	9º
+	repeat(3) [
+	repeat(4) [
+	right        ---> You have to repeat this action all in sequence "Repeat right 4 times; Repeat Left 4 times; And when the cycle ends you must start again until you have repeated 3 times"
+	repeat (4) [
+	left()
+	 ]
+	]
+	
+	
+	10º
+	left()
+	if YELLOW CIRCLE [ ---> You have to move to the "Left, then if there is any YELLOW CIRCLE u have to move Up; Then keep the sequence and move to the Right"
+	up()
+	]
+	right()
+	
+	11º
+	left() 
+	if YELLOW CIRCLE [
+	down()
+	]                  ---> You have to move to the "Left; Then if there is any YELLOW CIRCLE move Down *not red or whatever other color that exist*; Move to the Left;
+	left()                  Again if there is any YELLOW CIRCLE move Down *if not keep the sequence*; Move to the left"
+	if YELLOW CIRCLE [0
+	down()
+	]
+	left()
+	
+	
+	20º
+	up()
+	if YELLOW CIRCLE [ ---> Here we can see the term "else" wich means u have to trigger another action if the first condition is not met. 
+	up()                    You have to move "Up; If there is any YELLOW CIRCLE, u have to move Up, if not u have to move to the Left"   
+	] else [
+	left()
+	]
+	
+    23º
+	left() 
+	if GREEN CIRCLE [
+	down()
+	] else if BLUE CIRCLE [  ---> We must move to the "Left; If there is any GREEN CIRCLE, move it Down, if is not GREEN but BLUE instead u have to move to the Left, If there is not any of this color *GREEN or BLUE* u have to Move to the Right; Move Up
+	left()
+	] else [
+	right()
+	]
+	up()
+	
+	
+	28º
+	while PURPLE CIRCLE [
+	right()                 ---> Now we can see a new term *While*, we can use when we have a large sequence to mantain any action, the code say: "While there is a PURPLE CIRCLE you must move to the Right;
+	]                            Keep it until there're not any PURPLE CIRCLE, then you must move Up"
+	up()
+	
+	
+	39º
+	while not PURPLE CIRCLE[
+	down()                  ---> We can see a negative form of *While*, it says "While there are no any PURPLE CIRCLE you must move it Down and then Left"
+	left()
+	
+	
+	46º
+	toTheRight()
+	function toTheRight()[
+	right()                ---> Here we're creating a function wich means it trigger a serie of actions, for example here: "When toTheRight appears you must have move Right; Right; Right"
+	right()
+	right()
+	]
+	
+	
+	

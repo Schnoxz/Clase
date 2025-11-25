@@ -1,0 +1,36 @@
+Se pide diseñar la base de datos de una tienda, la cual está organizada por departamentos, que contenga información sobre los trabajadores y los artículos que se ofertan.
+Se deben tener en cuenta las siguientes restricciones:
+De todos los trabajadores nos interesa almacenar su DNI, nombre completo y número de teléfono, así como el departamento en el que trabajan.
+Existen tres tipos de trabajadores: gerentes (del que guardaremos el bonus anual), jefes (nos interesa almacenar cuantos vendedores tiene a su cargo) y vendedores (de cada vendedor, guardaremos su sueldo base y la zona donde trabaja).
+Cada departamento lo dirige un gerente, aunque se puede dar el caso que tengamos gerentes que no dirijan ningún departamento, pero nunca dirigirán más de uno.
+Un gerente tiene a su cargo a un cierto número de jefes y éstos a su vez a un cierto número de vendedores.
+En cuanto a los productos nos interesa su código, nombre y precio, y departamento en el que se encuentran.
+Cada producto lo pueden vender muchos vendedores, y cada vendedor, a su vez, puede vender muchos productos. Además, cada vendedor le aplicará un determinado descuento a los productos con los que trabaja. 
+
+
+Entidades: Departamento/Trabajador/Articulo/Jefe/Gerente/Vendedor
+PK: dni/
+FK:
+
+Relaciones:
+
+Trabajador 	  pertenece a 	 Departamento
+Gerente 	     dirije 	 Departamento
+Gerente 	   supervisa     Jefe
+Jefe	       supervisa     Vendedor
+Vendedor         vende       Articulo
+
+				  tiene 
+Departamento   se encuentra  Articulo
+                 pertenece				
+
+
+
+
+Total: La superclase pertenece obligatoriamente a alguna de las subclases. No puede haber un EMPLEADO que no sea ni SECRETARIO ni TECNICO, ni INGENIERO
+
+Parcial: La superclase puede no pertenecer a alguna de las subclases. Podríamos tener un EMPLEADO que no sea ni SECRETARIO ni TECNICO, ni INGENIERO
+
+Disjunta / Exclusiva: La superclase sólo pertenece a una de las subclases. Si un EMPLEADO es un INGENIERO, no puede ser un TECNICO ni SECRETARIO
+
+Solapada: La superclase puede pertenecer a varias de las subclases a la vez. Un EMPLEADO puede ser un INGENIERO, y un TECNICO a la vez 

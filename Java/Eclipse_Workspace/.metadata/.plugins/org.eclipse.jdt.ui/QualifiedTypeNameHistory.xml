@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="jdk.dynalink.beans.StaticClass"/>
+    <fullyQualifiedTypeName name="char"/>
+    <fullyQualifiedTypeName name="java.lang.module.FindException"/>
+    <fullyQualifiedTypeName name="sun.jvm.hotspot.oops.java_lang_Class"/>
+    <fullyQualifiedTypeName name="jdk.internal.shellsupport.doc.resources.javadocformatter"/>
+    <fullyQualifiedTypeName name="jdk.internal.access.JavaUtilCollectionAccess"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="Metodo_2.factorial"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="Metodo_2.bisiesto"/>
+</qualifiedTypeNameHistroy>

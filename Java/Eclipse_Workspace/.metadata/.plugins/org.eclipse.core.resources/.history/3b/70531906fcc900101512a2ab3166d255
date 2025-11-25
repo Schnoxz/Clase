@@ -1,0 +1,45 @@
+package String;
+import java.util.*;
+
+public class contadorVocales {
+	private static final Scanner teclado = new Scanner (System.in);
+	public static void main (String[] args) {
+		
+		System.out.print("Introduce una frase: ");
+		String frase = teclado.nextLine();
+		String limpio = frase.toLowerCase(); // Limpio la frase para no distinguir mayus o mins
+		
+		int resultado = vocales (limpio); // Llamo al metodo
+        
+        System.out.println("Se han encontrado: " + resultado + " vocales diferentes.");
+	}
+		
+		public static int vocales (String limpio) {
+			// Defino como boolean la aparición de vocales, para levantarlo en caso de ser cierto o dejarlo en false y no sumar al contador
+		boolean A = false;
+		boolean E = false;
+		boolean I = false;
+		boolean O = false;
+		boolean U = false;
+		
+		// Bucle que recorre la cadena 
+		for (int i = 0; i < limpio.length(); i++) {
+			char c = limpio.charAt(i);
+			// Comparo con las vocales
+			if (c == 'a') A = true;
+			else if (c == 'e') E = true;
+			else if (c == 'i') I = true;
+			else if (c == 'o') O = true;
+			else if (c == 'u') U = true;	
+		}
+		// Sumo 1 al contador cuando ha aparecido al menos una vocal de cada tipo
+		int contador = 0;
+		if (A) contador ++;
+		if (E) contador ++;
+		if (I) contador ++;
+		if (O) contador ++;
+		if (U) contador ++;
+		
+		return contador;
+  }
+}

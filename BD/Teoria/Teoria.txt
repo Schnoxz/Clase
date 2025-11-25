@@ -1,0 +1,200 @@
+BASE DE DATOS CUESTIONARIO
+
+1º ¿Cuales son las diferencias entre datos, sistema gestor de base de datos y base de datos?
+Digamos que los datos es aquella información que se guarda en una base de datos como si fuera un almacén, y el gestor es el encargado de ordenar, gestionar y localizar esta información
+
+2º Dime 3 ejemplos de datos, tanto su valor como su tipo
+Manuel (text) Falso (Boolean) 28/02/1998 (Date)
+
+
+3º ¿Una foto la podemos considerar como un dato o un conjunto de datos?
+Es un conjunto de datos 
+
+
+4º Cuando compramos en cualquier tienda online, ¿qué elementos que visualizamos proviene de una base de datos?
+Las imagenes, los precios, el formato de categorías de productos, en general prácticamente toda la web que necesite solicitar información 
+
+
+5º ¿Sabeis distinguir qué es una fila, una columna, un campo, un registro o un valor dentro de una tabla?
+Fila = Registro  
+
+
+6º Dime un ejemplo de almacén de datos que sea una sola tabla
+Las reservas en una peluqueria donde solo se necesita la fecha y hora y los nombres de los clientes.
+
+
+7º Si tuvieras diferentes tablas con diferente información, ¿es obligatorio que se relacionen de alguna manera?
+No creo que sea necesario, mientras que estas tablas pertenezcan a familias diferentes de información.
+
+
+8º Dentro de una tabla en el valor de un campo de un registro completo, ¿puedo poner el valor que me dé la gana?
+No, deberá ser coherente con el contenido y los datos 
+
+
+9º ¿Qué ventajas le ves a usar una base de datos como almacén para tus datos?
+Tener una gran capacidad de carga de datos, localizarlos y resguardarlos en un lugar seguro via back ups, gestionarlo de forma eficaz y flexible...
+
+
+10º ¿Qué operaciones básicas necesitas tener disponible para la base de datos?
+CRUD --> Crear, Eliminar, Actualizar y Editar
+
+
+
+
+
+TEORÍA PRINCIPAL DE BASES DE DATOS
+
+
+1. ¿Qué es una Base de Datos (BD)?
+
+Una base de datos es un conjunto organizado de datos que se almacenan y se pueden acceder electrónicamente. Su propósito principal es gestionar grandes volúmenes de información de forma eficiente y segura.
+
+
+2. Sistema de Gestión de Bases de Datos (SGBD)
+
+Un SGBD (como MySQL, PostgreSQL, SQL Server, Oracle) es el software que permite crear, administrar y consultar una base de datos. Proporciona herramientas para insertar, actualizar, 
+eliminar y consultar datos mediante lenguajes como SQL.
+
+
+3. Tipos de Bases de Datos
+
+Relacional (SQL): Organizada en tablas con filas y columnas. Ej.: MySQL, PostgreSQL.
+
+No relacional (NoSQL): Usa otros modelos como documentos, grafos, clave-valor. Ej.: MongoDB, Redis.
+
+Jerárquica, en red, orientada a objetos (menos comunes actualmente).
+
+
+4. Modelo Relacional
+
+Los datos se representan en forma de tablas (también llamadas relaciones). Cada fila representa un registro, y cada columna representa un atributo.
+
+
+5. Claves en Bases de Datos
+
+Clave primaria: Identifica de forma única cada registro.
+
+Clave foránea (foreign key): Es un campo que crea una relación entre dos tablas.
+
+
+6. Relaciones entre tablas
+
+Uno a uno: Un registro en una tabla se relaciona con uno en otra.
+
+Uno a muchos: Un registro se relaciona con muchos en otra tabla.
+
+Muchos a muchos: Se usa una tabla intermedia para gestionar esta relación.
+
+
+7. Normalización
+
+Es el proceso de estructurar una base de datos para reducir la redundancia y mejorar la integridad. Se divide en formas normales (1FN, 2FN, 3FN...).
+
+
+8. Consultas SQL básicas
+
+SELECT: Consulta datos.
+
+INSERT: Inserta nuevos registros.
+
+UPDATE: Modifica registros existentes.
+
+DELETE: Elimina registros.
+
+
+9. Transacciones
+
+Una transacción es una unidad de trabajo que se ejecuta completamente o no se ejecuta. Garantiza la integridad con las propiedades ACID:
+
+Atomicidad
+
+Consistencia
+
+Isolamiento
+
+Durabilidad
+
+
+10. Seguridad y control de acceso
+Los SGBD permiten definir roles, permisos y autenticación para controlar quién puede ver o modificar los datos.
+
+
+CRUD = Create, Read, Update, Delete
+Operation	Meaning	SQL Equivalent	Example
+
+Create	Add new data	        INSERT	Add a new user to a users table
+Read	Retrieve data	        SELECT	View all orders from the database
+Update	Modify existing data	UPDATE	Change a user’s email address
+Delete	Remove data	            DELETE	Remove a product from inventory  
+
+
+11. Tipo de Archivos en Base de DATOS
+
+ 1.1 CSV	Texto plano, columnas separadas por coma, fácil de abrir en Excel o Notepad
+
+				Name,Age,Major
+ Ejemplo:		Maria,21,Computer Science
+ 
+
+ 1.2 JSON	Guarda datos en estructura ramificada o árbol (objects y arrays), Común en APIs y NoSQL
+ 
+ Ejemplo:		{
+					"students": [
+					{"name": "Maria", "age": 21, "major": "Computer Science"},
+					{"name": "Ali", "age": 22, "major": "Engineering"}
+				]
+			}
+
+
+ 1.3 XML	Parece HTML. se usa en sistemas antiguos y algunas aplicaciones empresariales como base de datos de un videojuego o clientes
+ 
+ 
+ Ejemplo: 			<students>
+						<student>
+							<name>Maria</name>
+							<age>21</age>
+							<major>Computer Science</major>
+						</student>
+					</students>
+
+
+ 1.4 SQL	Un archivo con comandos en lenguaje SQL para recrear tablas e insertar datos
+ 
+ 
+ Ejemplo:		CREATE TABLE students (name TEXT, age INT, major TEXT);
+				INSERT INTO students VALUES ('Maria', 21, 'Computer Science');
+
+
+12. ¿Para qué se usa cada tipo de Fichero?
+
+CSV  --> Tablas simples, pequeños módulos de datos, importación y exportación de Excel
+JSON --> Aplicaciones web. APIs, NoSQL DB
+XML  --> Antiguas aplicaciones empresariales
+SQL  --> Backup o movimiento de bases de datos
+
+
+13. Las Tres Capas
+
+El modelo de 3 capas explica cómo se organiza una base de datos en tres niveles, para separar: 
+
+--> La forma en la que los usuarios ven los datos
+--> Cómo se guardan de forma física
+--> Estructura lógica entre ellos
+
+ 2.1 Nivel externo (Vista usuario)
+ 
+	--> Cada usuario está destinado a ver solo lo que necesita, por ejemplo "Tenemos dos departamentos, uno de ventas y otro de recursos humanos,
+     	cada uno de ellos solo verá los datos que necesiten sin mezclar".
+		
+ 2.2 Nivel Interno (Almacenamiento físico)
+ 	
+	--> Se definen índices, estructura de archivos, compresión...
+		Ejemplo: "La tabla Clientes está en un archivo en el disco, y existe un índice en 
+				  la columna ID_Cliente para agilizar su búsqueda
+				  
+ 2.3 Nicel Conceptual
+ 
+	--> Visión única y general de la Base de datos (DB), muestra los datos exitentes y cómo se relacionan
+		Ejemplo: "Modelo entidad-relación de Clientes, Pedidos, Empleados"
+		
+	

@@ -1,0 +1,36 @@
+/*Realizar un método que tenga como parámetros de entrada una cadena de caracteres y un carácter y
+devuelva cuántas veces aparece ese carácter en la cadena. No debe distinguir entre caracteres
+mayúsculas y minúsculas.*/
+
+package String;
+import java.util.*;
+
+public class caracterEntrada {
+	public static Scanner teclado = new Scanner(System.in);
+	
+    public static void main(String[] args) {
+    	// Pido la cadena de carateres y la guardo con un String
+        System.out.print("Introduzca una cadena de caracteres: ");
+        String cadena = teclado.nextLine();  
+
+        System.out.print("Introduzca el caracter que desea contar: ");
+        char caracter = teclado.next().charAt(0); // tomamos el primer carácter
+        // Creo la variable resultado como int donde devuelvo el valor de caracteres contados via método "contarCaracter"
+        int resultado = contarCaracter(cadena, caracter);
+        
+        System.out.println("El número de '" + caracter + "' = " + resultado);
+    }
+    // Creo el método para contar caracteres iguales, uso "toLowerCase" para no distinguir entre mayusculas y minusculas
+    public static int contarCaracter(String cadena, char caracter) {
+        String cadena2 = cadena.toLowerCase();
+        char caracter2 = Character.toLowerCase(caracter);
+        int contador = 0;
+
+        for (int i = 0; i < cadena2.length(); i++) {
+            if (cadena2.charAt(i) == caracter2) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+}

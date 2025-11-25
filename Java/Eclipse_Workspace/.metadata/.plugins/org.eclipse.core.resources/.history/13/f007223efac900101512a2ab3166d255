@@ -1,0 +1,41 @@
+package String;
+import java.util.Scanner;
+
+public class palíndromo {
+	public static final Scanner teclado = new Scanner(System.in);
+    public static void main(String[] args) {
+       
+        
+        System.out.println("Introduce una frase para verificar:");
+        String frase = teclado.nextLine(); // Usamos nextLine() para leer la frase entera con espacios
+        
+    
+        // 1. Convertir a minúsculas
+        // 2. Quitar espacios vacíos (" ") y sustituirlos por nada ("")
+        String limpia = frase.toLowerCase().replace(" ", "");
+        
+        // PASO 2: LLAMAR AL MÉTODO INVERTIR
+        String invertida = invertirCadena(limpia);
+        
+        System.out.println("Original limpia: " + limpia);
+        System.out.println("Invertida:       " + invertida);
+        
+        // Comparo
+        if (limpia.equals(invertida)) {
+            System.out.println("Es un palíndromo");
+        } else {
+            System.out.println("No es un palíndromo.");
+        }      
+    }
+
+    // Metodo para invertir la cadena
+    public static String invertirCadena(String frase) {
+        String resultado = "";
+        // Recorre la frase desde el final hacia el principio
+        for (int i = frase.length() - 1; i >= 0; i--) {
+            resultado += frase.charAt(i);
+        }
+        System.out.println("La frase invertida es: " + resultado);
+        return resultado;
+    }
+}

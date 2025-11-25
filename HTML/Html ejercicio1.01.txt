@@ -1,0 +1,60 @@
+Nos indica que aplicaciones se usan para gestionar/programar un archivo HTML, 
+como el notepad que ahora mismo uso para crear un simple .txt, o el visual studio code.
+También no muestra qué terminos se usan para comenzar con códigos muy básicos, un archivo HTML.
+
+Por ejemplo, el indicar el tipo de archivo "<!DOCTYPE html>" para definir que estás haciendo una página HTML
+
+<html lang="es"> para definir que idioma usar
+<head> Para el encabezado de la página
+<title> Para el titulo de la misma
+<body> Para el cuerpo de texto
+<h1> Para escribir titulos
+
+También entendemos que un código HTML tiene que ir acompañado de un "styles.css" para dar un estilo y al menos un tono de color y background a lo que se muestra en pantalla.
+
+Me he dado el lujo de hacer un ejemplo, con lo mostrado en pantalla:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+   <!-- Declaramos el encoding de la página web en este caso y de forma universal el UTF-8 para que se vea correctamente en regiones con otro alfabeto-->
+  <title>Gobierno De España 🇪🇸 </title>
+  <link rel="stylesheet" href="styles.css" /> 
+    <!-- Aquí hacemos referencia al styles.css que supuestamente crearemos en conjunto para que se aplique-->
+</head>
+<body>
+
+  <header>
+    <h1>Bienvenido al PSOE</h1>
+  </header>
+
+  <main>
+    <section>
+        <h2>Imputados del PSOE</h2>
+  <ul>
+    <li>Begoña Gómez</li>
+    <li>Álvaro García Ortiz</li>
+    <li>Santos Cerdán</li>
+    <li>José Luis Ábalos</li>
+    <li>Isabel Pardo de Vera</li>
+    <li>Javier Herrero</li>
+    <li>Manuel Chaves</li>
+    <li>José Antonio Griñán</li>
+    <li>Gaspar Zarrías</li>
+    <li>José Antonio Viera</li>
+    <li>Antonio Fernández</li>
+    <li>Manuel Recio</li>
+    <li>Magdalena Álvarez</li>
+    <li>Francisco Vallejo</li>
+    <li>Martín Soler</li>
+    <li>Carmen Martínez Aguayo</li>
+
+   </section>
+  </main>
+
+  <footer>
+    <p>&copy; U HAVE BEEN PSOED.</p>
+  </footer>
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="true"/>
+		<list key="findhistory">
+			<item value="c"/>
+			<item value="b"/>
+			<item value="a"/>
+			<item value="j"/>
+			<item value="i"/>
+			<item value="n"/>
+			<item value="sc"/>
+			<item value="primero"/>
+			<item value="scanner"/>
+			<item value="numero"/>
+		</list>
+		<list key="replacehistory">
+			<item value="num3"/>
+			<item value="num2"/>
+			<item value="num1"/>
+			<item value="i"/>
+			<item value="num"/>
+			<item value="teclado"/>
+		</list>
+	</section>
+</section>

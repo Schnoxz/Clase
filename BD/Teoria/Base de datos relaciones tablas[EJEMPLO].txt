@@ -1,0 +1,39 @@
+Base De Datos. Crear una Tabla de valores para un restaurante
+
+
+						---> Dirección
+	
+Tablas --> CLIENTES		---> Nº Telf {PRIMARY KEY}
+ 		
+						
+
+
+						---> id_Pedido  {PRIMARY KEY}  {				
+																		---> id_Carta
+Tablas --> PEDIDOS		---> id_Cliente {Foreign Key}  {  				
+														   -->CARTA		---> id_Categoria
+						---> PrecioTotal               {				
+																		---> Precio
+						---> Fecha                     {
+						
+						
+						
+						
+						  ---> id_Categoria {PRIMARY KEY}
+			
+Tablas    --> CATEGORIA	  ---> Nombre
+	   
+	   
+	   
+	   
+							  ---> id_Pedido {Foreign Key}
+	   
+Tablas	 --> DETALLE_PEDIDO	  ---> id_Cliente
+	   
+							  ---> Total
+							  
+							  ---> Cantidad
+							  
+							  
+							  
+RELACIÓN : id_Pedido--id_Carta--Cantidad--Total [EJEMPLO]

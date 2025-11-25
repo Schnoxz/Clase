@@ -1,0 +1,58 @@
+1.- Identifique cada uno de los modelos de base de datos Justifique su respuesta
+
+a) Modelo: Jerárquico
+
+b) Modelo: Orientada a objetos
+
+c) Modelo: Relacional
+
+
+2. Encuentra la Primary Key de cada uno de las siguientes tablas. Justifique su respuesta
+
+Region table : Region ID --> PK
+
+Winery table : Winery ID --> PK
+
+Es el valor único que sirve como indentificador del dato que nos otorga cada tabla tanto en "Region" como en "Winery"
+
+
+3. Explique cada una de las siguientes sentencias SQL e indique su resultado en casa de tenerlo
+
+a) SELECT name, surname FROM Students WHERE idCourse=2
+
+Nos pide tomar el nombre y apellido de la tabla "Students" donde el valor de "idCourse" sea 2
+
+Peter Shannon, John Truman, George Parker
+
+
+b) SELECT courseName FROM Courses WHERE floor > 1
+
+Seleccionamos los "courseName" de la tabla "Courses" donde "floor" sea mayor que 1
+
+1DAW, 1SMR, 2SMR
+
+
+c) UPDATE Students SET surname=’Orellana’ WHERE studentId=6
+
+Actualizamos la tabla "Students" en el "surname" con "Orellana" donde el valor de studentId sea 6
+
+d) DELETE from Courses WHERE floor=2
+
+Borramos de la tabla "Courses" todos los datos de las columnas donde "floor" sea igual a 2
+
+
+4. En el siguiente ejemplo hay un problema de redundancia de información (datos repetidos).
+Responda a las siguientes cuestiones:
+
+a) ¿Cuales son los datos repetidos?
+
+Tenemos el mismo dueño con varias mascotas y a su vez mismo "ownerIDCard" y "ownerDirection"
+
+b) ¿Cómo solucionaría el problema?
+
+Podemos crear dos tablas y relacionarlas y así evitamos la repetición de valores 
+Dividimos una tabla en PET y otra en OWNER y ahí relacionamos los ID de ambas para evitar la sobre información
+
+ownerIDCard / petID / petName / Animal / Weigth  --> Tabla PETS
+
+ownerIDCard / ownerName / ownerDirection --> Tabla OWNER
