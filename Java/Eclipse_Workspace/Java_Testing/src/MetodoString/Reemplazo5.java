@@ -1,7 +1,7 @@
-package String;
+package MetodoString;
 import java.util.Scanner;
 
-public class reemplazo {
+public class Reemplazo5 {
 	private static final Scanner teclado = new Scanner(System.in);
 	
     public static void main(String[] args) {

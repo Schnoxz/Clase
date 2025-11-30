@@ -2,11 +2,11 @@
 devuelva cuántas veces aparece ese carácter en la cadena. No debe distinguir entre caracteres
 mayúsculas y minúsculas.*/
 
-package String;
+package MetodoString;
 import java.util.*;
 
-public class caracterEntrada {
-	public static Scanner teclado = new Scanner(System.in);
+public class CaracterEntrada1 {
+	public static final Scanner teclado = new Scanner(System.in);
 	
 	public static void main(String[] args) {
     	// Pido la cadena de carateres y la guardo con un String

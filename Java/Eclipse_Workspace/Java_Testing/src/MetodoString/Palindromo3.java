@@ -1,7 +1,7 @@
-package String;
+package MetodoString;
 import java.util.Scanner;
 
-public class palíndromo {
+public class Palindromo3 {
 	public static final Scanner teclado = new Scanner(System.in);
 	
     public static void main(String[] args) {

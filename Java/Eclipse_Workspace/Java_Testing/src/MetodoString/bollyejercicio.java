@@ -1,4 +1,4 @@
-package String;
+package MetodoString;
 import java.util.Scanner;
 
 public class bollyejercicio {

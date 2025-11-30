@@ -1,7 +1,7 @@
-package String;
+package MetodoString;
 import java.util.Scanner;
 
-public class escondite {
+public class PalabraOculta4 {
 	private static final Scanner teclado = new Scanner(System.in);
    
 	public static void main(String[] args) {

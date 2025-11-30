@@ -1,7 +1,7 @@
-package String;
+package MetodoString;
 import java.util.*;
 
-public class caracterMayus {
+public class CaracterMayus2 {
 	private static final Scanner teclado = new Scanner (System.in);
 	
     public static void main(String[] args) {

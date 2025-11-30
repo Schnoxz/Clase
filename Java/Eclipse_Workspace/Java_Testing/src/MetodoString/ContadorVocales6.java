@@ -1,7 +1,7 @@
-package String;
+package MetodoString;
 import java.util.*;
 
-public class contadorVocales {
+public class ContadorVocales6 {
 	private static final Scanner teclado = new Scanner (System.in);
 	
 	public static void main (String[] args) {

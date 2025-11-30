@@ -1,8 +1,8 @@
-
+package MetodoString;
 import java.util.Scanner;
 
-public class Untitled1 {
-    static Scanner teclado = new Scanner(System.in); 
+public class SimulacroUd3 {
+	private static final Scanner teclado = new Scanner (System.in);
 
     public static void main(String[] args) {
         String frase = pedirFrase();

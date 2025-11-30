@@ -1,7 +1,7 @@
-package String;
+package MetodoString;
 import java.util.*;
 
-public class validacionUsuarioPassword {
+public class ValidarUserPass8 {
 	public static final Scanner teclado = new Scanner(System.in);
 	
 	public static void main (String[] args) {
