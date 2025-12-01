@@ -32,7 +32,10 @@ public class Palindromo3 {
             System.out.println("No es un palíndromo.");
         }      
    	}
-
+/* for (int = 0; 1 < limpia.Length() / 2; i++) {
+ * if (limpia.charAt(i) != limpia.charAt(limpia.length() - 1 -i)) {    METODO SIN EQUALS
+ * return = false;
+ *  }                                                               */
     // Metodo para invertir la cadena
     public static String invertirCadena(String frase) {
         String resultado = "";
