@@ -14,12 +14,12 @@ public class Palindromo3 {
         // Limpio la cadena pasando a minus y limpiando los espacios
         String limpia = frase.toLowerCase().replace(" ", "");
         
-        // Llamo al método
+        // Llamo al método para invertir la cadena
         String invertida = invertirCadena(limpia);
         
         System.out.println("Original limpia: " + limpia);
         System.out.println("Invertida:       " + invertida);
-        
+        // Llamo al método para comparar las 2 cadenas
         comparador(limpia, invertida);
     }
         
