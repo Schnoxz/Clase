@@ -12,9 +12,12 @@ CREATE TABLE PUB (
     Licencia_Fiscal VARCHAR(20) UNIQUE NOT NULL,
     Domicilio VARCHAR(100),
     Fecha_Apertura DATE NOT NULL,
-    Horario ENUM('HOR1', 'HOR2', 'HOR3') NOT NULL,
+    Horario VARCHAR (70) NOT NULL,
     Cod_Localidad INT NOT NULL,
     FOREIGN KEY (Cod_Localidad) REFERENCES  (Cod_Localidad)
+
+    ALTER TABLE PUB ADD CONSTRAINT ck_horario
+    CHECK (Horario IN ('HOR1', 'HOR2', 'HOR3'));
 );
 
 CREATE TABLE EMPLEADO (
@@ -35,7 +38,7 @@ CREATE TABLE EXISTENCIAS (
     Cod_Articulo VARCHAR(20) PRIMARY KEY NOT NULL,
     Nombre VARCHAR(40) NOT NULL,
     Cantidad INT NOT NULL,
-    Precio DECIMAL(6,2) NOT NULL CHECK (Precio > 0),
+    Precio DECIMAL(6,2) NOT NULL,
     Cod_Pub VARCHAR(40) NOT NULL,
     FOREIGN KEY (Cod_Pub) REFERENCES PUB(Cod_Pub)
 );
@@ -47,5 +50,10 @@ CREATE TABLE PUB_EMPLEADO (
     PRIMARY KEY (Cod_Pub, Dni_Empleado, Funcion),
     FOREIGN KEY (Cod_Pub) REFERENCES PUB(Cod_Pub),
     FOREIGN KEY (Dni_Empleado) REFERENCES EMPLEADO(Dni_Empleado)
+
+    ALTER TABLE PUB_EMPLEADO ADD CONSTRAINT ck_funcion
+    CHECK (Funcion IN ('CAMARERO', 'SEGURIDAD', 'LIMPIEZA'));
+
+    
 );
 
