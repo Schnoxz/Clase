@@ -1,5 +1,4 @@
-DROP DATABASE IF EXISTS Ejercicio2;
-CREATE DATABASE Ejercicio2;
+CREATE DATABASE IF NOT EXISTS Ejercicio2;
 USE Ejercicio2;
 
 -- 1. Tabla independiente (sin FK)
