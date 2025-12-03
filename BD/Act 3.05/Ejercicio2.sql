@@ -1,0 +1,72 @@
+CREATE DATABASE IF NOT EXISTS Ejercicio2;
+USE Ejercicio2;
+
+CREATE TABLE ESPECTACULOS (
+    Cod_Espectaculo VARCHAR (30) PRIMARY KEY NOT NULL,
+    Nombre VARCHAR (40) NOT NULL,
+    Tipo VARCHAR (20) NOT NULL,
+    Fecha_Inicial DATE NOT NULL,
+    Fecha_Final DATE NOT NULL,
+    Interprete VARCHAR (40) NOT NULL,
+    Cod_Recinto VARCHAR (30) NOT NULL,
+    CONSTRAINT fk_espectaculos_recintos FOREIGN KEY (Cod_Recinto) REFERENCES RECINTOS (Cod_Recinto)
+);
+
+CREATE TABLE PRECIOS_ESPECTACULOS (
+    Cod_Espectaculo VARCHAR (30) PRIMARY KEY NOT NULL,
+    Cod_Recinto VARCHAR (30) NOT NULL,
+    Zona VARCHAR (20) NOT NULL,
+    Precio DECIMAL (4.2) NOT NULL
+
+);
+
+CREATE TABLE RECINTOS (
+    Cod_Recinto VARCHAR (30) PRIMARY KEY NOT NULL,
+    Cod_Recinto VARCHAR (30) NOT NULL,
+    Zona VARCHAR (20) NOT NULL
+);
+
+CREATE TABLE ZONA_RECINTOS (
+    Cod_Recinto VARCHAR (30) NOT NULL,
+    Zona VARCHAR (20) NOT NULL,
+    Capacidad INT NOT NULL,
+    PRIMARY KEY (Cod_Recinto, Zona),
+    CONSTRAINT fk_zona_recintos_recintos FOREIGN KEY (Cod_Recinto) REFERENCES RECINTOS (Cod_Recinto)
+);
+
+CREATE TABLE ASIENTOS (
+    Cod_Recinto VARCHAR (30) PRIMARY KEY NOT NULL,
+    Zona VARCHAR (20) NOT NULL,
+    Fila CHAR (1) NOT NULL,
+    Numero INT NOT NULL
+);
+
+CREATE TABLE REPRESENTACIONES (
+    Cod_Espectaculo VARCHAR (30) PRIMARY KEY NOT NULL,
+    Fecha DATE NOT NULL,
+    Hora TIME NOT NULL
+);
+
+CREATE TABLE CLIENTES (
+    Dni_Cliente VARCHAR (10) PRIMARY KEY NOT NULL,
+    Nombre VARCHAR (40) NOT NULL,
+    Direccion VARCHAR (100) NOT NULL,
+    Telefono VARCHAR (15) NOT NULL,
+    Ciudad VARCHAR (40) NOT NULL,
+    Ntarjeta int NOT NULL
+);
+
+CREATE TABLE ENTRADAS (
+    Cod_Espectaculo VARCHAR (30) PRIMARY KEY NOT NULL,
+    Fecha DATE NOT NULL,
+    Hora TIME NOT NULL,
+    Cod_Recinto VARCHAR (30) NOT NULL,
+    Fila CHAR (1) NOT NULL,
+    Numero INT NOT NULL,
+    Zona VARCHAR (20) NOT NULL,
+    Dni_Cliente VARCHAR (10) NOT NULL
+);
+ALTER TABLE ENTRADAS
+    ADD CONSTRAINT fk_entradas_espectaculos FOREIGN KEY (Cod_Espectaculo) REFERENCES ESPECTACULOS (Cod_Espectaculo);
+ALTER TABLE ENTRADAS
+    ADD CONSTRAINT fk_entradas_clientes FOREIGN KEY (Dni_Cliente) REFERENCES CLIENTES (Dni_Cliente);   
