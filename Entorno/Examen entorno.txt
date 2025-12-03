@@ -1,0 +1,73 @@
+IDE
+
+Editor de código - caracteristicas
+Compilador / Intérprete - diferencias
+Depurador o Debugger - definición
+Control de versiones - concepto
+
+---------------------------------
+
+CICLO DE VIDA DEL SW
+
+Planifiación --> Analisis --> Diseño --> Codificacion --> Pruebas --> Mantenimiento
+Establecer objetivos y viabilidad del proyecto
+
+---------------------------------
+Metodologia agil (Scrum) vs Metodologia como la cascada
+
+----------------------------------
+
+Sistema de Tipado -- Descripcion -- Tipos de Lenguaje
+
+----------------------------------
+
+  MAQUINA       HUMANO
+Bajo Nivel vs Alto Nivel
+
+----------------------------------
+
+ESTRUCTURA DE UN PROYECTO -- Roles de los trabajadores y/o departamentos
+
+- Arquitecto de SW
+- Analista del Sistema
+- Programador Senior y Junior
+- Testers
+----------------------------------
+
+Qué es un programa   Dónde se crea
+Qué es un algoritmo  Dónde se crea
+Diferencias
+
+----------------------------------
+
+Paradigmas Principales
+
+Imperativo
+Declarativo
+Funcional
+Orientada a objetos
+
+Nivel de abstracción Alto-Bajo
+Sistema de tipos Fuerte-Debil
+
+---------------------------------
+
+Fases del traductor / Compilador / Interpretador
+
+1. Analisis Léxico
+2. Analisi Sintáctico
+3. Código Semántico
+4. Código objeto
+5. Intermedio
+
+--------------------------------
+
+Proceso de Java
+1. Código fuente
+2. Compilación
+3. Bytecode
+4. JVM Interpreta 
+5. Ejecución
+
+
+
