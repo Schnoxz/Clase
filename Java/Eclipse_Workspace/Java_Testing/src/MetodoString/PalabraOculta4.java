@@ -12,14 +12,12 @@ public class PalabraOculta4 {
         System.out.print("Introduce la palabra escondida:");
         String palabra = teclado.nextLine().toLowerCase();
 
-        // Llamamos al método booleano para decirnos si se ha encontrado o no
+        // Llamo al método booleano para decirnos si se ha encontrado o no
         if (esPalabraEscondida(frase, palabra)) {
             System.out.println("Encontrada: La palabra: " + "'" + palabra + "'");
         } else {
             System.out.println("No se encuentra.");
         }
-
-        teclado.close();
     }
 
     // Método para buscar la palabra escondida

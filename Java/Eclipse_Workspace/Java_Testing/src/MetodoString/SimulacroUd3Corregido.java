@@ -1,7 +1,7 @@
 package MetodoString;
 import java.util.Scanner;
 
-public class SimulacroUd3 {
+public class SimulacroUd3Corregido {
 	private static final Scanner teclado = new Scanner (System.in);
 
     public static void main(String[] args) {

@@ -18,7 +18,7 @@ public class ValidarWeb10 {
         }
     }
     
-    // Método validar la direccion web usando otros métodos externos
+    // Método validar la direccion web usando otros métodos 
     public static boolean webValida(String url) {
         // Validamos el inicio
         if (!empiezaCon(url, "http://www.")) {
@@ -35,7 +35,7 @@ public class ValidarWeb10 {
 
         
         // Calculamos dónde acaba el dominio según si era .com (4 chars) o .es (3 chars)
-        int sufijo = 0;
+        int sufijo;
         if (esCom) sufijo = 4;
         else sufijo = 3;
 

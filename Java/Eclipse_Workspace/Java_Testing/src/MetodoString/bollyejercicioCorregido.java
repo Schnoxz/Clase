@@ -1,7 +1,8 @@
 package MetodoString;
 import java.util.Scanner;
 
-public class bollyejercicio {
+public class bollyejercicioCorregido {
+    private static final Scanner teclado = new Scanner (System.in);
     public static void main(String[] args) {    
         String frase = pedirFrase();
         contarPalabras(frase);
@@ -10,10 +11,10 @@ public class bollyejercicio {
     }
 
     private static String pedirFrase() {
-        Scanner scanner = new Scanner(System.in);
+       
         System.out.println("Ingrese una frase: ");
-        String frase = scanner.nextLine();
-        scanner.close();
+        String frase = teclado.nextLine();
+        
         return frase;
     }
 
@@ -39,7 +40,7 @@ public class bollyejercicio {
         
     }
 
-
+    // Método para eliminar espacios sobrantes entre palabras
     private static void eliminarEspacios(String frase) {
       String resultado = "";
       boolean espacioAnterior = false;

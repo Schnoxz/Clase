@@ -6,14 +6,15 @@ public class ejercicio8_validarLogin {
 	public static Scanner teclado = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		String usuario = pedirUsuario();
-		String password = pedirPassword();
+		// Llamo al metodo
+		pedirUsuario();
+		pedirPassword();
 		
 		System.out.println("Usuario y contraseña válidos");
 	}
 	
 	// Pedir y validar usuario
-	public static String pedirUsuario() {
+	public static boolean pedirUsuario() {
 		String usuario;
 		boolean usuarioValido = false;
 		
@@ -42,13 +43,13 @@ public class ejercicio8_validarLogin {
 			}
 			
 			usuarioValido = true;
-			return usuario;
+			
 		}
-		return "";
+		return usuarioValido;
 	}
 	
 	// Pedir y validar contraseña
-	public static String pedirPassword() {
+	public static boolean pedirPassword() {
 		String password;
 		boolean passwordValida = false;
 		
@@ -92,9 +93,9 @@ public class ejercicio8_validarLogin {
 			}
 			
 			passwordValida = true;
-			return password;
+			
 		}
-		return "";
+		return passwordValida;
 	}
 	
 	// Verificar si un carácter es una letra (a-z, A-Z)

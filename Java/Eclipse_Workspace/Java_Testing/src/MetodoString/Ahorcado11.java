@@ -5,50 +5,45 @@ public class Ahorcado10 {
 	private static final Scanner teclado = new Scanner(System.in);
 	
     public static void main(String[] args) {
-           // 1. Configuración inicial
-       // Nota del enunciado: usamos una palabra fija por ahora[cite: 135].
         String secreto = "programacion"; 
         
-        // Generamos la cadena inicial de guiones (ej: "____________")
+        // Llamo al metodo que genera una cadena de guiones
         String visible = generarGuiones(secreto);
-        
         int fallos = 0;
-        int maxFallos = 7;// Límite del enunciado[cite: 134].
+        int maxFallos = 7;
         
-        System.out.println("--- JUEGO DEL AHORCADO ---");
-        System.out.println("Adivina la palabra secreta.");
+        System.out.println("--- El AHORCADO ---");
+        System.out.println("¿Cuál es la palabra secreta?");
 
-        // 2. Bucle principal del juego
-        // Se repite mientras no hayamos ganado (palabras distintas) Y no hayamos perdido (fallos < 7)
+
+        // Creo un bucle hasta que acierte o se agoten los intentos
         while (!visible.equals(secreto) && fallos < maxFallos) {
             
             System.out.println("\nPalabra: " + visible);
             System.out.println("Vidas restantes: " + (maxFallos - fallos));
             System.out.print("Introduce una letra: ");
             
-            // Leemos el carácter y lo pasamos a minúscula
+            // Guardo la letra introducida por el usuario y la paso a minúscula
             String entrada = teclado.next();
             char letra = entrada.toLowerCase().charAt(0);
 
-            // 3. Llamada al método lógico
-            // Intentamos actualizar la palabra visible con la letra nueva
+            
+            // Llamo al metodo para que actualice la palabra con la letra introducida
             String nuevaVisible = actualizarTablero(secreto, visible, letra);
 
-            // 4. Comprobar si hubo cambios
+            // Se comprueba si ha habido acierto o fallo
             if (nuevaVisible.equals(visible)) {
-                // Si la palabra nueva es IGUAL a la anterior, significa que la letra no estaba
-                // (o ya estaba destapada), por tanto es un FALLO.
+                // Si la palabra nueva es igual a la anterior, significa que la letra no estaba
                 fallos++;
                 System.out.println("-> ¡Fallo! La letra '" + letra + "' no está.");
             } else {
-                // Si son distintas, es que hemos destapado algo
+                // Si son distintas, es que hemos revelado algo
                 visible = nuevaVisible;
                 System.out.println("-> ¡Bien! Has acertado una letra.");
             }
         }
 
-        // 5. Fin del juego
-        System.out.println("\n--------------------------------");
+        // El mensaje final dependiendo de si ganas o pierdes
         if (visible.equals(secreto)) {
             System.out.println("¡FELICIDADES! Has adivinado la palabra: " + secreto);
         } else {
@@ -57,9 +52,7 @@ public class Ahorcado10 {
         }
     }
 
-    /**
-     * Crea una cadena de guiones bajos del mismo tamaño que la palabra secreta.
-     */
+    // Metodo que genera una cadena de guiones del mismo tamaño que el texto
     public static String generarGuiones(String texto) {
         String resultado = "";
         for (int i = 0; i < texto.length(); i++) {
@@ -68,12 +61,7 @@ public class Ahorcado10 {
         return resultado;
     }
 
-    /**
-     * Reconstruye la palabra visible.
-     * Recorre la palabra secreta y decide qué poner en cada posición:
-     * - Si la letra secreta coincide con la letra jugada -> Pone la letra jugada.
-     * - Si no coincide -> Mantiene lo que ya había en 'visible' (sea guion o letra ya acertada).
-     */
+    // Metodo que compara la letra con la palabra secreta y va actualizando la cadena
     public static String actualizarTablero(String secreto, String visibleActual, char letraJugada) {
         String nuevaCadena = "";
 
