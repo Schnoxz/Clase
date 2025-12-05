@@ -1,7 +1,7 @@
 package MetodoString;
 import java.util.*;
 
-public class Ahorcado10 {
+public class Ahorcado11 {
 	private static final Scanner teclado = new Scanner(System.in);
 	
     public static void main(String[] args) {
