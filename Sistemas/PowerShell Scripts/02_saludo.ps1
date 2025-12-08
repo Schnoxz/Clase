@@ -1,5 +1,6 @@
 $nombre = Read-Host "Introduce tu nombre"
-if ($nombre -eq "") {
+
+if ($nombre -eq  "") {
     $nombre = "desconocido"
 }
-Write-Output "Hola, $nombre!"
+Write-Host "Hola, $nombre!"
