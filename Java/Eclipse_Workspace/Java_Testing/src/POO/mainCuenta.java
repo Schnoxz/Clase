@@ -2,7 +2,7 @@ package POO;
 
 import java.util.Scanner;
 
-public class cuentaMain {
+public class mainCuenta {
 	private static Scanner teclado = new Scanner (System.in);
     public static void main(String[] args) {
     	//Pido el saldo inicial
