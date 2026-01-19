@@ -5,9 +5,9 @@ import java.util.*;
 public class mainRectangulo {
     private static Scanner teclado = new Scanner(System.in);
     public static void main(String[] args){
-
+        // Creo el objeto rectangulo
         Rectangulo r1 = new Rectangulo (1,1);
-
+        // Pido los valores para los atributos aunque de forma predeterminada ya tienen 1
         System.out.println("Introduzca la longitud del rectangulo:");
         double longitud = teclado.nextDouble();
         r1.setLongitud(longitud);

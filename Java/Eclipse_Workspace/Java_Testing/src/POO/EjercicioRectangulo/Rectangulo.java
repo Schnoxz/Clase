@@ -13,10 +13,10 @@ public class Rectangulo {
     public double getLongitud() {
         return this.longitud;
     }
-    
+
     public void setLongitud (double Longitud) {
-        if (Longitud > 0 && Longitud < 20){ 
-            this.longitud = Longitud;
+        if (Longitud > 0 && Longitud < 20){ // Condicion del enunciado para que sea valido
+            this.longitud = Longitud; 
         } else {
             System.out.println("Error, la longitud debe ser mayor que 0 y menor que 20");
         }
@@ -28,7 +28,7 @@ public class Rectangulo {
     }
 
     public void setAncho (double Ancho){
-        if (Ancho > 0 && Ancho < 20){
+        if (Ancho > 0 && Ancho < 20){ // Condicion del enunciado para que sea valido
             this.ancho = Ancho;
         } else {
             System.out.println("Error, el ancho debe ser mayor que 0 y menor que 20");

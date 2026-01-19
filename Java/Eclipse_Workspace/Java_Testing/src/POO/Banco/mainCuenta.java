@@ -29,12 +29,14 @@ public class mainCuenta {
             case 1:
                 System.out.print("Ingrese la cantidad a retirar: ");
                 double reintegro = teclado.nextDouble();
+                // Si no hay saldo suficiente se envia mensaje de error
                 if (reintegro > c1.getSaldo()) {
                 	System.out.print("Saldo insuficiente en la cuenta");
                 	break;
                 }
                 // Usamos el método del objeto para retirar
-                c1.reintegro(reintegro); 
+                c1.reintegro(reintegro);
+                System.out.println("Saldo restante: " + c1.getSaldo()); 
                 break;
 
             case 2:
@@ -42,6 +44,7 @@ public class mainCuenta {
                 double ingreso = teclado.nextDouble();
                 // Usamos el método del objeto para ingresar
                 c1.ingreso(ingreso);
+                System.out.println("Saldo total: " + c1.getSaldo());
                 break;
 
             case 3:
@@ -54,7 +57,7 @@ public class mainCuenta {
             case 4:
                 System.out.print("¿Realmente desea salir? (S/N): ");
                 String confirmar = teclado.next();
-                if (confirmar.equalsIgnoreCase("S")) {
+                if (confirmar.equals ("s") || confirmar.equals ("S")) {
                     System.out.println("Saldo final: " + c1.getSaldo());
                     System.out.println("Gracias por usar el cajero.");
                 } else {
