@@ -1,4 +1,4 @@
-package POO;
+package POO.MaquinaCafe;
 import java.util.*;
 
 public class mainCafe {
@@ -8,7 +8,7 @@ public class mainCafe {
     // Se crea el objeto llamando al constructor, inicializa el monedero en 0
     Cafe m1 = new Cafe(0);
     // He añadido una variable para confirmar que el usuario realmente quiere el producto
-    int confirmar = 0;
+    int confirmar;
     int opcion = 0;
     
     // Menú principal de la maquina

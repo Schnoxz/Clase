@@ -1,4 +1,4 @@
-package POO;
+package POO.EjercicioRectangulo;
 import java.util.*;
 
 

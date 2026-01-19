@@ -1,4 +1,4 @@
-package POO;
+package POO.Banco;
 
 public class Cuenta {
     private double saldo;

@@ -1,4 +1,4 @@
-package POO;
+package POO.EjercicioRectangulo;
 
 public class Rectangulo {
  // Inicializo atributos privados en 1 dado el enunciado

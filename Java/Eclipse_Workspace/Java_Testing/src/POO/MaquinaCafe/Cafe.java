@@ -1,4 +1,4 @@
-package POO;
+package POO.MaquinaCafe;
 
 public class Cafe {
     private double monedero;
