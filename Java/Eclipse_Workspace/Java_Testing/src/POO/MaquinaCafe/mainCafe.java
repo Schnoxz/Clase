@@ -8,8 +8,8 @@ public class mainCafe {
     // Se crea el objeto llamando al constructor, inicializa el monedero en 0
     Cafe m1 = new Cafe(0);
     // He añadido una variable para confirmar que el usuario realmente quiere el producto
-    int confirmar = 0;
-    int opcion = 0;
+    int confirmar;
+    int opcion;
     
     // Menú principal de la maquina
     do {
@@ -19,9 +19,11 @@ public class mainCafe {
         System.out.println(" 3. Café con leche (1.50 euro) ");
         System.out.println(" 4. Estado ");
         System.out.println(" 5. Salir ");
+        System.out.println(" 6. Rellenar máquina");
+        System.out.println(" 7. Vaciar monedero");
 
         opcion = teclado.nextInt();
-    // Switch para navegar por el menú
+    // Switch para navegar por el menú y llamada a los metodos
         switch (opcion) {
             case 1:
                 System.out.println("Pulse de nuevo para confirmar"); // Confirmación adicional al usuario
@@ -68,9 +70,29 @@ public class mainCafe {
                 System.out.println(" <> <> <> <> <> ");
                 break;
 
+            case 6:
+                System.out.println("Pulse de nuevo para autofill de la máquina");
+                confirmar = teclado.nextInt();
+                if (confirmar == opcion){
+                    m1.rellenarMaquina(50, 50, 80);
+                } else {
+                    System.out.println("Cancelado");
+                }
+                break;
+            
+            case 7:
+                System.out.println("Pulse de nuevo para vaciar el monedero");
+                confirmar = teclado.nextInt();
+                if (confirmar == opcion){
+                    m1.vaciarMonedero();
+                } else {
+                    System.out.println("Cancelado");
+                }
+                break; 
+
             default:
                 System.out.println("Opción incorrecta"); 
         }
-    } while (opcion != 5);
+    } while (opcion != 7);
   }
 } 

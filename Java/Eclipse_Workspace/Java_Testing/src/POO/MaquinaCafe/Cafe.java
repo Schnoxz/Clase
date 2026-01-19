@@ -8,9 +8,9 @@ public class Cafe {
 
     // Constructor de una maquina de café con los atributos depositos de "Lecha, Cafe y Vasos" llenos y un atributo monedero donde se guarda el dinero de cada venta
     public Cafe (double monederoInicial) {
-        this.depositoCafe = 50;
-        this.depositoLeche = 50;
-        this.depositoVaso = 80;
+        this.depositoCafe = 1;
+        this.depositoLeche = 1;
+        this.depositoVaso = 1;
         this.monedero = monederoInicial;   
     }
 
@@ -21,7 +21,7 @@ public class Cafe {
             depositoCafe --;
             depositoVaso --;
             monedero += 1;
-            System.out.println("Sirviendo Café solo --> '1€' ");
+            System.out.println("Sirviendo Café solo --> '1 euro' ");
         } else {
             System.out.println("No se ha podido servir, stock insuficiente");
         }
@@ -33,7 +33,7 @@ public class Cafe {
             depositoLeche--;
             depositoVaso--;
             monedero+= 0.8;
-            System.out.println("Sirviendo vaso de leche --> '0.8€' ");
+            System.out.println("Sirviendo vaso de leche --> '0.8 euro' ");
         } else {
             System.out.println("No se ha podido servir, stock insuficiente");
         }
@@ -47,7 +47,7 @@ public class Cafe {
             depositoVaso--;
             depositoCafe--;
             monedero+= 1.5;
-            System.out.println("Sirviendo Café con leche --> '1.5€' ");
+            System.out.println("Sirviendo Cafe con leche --> '1.5 euro' ");
         } else {
             System.out.println("No se ha podido server, stock insuficiente");
         }
@@ -59,6 +59,18 @@ public class Cafe {
         System.out.println("Stock Café [ " + depositoCafe+ " ]");
         System.out.println("Stock Leche [ " + depositoLeche + " ]");
         System.out.println("Stock Vaso [ " + depositoVaso + " ]");
-        System.out.println("Monedero [ " + monedero + " € ]");
+        System.out.println("Monedero [ " + monedero + " euro(s) ]");
+    }
+
+    public void rellenarMaquina(int cafe, int leche, int vaso){
+        depositoCafe += cafe;
+        depositoLeche += leche;
+        depositoVaso += vaso;
+        System.out.println("Máquina rellenada");
+    }
+
+    public void vaciarMonedero(){
+        monedero = 0;
+        System.out.println("Monedero vaciado: monedero = " + monedero + " euro(s)");
     }
 }
