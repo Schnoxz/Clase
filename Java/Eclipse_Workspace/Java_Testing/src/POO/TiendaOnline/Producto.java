@@ -1,12 +1,12 @@
 package POO.TiendaOnline;
 
-public class Tienda {
+public class Producto {
     private String nombre;
     private double precio;
     private int stock;
 
-    // Constructor de la Tienda y sus atributos
-    public Tienda(String nombre, double precio, int stock){
+    // Constructor de la Producto y sus atributos
+    public Producto (String nombre, double precio, int stock){
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
@@ -18,43 +18,40 @@ public class Tienda {
     }
 
     public double getPrecio(){
-        System.out.println("Preio del producto:" + precio + " euros");
+        System.out.println("Preio del producto: " + precio + " euros");
         return precio;
     }
 
     public int getStock(){
-        System.out.println("Stock disponible: " + stock + " unidades");
         return stock;
     }
 
     // Metodos set (Precio y Stock)
     public void setPrecio (double ponerPrecio){
-        if (precio < 0){
+        if (ponerPrecio < 0){
             System.out.println("Error, el precio no puede ser negativo");
         } else {
             this.precio = ponerPrecio;
-            System.out.println("El precio se ha actualizado a: " + precio);
         }
      }
      // Metodo setStock en boolean para validar si es o no negativo
      public boolean setStock (int ponerStock){
-        if (stock < 0){
+        if (ponerStock < 0){
             System.out.println("Error, el stock no puede ser negativo");
             return false;
         } else {
             this.stock = ponerStock;
-            System.out.println("El stock se ha actualizado a: " + stock);
             return true;
         }
         }
         // Metodo vender en boolean para validar si hay suficiente stock
         public boolean vender (int cantidad){
-            if (cantidad > stock){
+            if (cantidad > this.stock){
                 System.out.println("No hay suficiente stock para vender");
                 return false;
             } else{
-                stock -= cantidad;
-                System.out.println("Se ha vendido " + cantidad + " unidades. Stock restante: " + stock);
+                this.stock -= cantidad;
+                System.out.println("\nSe ha vendido " + cantidad + " unidades. Stock restante: " + stock);
                 return true;  
             }
          }
