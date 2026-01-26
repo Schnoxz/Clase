@@ -1,25 +1,25 @@
 
 
-/*Table structure for table `Offices` */
+/*Table structure for table `Oficinas` */
 
-DROP TABLE IF EXISTS `Offices`;
+DROP TABLE IF EXISTS `Oficinas`;
 
-CREATE TABLE `Offices` (
-  `officeCode` varchar(10) NOT NULL,
-  `city` varchar(50) NOT NULL,
-  `phone` varchar(50) NOT NULL,
-  `addressLine1` varchar(50) NOT NULL,
-  `addressLine2` varchar(50) DEFAULT NULL,
-  `state` varchar(50) DEFAULT NULL,
-  `country` varchar(50) NOT NULL,
-  `postalCode` varchar(15) NOT NULL,
-  `territory` varchar(10) NOT NULL,
-  PRIMARY KEY (`officeCode`)
+CREATE TABLE `Oficinas` (
+  `idOficina` varchar(10) NOT NULL,
+  `ciudad` varchar(50) NOT NULL,
+  `telefono` varchar(50) NOT NULL,
+  `direccion1` varchar(50) NOT NULL,
+  `direccion2` varchar(50) DEFAULT NULL,
+  `provincia` varchar(50) DEFAULT NULL,
+  `pais` varchar(50) NOT NULL,
+  `codPostal` varchar(15) NOT NULL,
+  `territorio` varchar(10) NOT NULL,
+  PRIMARY KEY (`idOficina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Offices` */
+/*Data for the table `Oficinas` */
 
-insert  into `Offices`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`,`state`,`country`,`postalCode`,`territory`) values 
+insert  into `Oficinas`(`idOficina`,`ciudad`,`telefono`,`direccion1`,`direccion2`,`provincia`,`pais`,`codPostal`,`territorio`) values 
 
 ('1','San Francisco','+1 650 219 4782','100 Market Street','Suite 300','CA','USA','94080','NA'),
 
@@ -36,29 +36,29 @@ insert  into `Offices`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`
 ('7','London','+44 20 7877 2041','25 Old Broad Street','Level 7',NULL,'UK','EC2N 1HN','EMEA');
 
 
-/*Table structure for table `Employees` */
+/*Table structure for table `Empleados` */
 
-DROP TABLE IF EXISTS `Employees`;
+DROP TABLE IF EXISTS `Empleados`;
 
-CREATE TABLE `Employees` (
-  `employeeNumber` int(11) NOT NULL,
-  `lastName` varchar(50) NOT NULL,
-  `firstName` varchar(50) NOT NULL,
+CREATE TABLE `Empleados` (
+  `idEmpleado` int(11) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
   `extension` varchar(10) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `officeCode` varchar(10) NOT NULL,
-  `reportsTo` int(11) DEFAULT NULL,
-  `jobTitle` varchar(50) NOT NULL,
-  PRIMARY KEY (`employeeNumber`),
-  KEY `reportsTo` (`reportsTo`),
-  KEY `officeCode` (`officeCode`),
-  CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`reportsTo`) REFERENCES `Employees` (`employeeNumber`),
-  CONSTRAINT `employees_ibfk_2` FOREIGN KEY (`officeCode`) REFERENCES `Offices` (`officeCode`)
+  `idOficina` varchar(10) NOT NULL,
+  `encargado` int(11) DEFAULT NULL,
+  `cargo` varchar(50) NOT NULL,
+  PRIMARY KEY (`idEmpleado`),
+  KEY `encargado` (`encargado`),
+  KEY `idOficina` (`idOficina`),
+  CONSTRAINT `Empleados_ibfk_1` FOREIGN KEY (`encargado`) REFERENCES `Empleados` (`idEmpleado`),
+  CONSTRAINT `Empleados_ibfk_2` FOREIGN KEY (`idOficina`) REFERENCES `Oficinas` (`idOficina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Employees` */
+/*Data for the table `Empleados` */
 
-insert  into `Employees`(`employeeNumber`,`lastName`,`firstName`,`extension`,`email`,`officeCode`,`reportsTo`,`jobTitle`) values 
+insert  into `Empleados`(`idEmpleado`,`apellido`,`nombre`,`extension`,`email`,`idOficina`,`encargado`,`cargo`) values 
 
 (1002,'Murphy','Diane','x5800','dmurphy@classicmodelcars.com','1',NULL,'President'),
 
@@ -106,32 +106,32 @@ insert  into `Employees`(`employeeNumber`,`lastName`,`firstName`,`extension`,`em
 
 (1702,'Gerard','Martin','x2312','mgerard@classicmodelcars.com','4',1102,'Sales Rep');
 
-/*Table structure for table `Customers` */
+/*Table structure for table `Clientes` */
 
-DROP TABLE IF EXISTS `Customers`;
+DROP TABLE IF EXISTS `Clientes`;
 
-CREATE TABLE `Customers` (
-  `customerNumber` int(11) NOT NULL,
-  `customerName` varchar(50) NOT NULL,
-  `contactLastName` varchar(50) NOT NULL,
-  `contactFirstName` varchar(50) NOT NULL,
-  `phone` varchar(50) NOT NULL,
-  `addressLine1` varchar(50) NOT NULL,
-  `addressLine2` varchar(50) DEFAULT NULL,
-  `city` varchar(50) NOT NULL,
-  `state` varchar(50) DEFAULT NULL,
-  `postalCode` varchar(15) DEFAULT NULL,
-  `country` varchar(50) NOT NULL,
-  `salesRepEmployeeNumber` int(11) DEFAULT NULL,
-  `creditLimit` decimal(10,2) DEFAULT NULL,
-  PRIMARY KEY (`customerNumber`),
-  KEY `salesRepEmployeeNumber` (`salesRepEmployeeNumber`),
-  CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`salesRepEmployeeNumber`) REFERENCES `Employees` (`employeeNumber`)
+CREATE TABLE `Clientes` (
+  `idCliente` int(11) NOT NULL,
+  `nombreCliente` varchar(50) NOT NULL,
+  `apellidoContacto` varchar(50) NOT NULL,
+  `nombreContacto` varchar(50) NOT NULL,
+  `telefono` varchar(50) NOT NULL,
+  `direccion1` varchar(50) NOT NULL,
+  `direccion2` varchar(50) DEFAULT NULL,
+  `ciudad` varchar(50) NOT NULL,
+  `provincia` varchar(50) DEFAULT NULL,
+  `codPostal` varchar(15) DEFAULT NULL,
+  `pais` varchar(50) NOT NULL,
+  `idEmpleadoResponsable` int(11) DEFAULT NULL,
+  `limiteCredito` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`idCliente`),
+  KEY `idEmpleadoResponsable` (`idEmpleadoResponsable`),
+  CONSTRAINT `Clientes_ibfk_1` FOREIGN KEY (`idEmpleadoResponsable`) REFERENCES `Empleados` (`idEmpleado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Customers` */
+/*Data for the table `Clientes` */
 
-insert  into `Customers`(`customerNumber`,`customerName`,`contactLastName`,`contactFirstName`,`phone`,`addressLine1`,`addressLine2`,`city`,`state`,`postalCode`,`country`,`salesRepEmployeeNumber`,`creditLimit`) values 
+insert  into `Clientes`(`idCliente`,`nombreCliente`,`apellidoContacto`,`nombreContacto`,`telefono`,`direccion1`,`direccion2`,`ciudad`,`provincia`,`codPostal`,`pais`,`idEmpleadoResponsable`,`limiteCredito`) values 
 
 (103,'Atelier graphique','Schmitt','Carine ','40.32.2555','54, rue Royale',NULL,'Nantes',NULL,'44000','France',1370,'21000.00'),
 
@@ -315,7 +315,7 @@ insert  into `Customers`(`customerNumber`,`customerName`,`contactLastName`,`cont
 
 (382,'Salzburg Collectables','Pipps','Georg ','6562-9555','Geislweg 14',NULL,'Salzburg',NULL,'5020','Austria',1401,'71700.00'),
 
-(385,'Cruz & Sons Co.','Cruz','Arnold','+63 2 555 3587','15 McCallum Street','NatWest Center #13-03','Makati City',NULL,'1227 MM','Philippines',1621,'81500.00'),
+(385,'Cruz & Sons Co.','Cruz','Arnold','+63 2 555 3587','15 McCallum Street','NatWest Center #13-03','Makati ciudad',NULL,'1227 MM','Philippines',1621,'81500.00'),
 
 (386,'L\'ordine Souveniers','Moroni','Maurizio ','0522-556555','Strada Provinciale 124',NULL,'Reggio Emilia',NULL,'42100','Italy',1401,'121400.00'),
 
@@ -377,26 +377,26 @@ insert  into `Customers`(`customerNumber`,`customerName`,`contactLastName`,`cont
 
 (496,'Kelly\'s Gift Shop','Snowden','Tony','+64 9 5555500','Arenales 1938 3\'A\'',NULL,'Auckland  ',NULL,NULL,'New Zealand',1612,'110000.00');
 
-/*Table structure for table `Orders` */
+/*Table structure for table `Pedidos` */
 
-DROP TABLE IF EXISTS `Orders`;
+DROP TABLE IF EXISTS `Pedidos`;
 
-CREATE TABLE `Orders` (
-  `orderNumber` int(11) NOT NULL,
-  `orderDate` date NOT NULL,
-  `requiredDate` date NOT NULL,
-  `shippedDate` date DEFAULT NULL,
-  `status` varchar(15) NOT NULL,
-  `comments` text,
-  `customerNumber` int(11) NOT NULL,
-  PRIMARY KEY (`orderNumber`),
-  KEY `customerNumber` (`customerNumber`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customerNumber`) REFERENCES `Customers` (`customerNumber`)
+CREATE TABLE `Pedidos` (
+  `idPedido` int(11) NOT NULL,
+  `fechaPedido` date NOT NULL,
+  `fechaEntrega` date NOT NULL,
+  `fechaEnvio` date DEFAULT NULL,
+  `estado` varchar(15) NOT NULL,
+  `comentarios` text,
+  `idCliente` int(11) NOT NULL,
+  PRIMARY KEY (`idPedido`),
+  KEY `idCliente` (`idCliente`),
+  CONSTRAINT `Pedidos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `Clientes` (`idCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Orders` */
+/*Data for the table `Pedidos` */
 
-insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`status`,`comments`,`customerNumber`) values 
+insert  into `Pedidos`(`idPedido`,`fechaPedido`,`fechaEntrega`,`fechaEnvio`,`estado`,`comentarios`,`idCliente`) values 
 
 (10100,'2003-01-06','2003-01-13','2003-01-10','Shipped',NULL,363),
 
@@ -434,7 +434,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10117,'2003-04-16','2003-04-24','2003-04-17','Shipped',NULL,148),
 
-(10118,'2003-04-21','2003-04-29','2003-04-26','Shipped','Customer has worked with some of our vendors in the past and is aware of their MSRP',216),
+(10118,'2003-04-21','2003-04-29','2003-04-26','Shipped','Customer has worked with some of our vendors in the past and is aware of their precioDeVenta',216),
 
 (10119,'2003-04-28','2003-05-05','2003-05-02','Shipped',NULL,382),
 
@@ -528,7 +528,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10164,'2003-10-21','2003-10-30','2003-10-23','Resolved','This order was disputed, but resolved on 11/1/2003; Customer doesn\'t like the colors and precision of the models.',452),
 
-(10165,'2003-10-22','2003-10-31','2003-12-26','Shipped','This order was on hold because customers\'s credit limit had been exceeded. Order will ship when payment is received',148),
+(10165,'2003-10-22','2003-10-31','2003-12-26','Shipped','This order was on hold because Clientes\'s credit limit had been exceeded. Order will ship when payment is received',148),
 
 (10166,'2003-10-21','2003-10-30','2003-10-27','Shipped',NULL,462),
 
@@ -544,7 +544,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10172,'2003-11-05','2003-11-14','2003-11-11','Shipped',NULL,175),
 
-(10173,'2003-11-05','2003-11-15','2003-11-09','Shipped','Cautious optimism. We have happy customers here, if we can keep them well stocked.  I need all the information I can get on the planned shippments of Porches',278),
+(10173,'2003-11-05','2003-11-15','2003-11-09','Shipped','Cautious optimism. We have happy Clientes here, if we can keep them well stocked.  I need all the information I can get on the planned shippments of Porches',278),
 
 (10174,'2003-11-06','2003-11-15','2003-11-10','Shipped',NULL,333),
 
@@ -646,7 +646,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10223,'2004-02-20','2004-02-29','2004-02-24','Shipped',NULL,114),
 
-(10224,'2004-02-21','2004-03-02','2004-02-26','Shipped','Customer has worked with some of our vendors in the past and is aware of their MSRP',171),
+(10224,'2004-02-21','2004-03-02','2004-02-26','Shipped','Customer has worked with some of our vendors in the past and is aware of their precioDeVenta',171),
 
 (10225,'2004-02-22','2004-03-01','2004-02-24','Shipped',NULL,298),
 
@@ -718,7 +718,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10259,'2004-06-15','2004-06-22','2004-06-17','Shipped',NULL,166),
 
-(10260,'2004-06-16','2004-06-22',NULL,'Cancelled','Customer heard complaints from their customers and called to cancel this order. Will notify the Sales Manager.',357),
+(10260,'2004-06-16','2004-06-22',NULL,'Cancelled','Customer heard complaints from their Clientes and called to cancel this order. Will notify the Sales Manager.',357),
 
 (10261,'2004-06-17','2004-06-25','2004-06-22','Shipped',NULL,233),
 
@@ -756,7 +756,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10278,'2004-08-06','2004-08-16','2004-08-09','Shipped',NULL,112),
 
-(10279,'2004-08-09','2004-08-19','2004-08-15','Shipped','Cautious optimism. We have happy customers here, if we can keep them well stocked.  I need all the information I can get on the planned shippments of Porches',141),
+(10279,'2004-08-09','2004-08-19','2004-08-15','Shipped','Cautious optimism. We have happy Clientes here, if we can keep them well stocked.  I need all the information I can get on the planned shippments of Porches',141),
 
 (10280,'2004-08-17','2004-08-27','2004-08-19','Shipped',NULL,249),
 
@@ -842,7 +842,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10321,'2004-11-04','2004-11-12','2004-11-07','Shipped',NULL,462),
 
-(10322,'2004-11-04','2004-11-12','2004-11-10','Shipped','Customer has worked with some of our vendors in the past and is aware of their MSRP',363),
+(10322,'2004-11-04','2004-11-12','2004-11-10','Shipped','Customer has worked with some of our vendors in the past and is aware of their precioDeVenta',363),
 
 (10323,'2004-11-05','2004-11-12','2004-11-09','Shipped',NULL,128),
 
@@ -952,7 +952,7 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 (10376,'2005-02-08','2005-02-18','2005-02-13','Shipped',NULL,219),
 
-(10377,'2005-02-09','2005-02-21','2005-02-12','Shipped','Cautious optimism. We have happy customers here, if we can keep them well stocked.  I need all the information I can get on the planned shippments of Porches',186),
+(10377,'2005-02-09','2005-02-21','2005-02-12','Shipped','Cautious optimism. We have happy Clientes here, if we can keep them well stocked.  I need all the information I can get on the planned shippments of Porches',186),
 
 (10378,'2005-02-10','2005-02-18','2005-02-11','Shipped',NULL,141),
 
@@ -1056,22 +1056,22 @@ insert  into `Orders`(`orderNumber`,`orderDate`,`requiredDate`,`shippedDate`,`st
 
 
 
-/*Table structure for table `payments` */
+/*Table structure for table `Pagos` */
 
-DROP TABLE IF EXISTS `Payments`;
+DROP TABLE IF EXISTS `Pagos`;
 
-CREATE TABLE `Payments` (
-  `customerNumber` int(11) NOT NULL,
+CREATE TABLE `Pagos` (
+  `idCliente` int(11) NOT NULL,
   `checkNumber` varchar(50) NOT NULL,
-  `paymentDate` date NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`customerNumber`,`checkNumber`),
-  CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`customerNumber`) REFERENCES `Customers` (`customerNumber`)
+  `fechaPago` date NOT NULL,
+  `cantidad` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`idCliente`,`checkNumber`),
+  CONSTRAINT `Pagos_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `Clientes` (`idCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Payments` */
+/*Data for the table `Pagos` */
 
-insert  into `Payments`(`customerNumber`,`checkNumber`,`paymentDate`,`amount`) values 
+insert  into `Pagos`(`idCliente`,`checkNumber`,`fechaPago`,`cantidad`) values 
 
 (103,'HQ336336','2004-10-19','6066.78'),
 
@@ -1619,58 +1619,58 @@ insert  into `Payments`(`customerNumber`,`checkNumber`,`paymentDate`,`amount`) v
 
 (496,'MN89921','2004-12-31','52166.00');
 
-/*Table structure for table `Productlines` */
+/*Table structure for table `lineasProductos` */
 
-DROP TABLE IF EXISTS `Productlines`;
+DROP TABLE IF EXISTS `lineasProductos`;
 
-CREATE TABLE `Productlines` (
-  `productLine` varchar(50) NOT NULL,
-  `textDescription` varchar(4000) DEFAULT NULL,
-  `htmlDescription` mediumtext,
-  `image` mediumblob,
-  PRIMARY KEY (`productLine`)
+CREATE TABLE `lineasProductos` (
+  `lineasProducto` varchar(50) NOT NULL,
+  `textoDescripcion` varchar(4000) DEFAULT NULL,
+  `htmlDescripcion` mediumtext,
+  `imagen` mediumblob,
+  PRIMARY KEY (`lineasProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Productlines` */
+/*Data for the table `lineasProductos` */
 
-insert  into `Productlines`(`productLine`,`textDescription`,`htmlDescription`,`image`) values 
+insert  into `lineasProductos`(`lineasProducto`,`textoDescripcion`,`htmlDescripcion`,`imagen`) values 
 
-('Classic Cars','Attention car enthusiasts: Make your wildest car ownership dreams come true. Whether you are looking for classic muscle cars, dream sports cars or movie-inspired miniatures, you will find great choices in this category. These replicas feature superb attention to detail and craftsmanship and offer features such as working steering system, opening forward compartment, opening rear trunk with removable spare wheel, 4-wheel independent spring suspension, and so on. The models range in size from 1:10 to 1:24 scale and include numerous limited edition and several out-of-production vehicles. All models include a certificate of authenticity from their manufacturers and come fully assembled and ready for display in the home or office.',NULL,NULL),
+('Classic Cars','Attention car enthusiasts: Make your wildest car ownership dreams come true. Whether you are looking for classic muscle cars, dream sports cars or movie-inspired miniatures, you will find great choices in this category. These replicas feature superb attention to detail and craftsmanship and offer features such as working steering system, opening forward compartment, opening rear trunk with removable spare wheel, 4-wheel independent spring suspension, and so on. The models range in size from 1:10 to 1:24 scale and include numerous limited edition and several out-of-production vehicles. All models include a certificate of authenticiudad from their manufacturers and come fully assembled and ready for display in the home or office.',NULL,NULL),
 
-('Motorcycles','Our motorcycles are state of the art replicas of classic as well as contemporary motorcycle legends such as Harley Davidson, Ducati and Vespa. Models contain stunning details such as official logos, rotating wheels, working kickstand, front suspension, gear-shift lever, footbrake lever, and drive chain. Materials used include diecast and plastic. The models range in size from 1:10 to 1:50 scale and include numerous limited edition and several out-of-production vehicles. All models come fully assembled and ready for display in the home or office. Most include a certificate of authenticity.',NULL,NULL),
+('Motorcycles','Our motorcycles are provincia of the art replicas of classic as well as contemporary motorcycle legends such as Harley Davidson, Ducati and Vespa. Models contain stunning details such as official logos, rotating wheels, working kickstand, front suspension, gear-shift lever, footbrake lever, and drive chain. Materials used include diecast and plastic. The models range in size from 1:10 to 1:50 scale and include numerous limited edition and several out-of-production vehicles. All models come fully assembled and ready for display in the home or office. Most include a certificate of authenticiudad.',NULL,NULL),
 
-('Planes','Unique, diecast airplane and helicopter replicas suitable for collections, as well as home, office or classroom decorations. Models contain stunning details such as official logos and insignias, rotating jet engines and propellers, retractable wheels, and so on. Most come fully assembled and with a certificate of authenticity from their manufacturers.',NULL,NULL),
+('Planes','Unique, diecast airplane and helicopter replicas suitable for collections, as well as home, office or classroom decorations. Models contain stunning details such as official logos and insignias, rotating jet engines and propellers, retractable wheels, and so on. Most come fully assembled and with a certificate of authenticiudad from their manufacturers.',NULL,NULL),
 
 ('Ships','The perfect holiday or anniversary gift for executives, clients, friends, and family. These handcrafted model ships are unique, stunning works of art that will be treasured for generations! They come fully assembled and ready for display in the home or office. We guarantee the highest quality, and best value.',NULL,NULL),
 
 ('Trains','Model trains are a rewarding hobby for enthusiasts of all ages. Whether you\'re looking for collectible wooden trains, electric streetcars or locomotives, you\'ll find a number of great choices for any budget within this category. The interactive aspect of trains makes toy trains perfect for young children. The wooden train sets are ideal for children under the age of 5.',NULL,NULL),
 
-('Trucks and Buses','The Truck and Bus models are realistic replicas of buses and specialized trucks produced from the early 1920s to present. The models range in size from 1:12 to 1:50 scale and include numerous limited edition and several out-of-production vehicles. Materials used include tin, diecast and plastic. All models include a certificate of authenticity from their manufacturers and are a perfect ornament for the home and office.',NULL,NULL),
+('Trucks and Buses','The Truck and Bus models are realistic replicas of buses and specialized trucks produced from the early 1920s to present. The models range in size from 1:12 to 1:50 scale and include numerous limited edition and several out-of-production vehicles. Materials used include tin, diecast and plastic. All models include a certificate of authenticiudad from their manufacturers and are a perfect ornament for the home and office.',NULL,NULL),
 
-('Vintage Cars','Our Vintage Car models realistically portray automobiles produced from the early 1900s through the 1940s. Materials used include Bakelite, diecast, plastic and wood. Most of the replicas are in the 1:18 and 1:24 scale sizes, which provide the optimum in detail and accuracy. Prices range from $30.00 up to $180.00 for some special limited edition replicas. All models include a certificate of authenticity from their manufacturers and come fully assembled and ready for display in the home or office.',NULL,NULL);
+('Vintage Cars','Our Vintage Car models realistically portray automobiles produced from the early 1900s through the 1940s. Materials used include Bakelite, diecast, plastic and wood. Most of the replicas are in the 1:18 and 1:24 scale sizes, which provide the optimum in detail and accuracy. Prices range from $30.00 up to $180.00 for some special limited edition replicas. All models include a certificate of authenticiudad from their manufacturers and come fully assembled and ready for display in the home or office.',NULL,NULL);
 
-/*Table structure for table `Products` */
+/*Table structure for table `Productos` */
 
-DROP TABLE IF EXISTS `Products`;
+DROP TABLE IF EXISTS `Productos`;
 
-CREATE TABLE `Products` (
-  `productCode` varchar(15) NOT NULL,
-  `productName` varchar(70) NOT NULL,
-  `productLine` varchar(50) NOT NULL,
-  `productScale` varchar(10) NOT NULL,
-  `productVendor` varchar(50) NOT NULL,
-  `productDescription` text NOT NULL,
-  `quantityInStock` smallint(6) NOT NULL,
-  `buyPrice` decimal(10,2) NOT NULL,
-  `MSRP` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`productCode`),
-  KEY `productLine` (`productLine`),
-  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`productLine`) REFERENCES `Productlines` (`productLine`)
+CREATE TABLE `Productos` (
+  `idProducto` varchar(15) NOT NULL,
+  `nombreProducto` varchar(70) NOT NULL,
+  `lineasProducto` varchar(50) NOT NULL,
+  `escalaProducto` varchar(10) NOT NULL,
+  `vendedorProducto` varchar(50) NOT NULL,
+  `descripcionProducto` text NOT NULL,
+  `cantidadEnStock` smallint(6) NOT NULL,
+  `precioDeCompra` decimal(10,2) NOT NULL,
+  `precioDeVenta` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`idProducto`),
+  KEY `lineasProducto` (`lineasProducto`),
+  CONSTRAINT `Productos_ibfk_1` FOREIGN KEY (`lineasProducto`) REFERENCES `lineasProductos` (`lineasProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Products` */
+/*Data for the table `Productos` */
 
-insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`,`productVendor`,`productDescription`,`quantityInStock`,`buyPrice`,`MSRP`) values 
+insert  into `Productos`(`idProducto`,`nombreProducto`,`lineasProducto`,`escalaProducto`,`vendedorProducto`,`descripcionProducto`,`cantidadEnStock`,`precioDeCompra`,`precioDeVenta`) values 
 
 ('S10_1678','1969 Harley Davidson Ultimate Chopper','Motorcycles','1:10','Min Lin Diecast','This replica features working kickstand, front suspension, gear-shift lever, footbrake lever, drive chain, wheels and steering. All parts are particularly delicate due to their precise scale and require special care and attention.',7933,'48.81','95.70'),
 
@@ -1678,9 +1678,9 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S10_2016','1996 Moto Guzzi 1100i','Motorcycles','1:10','Highway 66 Mini Classics','Official Moto Guzzi logos and insignias, saddle bags located on side of motorcycle, detailed engine, working steering, working suspension, two leather seats, luggage rack, dual exhaust pipes, small saddle bag located on handle bars, two-tone paint with chrome accents, superior die-cast detail , rotating wheels , working kick stand, diecast metal with plastic parts and baked enamel finish.',6625,'68.99','118.94'),
 
-('S10_4698','2003 Harley-Davidson Eagle Drag Bike','Motorcycles','1:10','Red Start Diecast','Model features, official Harley Davidson logos and insignias, detachable rear wheelie bar, heavy diecast metal with resin parts, authentic multi-color tampo-printed graphics, separate engine drive belts, free-turning front fork, rotating tires and rear racing slick, certificate of authenticity, detailed engine, display stand\r\n, precision diecast replica, baked enamel finish, 1:10 scale model, removable fender, seat and tank cover piece for displaying the superior detail of the v-twin engine',5582,'91.02','193.66'),
+('S10_4698','2003 Harley-Davidson Eagle Drag Bike','Motorcycles','1:10','Red Start Diecast','Model features, official Harley Davidson logos and insignias, detachable rear wheelie bar, heavy diecast metal with resin parts, authentic multi-color tampo-printed graphics, separate engine drive belts, free-turning front fork, rotating tires and rear racing slick, certificate of authenticiudad, detailed engine, display stand\r\n, precision diecast replica, baked enamel finish, 1:10 scale model, removable fender, seat and tank cover piece for displaying the superior detail of the v-twin engine',5582,'91.02','193.66'),
 
-('S10_4757','1972 Alfa Romeo GTA','Classic Cars','1:10','Motor City Art Classics','Features include: Turnable front wheels; steering function; detailed interior; detailed engine; opening hood; opening trunk; opening doors; and detailed chassis.',3252,'85.68','136.00'),
+('S10_4757','1972 Alfa Romeo GTA','Classic Cars','1:10','Motor ciudad Art Classics','Features include: Turnable front wheels; steering function; detailed interior; detailed engine; opening hood; opening trunk; opening doors; and detailed chassis.',3252,'85.68','136.00'),
 
 ('S10_4962','1962 LanciaA Delta 16V','Classic Cars','1:10','Second Gear Diecast','Features include: Turnable front wheels; steering function; detailed interior; detailed engine; opening hood; opening trunk; opening doors; and detailed chassis.',6791,'103.42','147.74'),
 
@@ -1708,7 +1708,7 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S18_1129','1993 Mazda RX-7','Classic Cars','1:18','Highway 66 Mini Classics','This model features, opening hood, opening doors, detailed engine, rear spoiler, opening trunk, working steering, tinted windows, baked enamel finish. Color red.',3975,'83.51','141.54'),
 
-('S18_1342','1937 Lincoln Berline','Vintage Cars','1:18','Motor City Art Classics','Features opening engine cover, doors, trunk, and fuel filler cap. Color black',8693,'60.62','102.74'),
+('S18_1342','1937 Lincoln Berline','Vintage Cars','1:18','Motor ciudad Art Classics','Features opening engine cover, doors, trunk, and fuel filler cap. Color black',8693,'60.62','102.74'),
 
 ('S18_1367','1936 Mercedes-Benz 500K Special Roadster','Vintage Cars','1:18','Studio M Art Models','This 1:18 scale replica is constructed of heavy die-cast metal and has all the features of the original: working doors and rumble seat, independent spring suspension, detailed interior, working steering system, and a bifold hood that reveals an engine so accurate that it even includes the wiring. All this is topped off with a baked enamel finish. Color white.',8635,'24.26','53.91'),
 
@@ -1724,7 +1724,7 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S18_2238','1998 Chrysler Plymouth Prowler','Classic Cars','1:18','Gearbox Collectibles','Turnable front wheels; steering function; detailed interior; detailed engine; opening hood; opening trunk; opening doors; and detailed chassis.',4724,'101.51','163.73'),
 
-('S18_2248','1911 Ford Town Car','Vintage Cars','1:18','Motor City Art Classics','Features opening hood, opening doors, opening trunk, wide white wall tires, front door arm rests, working steering system.',540,'33.30','60.54'),
+('S18_2248','1911 Ford Town Car','Vintage Cars','1:18','Motor ciudad Art Classics','Features opening hood, opening doors, opening trunk, wide white wall tires, front door arm rests, working steering system.',540,'33.30','60.54'),
 
 ('S18_2319','1964 Mercedes Tour Bus','Trucks and Buses','1:18','Unimax Art Galleries','Exact replica. 100+ parts. working steering system, original logos',8258,'74.86','122.73'),
 
@@ -1740,7 +1740,7 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S18_2870','1999 Indy 500 Monte Carlo SS','Classic Cars','1:18','Red Start Diecast','Features include opening and closing doors. Color: Red',8164,'56.76','132.00'),
 
-('S18_2949','1913 Ford Model T Speedster','Vintage Cars','1:18','Carousel DieCast Legends','This 250 part reproduction includes moving handbrakes, clutch, throttle and foot pedals, squeezable horn, detailed wired engine, removable water, gas, and oil cans, pivoting monocle windshield, all topped with a baked enamel red finish. Each replica comes with an Owners Title and Certificate of Authenticity. Color red.',4189,'60.78','101.31'),
+('S18_2949','1913 Ford Model T Speedster','Vintage Cars','1:18','Carousel DieCast Legends','This 250 part reproduction includes moving handbrakes, clutch, throttle and foot pedals, squeezable horn, detailed wired engine, removable water, gas, and oil cans, pivoting monocle windshield, all topped with a baked enamel red finish. Each replica comes with an Owners Title and Certificate of Authenticiudad. Color red.',4189,'60.78','101.31'),
 
 ('S18_2957','1934 Ford V8 Coupe','Vintage Cars','1:18','Min Lin Diecast','Chrome Trim, Chrome Grille, Opening Hood, Opening Doors, Opening Trunk, Detailed Engine, Working Steering System',5649,'34.35','62.46'),
 
@@ -1774,7 +1774,7 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S18_4522','1904 Buick Runabout','Vintage Cars','1:18','Exoto Designs','Features opening trunk,  working steering system',8290,'52.66','87.77'),
 
-('S18_4600','1940s Ford truck','Trucks and Buses','1:18','Motor City Art Classics','This 1940s Ford Pick-Up truck is re-created in 1:18 scale of original 1940s Ford truck. This antique style metal 1940s Ford Flatbed truck is all hand-assembled. This collectible 1940\'s Pick-Up truck is painted in classic dark green color, and features rotating wheels.',3128,'84.76','121.08'),
+('S18_4600','1940s Ford truck','Trucks and Buses','1:18','Motor ciudad Art Classics','This 1940s Ford Pick-Up truck is re-created in 1:18 scale of original 1940s Ford truck. This antique style metal 1940s Ford Flatbed truck is all hand-assembled. This collectible 1940\'s Pick-Up truck is painted in classic dark green color, and features rotating wheels.',3128,'84.76','121.08'),
 
 ('S18_4668','1939 Cadillac Limousine','Vintage Cars','1:18','Studio M Art Models','Features completely detailed interior including Velvet flocked drapes,deluxe wood grain floor, and a wood grain casket with seperate chrome handles',6645,'23.14','50.31'),
 
@@ -1792,13 +1792,13 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S24_1785','1928 British Royal Navy Airplane','Planes','1:24','Classic Metal Creations','Official logos and insignias',3627,'66.74','109.42'),
 
-('S24_1937','1939 Chevrolet Deluxe Coupe','Vintage Cars','1:24','Motor City Art Classics','This 1:24 scale die-cast replica of the 1939 Chevrolet Deluxe Coupe has the same classy look as the original. Features opening trunk, hood and doors and a showroom quality baked enamel finish.',7332,'22.57','33.19'),
+('S24_1937','1939 Chevrolet Deluxe Coupe','Vintage Cars','1:24','Motor ciudad Art Classics','This 1:24 scale die-cast replica of the 1939 Chevrolet Deluxe Coupe has the same classy look as the original. Features opening trunk, hood and doors and a showroom quality baked enamel finish.',7332,'22.57','33.19'),
 
 ('S24_2000','1960 BSA Gold Star DBD34','Motorcycles','1:24','Highway 66 Mini Classics','Detailed scale replica with working suspension and constructed from over 70 parts',15,'37.32','76.17'),
 
 ('S24_2011','18th century schooner','Ships','1:24','Carousel DieCast Legends','All wood with canvas sails. Many extras including rigging, long boats, pilot house, anchors, etc. Comes with 4 masts, all square-rigged.',1898,'82.34','122.89'),
 
-('S24_2022','1938 Cadillac V-16 Presidential Limousine','Vintage Cars','1:24','Classic Metal Creations','This 1:24 scale precision die cast replica of the 1938 Cadillac V-16 Presidential Limousine has all the details of the original, from the flags on the front to an opening back seat compartment complete with telephone and rifle. Features factory baked-enamel black finish, hood goddess ornament, working jump seats.',2847,'20.61','44.80'),
+('S24_2022','1938 Cadillac V-16 Presidential Limousine','Vintage Cars','1:24','Classic Metal Creations','This 1:24 scale precision die cast replica of the 1938 Cadillac V-16 Presidential Limousine has all the details of the original, from the flags on the front to an opening back seat compartment complete with teletelefono and rifle. Features factory baked-enamel black finish, hood goddess ornament, working jump seats.',2847,'20.61','44.80'),
 
 ('S24_2300','1962 Volkswagen Microbus','Trucks and Buses','1:24','Autoart Studio Design','This 1:18 scale die cast replica of the 1962 Microbus is loaded with features: A working steering system, opening front doors and tailgate, and famous two-tone factory baked enamel finish, are all topped of by the sliding, real fabric, sunroof.',2327,'61.34','127.79'),
 
@@ -1840,7 +1840,7 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S24_4620','1961 Chevrolet Impala','Classic Cars','1:18','Classic Metal Creations','This 1:18 scale precision die-cast reproduction of the 1961 Chevrolet Impala has all the features-doors, hood and trunk that open; detailed 409 cubic-inch engine; chrome dashboard and stick shift, two-tone interior; working steering system; all topped of with a factory baked-enamel finish.',7869,'32.33','80.84'),
 
-('S32_1268','1980’s GM Manhattan Express','Trucks and Buses','1:32','Motor City Art Classics','This 1980’s era new look Manhattan express is still active, running from the Bronx to mid-town Manhattan. Has 35 opeining windows and working lights. Needs a battery.',5099,'53.93','96.31'),
+('S32_1268','1980’s GM Manhattan Express','Trucks and Buses','1:32','Motor ciudad Art Classics','This 1980’s era new look Manhattan express is still active, running from the Bronx to mid-town Manhattan. Has 35 opeining windows and working lights. Needs a battery.',5099,'53.93','96.31'),
 
 ('S32_1374','1997 BMW F650 ST','Motorcycles','1:32','Exoto Designs','Features official die-struck logos and baked enamel finish. Comes with stand.',178,'66.92','99.89'),
 
@@ -1858,9 +1858,9 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S50_1341','1930 Buick Marquette Phaeton','Vintage Cars','1:50','Studio M Art Models','Features opening trunk,  working steering system',7062,'27.06','43.64'),
 
-('S50_1392','Diamond T620 Semi-Skirted Tanker','Trucks and Buses','1:50','Highway 66 Mini Classics','This limited edition model is licensed and perfectly scaled for Lionel Trains. The Diamond T620 has been produced in solid precision diecast and painted with a fire baked enamel finish. It comes with a removable tanker and is a perfect model to add authenticity to your static train or car layout or to just have on display.',1016,'68.29','115.75'),
+('S50_1392','Diamond T620 Semi-Skirted Tanker','Trucks and Buses','1:50','Highway 66 Mini Classics','This limited edition model is licensed and perfectly scaled for Lionel Trains. The Diamond T620 has been produced in solid precision diecast and painted with a fire baked enamel finish. It comes with a removable tanker and is a perfect model to add authenticiudad to your static train or car layout or to just have on display.',1016,'68.29','115.75'),
 
-('S50_1514','1962 City of Detroit Streetcar','Trains','1:50','Classic Metal Creations','This streetcar is a joy to see. It has 99 separate windows, electric wire guides, detailed interiors with seats, poles and drivers controls, rolling and turning wheel assemblies, plus authentic factory baked-enamel finishes (Green Hornet for Chicago and Cream and Crimson for Boston).',1645,'37.49','58.58'),
+('S50_1514','1962 ciudad of Detroit Streetcar','Trains','1:50','Classic Metal Creations','This streetcar is a joy to see. It has 99 separate windows, electric wire guides, detailed interiors with seats, poles and drivers controls, rolling and turning wheel assemblies, plus authentic factory baked-enamel finishes (Green Hornet for Chicago and Cream and Crimson for Boston).',1645,'37.49','58.58'),
 
 ('S50_4713','2002 Yamaha YZR M1','Motorcycles','1:50','Autoart Studio Design','Features rotating wheels , working kick stand. Comes with stand.',600,'34.17','81.36'),
 
@@ -1872,7 +1872,7 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S700_2047','HMS Bounty','Ships','1:700','Unimax Art Galleries','Measures 30 inches Long x 27 1/2 inches High x 4 3/4 inches Wide. \r\nMany extras including rigging, long boats, pilot house, anchors, etc. Comes with three masts, all square-rigged.',3501,'39.83','90.52'),
 
-('S700_2466','America West Airlines B757-200','Planes','1:700','Motor City Art Classics','Official logos and insignias. Working steering system. Rotating jet engines',9653,'68.80','99.72'),
+('S700_2466','America West Airlines B757-200','Planes','1:700','Motor ciudad Art Classics','Official logos and insignias. Working steering system. Rotating jet engines',9653,'68.80','99.72'),
 
 ('S700_2610','The USS Constitution Ship','Ships','1:700','Red Start Diecast','All wood with canvas sails. Measures 31 1/2\" Length x 22 3/8\" High x 8 1/4\" Width. Extras include 4 boats on deck, sea sprite on bow, anchors, copper railing, pilot houses, etc.',7083,'33.97','72.28'),
 
@@ -1880,7 +1880,7 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S700_2834','ATA: B757-300','Planes','1:700','Highway 66 Mini Classics','Exact replia with official logos and insignias and retractable wheels',7106,'59.33','118.65'),
 
-('S700_3167','F/A 18 Hornet 1/72','Planes','1:72','Motor City Art Classics','10\" Wingspan with retractable landing gears.Comes with pilot',551,'54.40','80.00'),
+('S700_3167','F/A 18 Hornet 1/72','Planes','1:72','Motor ciudad Art Classics','10\" Wingspan with retractable landing gears.Comes with pilot',551,'54.40','80.00'),
 
 ('S700_3505','The Titanic','Ships','1:700','Carousel DieCast Legends','Completed model measures 19 1/2 inches long, 9 inches high, 3inches wide and is in barn red/black. All wood and metal.',1956,'51.09','100.17'),
 
@@ -1888,29 +1888,29 @@ insert  into `Products`(`productCode`,`productName`,`productLine`,`productScale`
 
 ('S700_4002','American Airlines: MD-11S','Planes','1:700','Second Gear Diecast','Polished finish. Exact replia with official logos and insignias and retractable wheels',8820,'36.27','74.03'),
 
-('S72_1253','Boeing X-32A JSF','Planes','1:72','Motor City Art Classics','10\" Wingspan with retractable landing gears.Comes with pilot',4857,'32.77','49.66'),
+('S72_1253','Boeing X-32A JSF','Planes','1:72','Motor ciudad Art Classics','10\" Wingspan with retractable landing gears.Comes with pilot',4857,'32.77','49.66'),
 
 ('S72_3212','Pont Yacht','Ships','1:72','Unimax Art Galleries','Measures 38 inches Long x 33 3/4 inches High. Includes a stand.\r\nMany extras including rigging, long boats, pilot house, anchors, etc. Comes with 2 masts, all square-rigged',414,'33.30','54.60');
 
-/*Table structure for table `Orderdetails` */
+/*Table structure for table `DetallesPedidos` */
 
-DROP TABLE IF EXISTS `Orderdetails`;
+DROP TABLE IF EXISTS `DetallesPedidos`;
 
-CREATE TABLE `Orderdetails` (
-  `orderNumber` int(11) NOT NULL,
-  `productCode` varchar(15) NOT NULL,
-  `quantityOrdered` int(11) NOT NULL,
-  `priceEach` decimal(10,2) NOT NULL,
-  `orderLineNumber` smallint(6) NOT NULL,
-  PRIMARY KEY (`orderNumber`,`productCode`),
-  KEY `productCode` (`productCode`),
-  CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`orderNumber`) REFERENCES `Orders` (`orderNumber`),
-  CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`productCode`) REFERENCES `Products` (`productCode`)
+CREATE TABLE `DetallesPedidos` (
+  `idPedido` int(11) NOT NULL,
+  `idProducto` varchar(15) NOT NULL,
+  `cantidadPedida` int(11) NOT NULL,
+  `PrecioUnidad` decimal(10,2) NOT NULL,
+  `numeroLineaPedido` smallint(6) NOT NULL,
+  PRIMARY KEY (`idPedido`,`idProducto`),
+  KEY `idProducto` (`idProducto`),
+  CONSTRAINT `DetallesPedidos_ibfk_1` FOREIGN KEY (`idPedido`) REFERENCES `Pedidos` (`idPedido`),
+  CONSTRAINT `DetallesPedidos_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `Productos` (`idProducto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Orderdetails` */
+/*Data for the table `DetallesPedidos` */
 
-insert  into `Orderdetails`(`orderNumber`,`productCode`,`quantityOrdered`,`priceEach`,`orderLineNumber`) values 
+insert  into `DetallesPedidos`(`idPedido`,`idProducto`,`cantidadPedida`,`PrecioUnidad`,`numeroLineaPedido`) values 
 
 (10100,'S18_1749',30,'136.00',3),
 
