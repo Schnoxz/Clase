@@ -25,11 +25,8 @@ body {
   gap: 30px;
   /* Padding para separar la barra */
   padding: 20px 0;
-
   /* Tamaño maximo para que aparezcan solo dos fotos a la vez con un margen de 30px */
   width: 830px;
-
-
   /* Barra de desplazamiento */
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -47,7 +44,12 @@ body {
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-
+.carrusel-controles {
+    display: flex;
+    justify-content: space-between; /* Empuja el primer elemento a la izquierda y el último a la derecha */
+    width: 830px; /* O el ancho que le hayas dado a tu contenedor de fotos */
+    margin-bottom: 20px; /* Separación con las fotos que ahora están debajo */
+}
 /* Auto relleno para las imagenes */
 .carrusel-item img {
   width: 100%;
