@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrusel</title>
+  <link rel="stylesheet" href="carrusel.css">
+</head>
+<body>
+
+  <!-- Carrusel que solo enseña una imagen a la vez -->
+
+  <div class="carrusel">
+<!-- La unica forma de hacer funcionar las flechas es que cada imagen vaya dirigida a la siguiente o anterior de forma directa , 
+ porque como en clase no hacemos nada pues no sabemos ni que hacer cuando se nos manda una tarea y tenemos que usar IA para resolverlo
+ Además así no aprendemos codigo, aprendemos a buscarnos la vida para hacer una tarea que se ha explicado entre poco y nada, hice una pagina web funcional las primeras
+ semanas y aun asi me comí un 3 en la evaluación, así da gusto enseñar-->
+
+    <div class="diapositiva" id="diapositiva-1">
+      <!-- Botonera de esta diapositiva -->
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-2">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img1/860/484" alt="Imagen 1">
+      <span class="contador">01 / 10</span>
+    </div>
+ 
+    <div class="diapositiva" id="diapositiva-2">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-1">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-3">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img2/860/484" alt="Imagen 2">
+      <span class="contador">02 / 10</span>
+    </div>
+
+    <div class="diapositiva" id="diapositiva-3">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-2">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-4">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img3/860/484" alt="Imagen 3">
+      <span class="contador">03 / 10</span>
+    </div>
+
+    <div class="diapositiva" id="diapositiva-4">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-3">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-5">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img4/860/484" alt="Imagen 4">
+      <span class="contador">04 / 10</span>
+    </div>
+
+    <div class="diapositiva" id="diapositiva-5">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-4">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-6">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img5/860/484" alt="Imagen 5">
+      <span class="contador">05 / 10</span>
+    </div>
+
+    <div class="diapositiva" id="diapositiva-6">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-5">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-7">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img6/860/484" alt="Imagen 6">
+      <span class="contador">06 / 10</span>
+    </div>
+
+    <div class="diapositiva" id="diapositiva-7">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-6">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-8">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img7/860/484" alt="Imagen 7">
+      <span class="contador">07 / 10</span>
+    </div>
+
+    <div class="diapositiva" id="diapositiva-8">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-7">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-9">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img8/860/484" alt="Imagen 8">
+      <span class="contador">08 / 10</span>
+    </div>
+
+    <div class="diapositiva" id="diapositiva-9">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-8">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-10">&#8250;</a>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img9/860/484" alt="Imagen 9">
+      <span class="contador">09 / 10</span>
+    </div>
+
+    <!-- Diapositiva 10: sin flecha derecha porque es la última -->
+    <div class="diapositiva" id="diapositiva-10">
+      <nav class="botonera">
+        <a href="#diapositiva-1">Inicio</a>
+        <a href="#diapositiva-9">&#8249;</a>
+        <div class="hueco"></div>
+        <a href="#diapositiva-10">Final</a>
+      </nav>
+      <img src="https://picsum.photos/seed/img10/860/484" alt="Imagen 10">
+      <span class="contador">10 / 10</span>
+    </div>
+
+  </div><!-- fin del carrusel -->
+</body>
+</html>
