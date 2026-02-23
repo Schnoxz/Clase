@@ -11,29 +11,37 @@ CREATE TABLE Usuario (
     telefono VARCHAR(20),
     fecha_nacimiento DATE NOT NULL
 );
-
--- 2. Tabla Membresia
--- Se crea antes que Socio para permitir la FK en Socio
-CREATE TABLE Membresia (
-    id_membresia INT PRIMARY KEY AUTO_INCREMENT,
-    tipo VARCHAR(50) NOT NULL, -- Ej: Mensual, Trimestra, Anual, VIP
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    estado VARCHAR(50) DEFAULT 'Vigente' -- Ej: Vigente, Caducada, Suspendida
+-- 2. Tabla Plan (que define los tipos de membresia por precio y duracion)
+CREATE TABLE Plan (
+    id_plan INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL,    -- 'Mensual', 'Trimestral', 'Anual'
+    duracion_meses INT NOT NULL,    -- 1, 3, 12
+    precio_base DECIMAL(7,2) NOT NULL -- 29.99, 69.99, 129.99
 );
 
 -- 3. Tabla Hija: Socio
 -- Relación 1:1 con Usuario y FK hacia Membresia
 CREATE TABLE Socio (
     id_socio INT PRIMARY KEY,
-    id_membresia INT, -- FK hacia Membresia según diagrama
     fecha_registro DATE DEFAULT (CURRENT_DATE),
     estado VARCHAR(50) DEFAULT 'Activo', -- Ej: Activo, Inactivo
-    FOREIGN KEY (id_socio) REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
-    FOREIGN KEY (id_membresia) REFERENCES Membresia(id_membresia) ON DELETE SET NULL
+    FOREIGN KEY (id_socio) REFERENCES Usuario(id_usuario) ON DELETE CASCADE
 );
 
--- 4. Tabla Hija: Entrenador
+-- 4. Tabla Membresia
+-- Se crea antes que Socio para permitir la FK en Socio
+CREATE TABLE Membresia (
+    id_membresia INT PRIMARY KEY AUTO_INCREMENT,
+    id_socio INT NOT NULL, 
+    id_plan INT NOT NULL, 
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    estado VARCHAR(50) DEFAULT 'Vigente', -- Ej: Vigente, Caducada, Suspendida
+    FOREIGN KEY (id_plan) REFERENCES Plan(id_plan) ON DELETE RESTRICT, -- FK hacia Plan para definir el tipo de membresía
+    FOREIGN KEY (id_socio) REFERENCES Socio(id_socio) ON DELETE CASCADE -- FK hacia Socio para que se vincule la membresía al socio
+);
+
+-- 5. Tabla Hija: Entrenador
 -- Relación 1:1 con Usuario
 CREATE TABLE Entrenador (
     id_entrenador INT PRIMARY KEY,
@@ -42,7 +50,7 @@ CREATE TABLE Entrenador (
     FOREIGN KEY (id_entrenador) REFERENCES Usuario(id_usuario) ON DELETE CASCADE
 );
 
--- 5. TABLA CLASE
+-- 6. TABLA CLASE
 -- Relación 1:N (Un Entrenador imparte N Clases)
 CREATE TABLE Clase (
     id_clase INT PRIMARY KEY AUTO_INCREMENT,
@@ -55,7 +63,7 @@ CREATE TABLE Clase (
     FOREIGN KEY (id_entrenador) REFERENCES Entrenador(id_entrenador) ON DELETE RESTRICT
 );
 
--- 6. TABLA EQUIPAMIENTO
+-- 7. TABLA EQUIPAMIENTO
 CREATE TABLE Equipamiento (
     id_equipamiento INT PRIMARY KEY AUTO_INCREMENT,
     nombre_equipo VARCHAR(100) NOT NULL,
@@ -64,18 +72,18 @@ CREATE TABLE Equipamiento (
     fecha_adquisicion DATE
 );
 
--- 7. TABLA PAGO
+-- 8. TABLA PAGO
 -- Relación 1:N (Socio realiza Pagos)
 CREATE TABLE Pago (
     id_pago INT PRIMARY KEY AUTO_INCREMENT,
-    id_socio INT NOT NULL,
+    id_membresia INT NOT NULL,
     cantidad DECIMAL(10, 2) NOT NULL,
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
     metodo_pago VARCHAR(50) NOT NULL,
-    FOREIGN KEY (id_socio) REFERENCES Socio(id_socio) ON DELETE CASCADE
+    FOREIGN KEY (id_membresia) REFERENCES Membresia(id_membresia) ON DELETE CASCADE
 );
 
--- 8. TABLA ASISTENCIA (Relación N:M "Asiste")
+-- 9. TABLA ASISTENCIA (Relación N:M "Asiste")
 -- Corregida: PK Compuesta (id_socio + id_clase)
 CREATE TABLE Asistencia (
     id_socio INT NOT NULL,
@@ -86,7 +94,7 @@ CREATE TABLE Asistencia (
     FOREIGN KEY (id_clase) REFERENCES Clase(id_clase) ON DELETE CASCADE
 );
 
--- 9. TABLA CLASE_EQUIPAMIENTO (Relación N:M "Utiliza")
+-- 10. TABLA CLASE_EQUIPAMIENTO (Relación N:M "Utiliza")
 CREATE TABLE Clase_Equipamiento (
     id_clase INT NOT NULL,
     id_equipamiento INT NOT NULL,
