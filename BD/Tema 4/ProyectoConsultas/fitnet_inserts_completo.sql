@@ -1,24 +1,11 @@
-
-
 USE FitNet;
+-- Me he ayudado con la IA para generar datos, aunque muchos de ellos los he creado manualmente especificamente para los ejemplos de consulta y que tuvieran coherencia
 
-
--- Limpio todos los datos 
-
-DELETE FROM Clase_Equipamiento;
-DELETE FROM Asistencia;
-DELETE FROM Pago;
-DELETE FROM Clase;
-DELETE FROM Equipamiento;
-DELETE FROM Entrenador;
-DELETE FROM Socio;
-DELETE FROM Membresia;
-DELETE FROM Usuario;
 
 -- 1. Tabla usuario
 
-INSERT INTO Usuario (nombre, apellido, email, telefono, fecha_nacimiento) 
-VALUES 
+INSERT INTO Usuario (nombre, apellido, email, telefono, fecha_nacimiento)
+VALUES
 ('Carlos', 'Giménez', 'carlos@fitnet.es', '665123456', '1990-10-15'),
 ('María', 'López', 'maria.lopez@fitnet.es', '672234567', '1985-03-22'),
 ('Juan', 'Rodríguez', 'juan.rodriguez@fitnet.es', '658345678', '1995-07-10'),
@@ -36,32 +23,37 @@ VALUES
 ('Oscar', 'Vargas', 'oscar.vargas@fitnet.es', '657567890', '1990-07-28');
 
 
+
 -- 2. Tabla membresia
 
-INSERT INTO Membresia (tipo, fecha_inicio, fecha_fin, estado)
-VALUES 
--- Membresías Vigentes 2026
-('Mensual', '2026-01-01', '2026-02-01', 'Caducada'),
-('Anual VIP', '2026-01-15', '2027-01-15', 'Vigente'),
-('Mensual', '2026-02-01', '2026-03-01', 'Vigente'),
-('Trimestral', '2025-11-01', '2026-02-01', 'Vigente'),
-('Anual', '2025-02-19', '2026-02-19', 'Vigente'),
-('Anual VIP', '2025-06-01', '2026-06-01', 'Vigente'),
+-- Añado una columna de precio en Membresia porque la base de datos original no lo contenia y simplemente tenia cantidad en la tabla Pago
+DELETE FROM Membresia; -- No quiero que se dupliquen los datos y es un cambio repentino para las consultas
+ALTER TABLE Membresia ADD precio DECIMAL(7,2) NOT NULL;
+
+INSERT INTO Membresia (tipo, fecha_inicio, fecha_fin, estado, precio) -- Mensual, Trimestral, Anual, VIP (29.99e, 89.99e, 129.99e, 20e + Mensual/Trimestral/Anual)
+VALUES
+-- Membresías Vigentes
+('Mensual', '2026-01-01', '2026-02-01', 'Caducada', 29.99),
+('Anual VIP', '2026-01-15', '2027-01-15', 'Vigente', 159.99),
+('Mensual', '2026-02-01', '2026-03-01', 'Vigente', 29.99),
+('Trimestral', '2025-11-01', '2026-02-01', 'Vigente', 89.99),
+('Anual', '2025-02-19', '2026-02-19', 'Vigente', 129.99),
+('Anual VIP', '2025-06-01', '2026-06-01', 'Vigente', 159.99),
 -- Membresías Caducadas
-('Mensual', '2025-12-01', '2026-01-01', 'Caducada'),
-('Anual', '2024-02-19', '2025-02-19', 'Caducada'),
-('Trimestral', '2025-08-01', '2025-11-01', 'Caducada'),
-('Mensual', '2025-10-15', '2025-11-15', 'Caducada'),
+('Mensual', '2025-12-01', '2026-01-01', 'Caducada', 29.99),
+('Anual', '2024-02-19', '2025-02-19', 'Caducada', 129.99),
+('Trimestral', '2025-08-01', '2025-11-01', 'Caducada', 89.99),
+('Mensual', '2025-10-15', '2025-11-15', 'Caducada', 29.99),
 -- Membresías Suspendidas
-('Anual VIP', '2025-03-01', '2026-03-01', 'Suspendida'),
-('Mensual', '2026-01-10', '2026-02-10', 'Suspendida'),
-('Mensual', '2025-02-15', '2025-03-15', 'Vigente');
+('Anual VIP', '2025-03-01', '2026-03-01', 'Suspendida', 159.99),
+('Mensual', '2026-01-10', '2026-02-10', 'Suspendida', 29.99),
+('Mensual', '2025-02-15', '2025-03-15', 'Vigente', 29.99);
 
 
 -- 3. Tabla socio
 
 INSERT INTO Socio (id_socio, id_membresia, fecha_registro, estado)
-VALUES 
+VALUES
 (1, 2, '2025-01-15', 'Activo'),    -- Carlos con VIP
 (2, 1, '2025-02-01', 'Activo'),    -- María
 (3, 4, '2024-11-20', 'Activo'),    -- Juan
@@ -83,7 +75,7 @@ VALUES
 
 -- Algunos ids coinciden con Usuario (socios que son entrenadores)
 INSERT INTO Entrenador (id_entrenador, especialidad, certificado)
-VALUES 
+VALUES
 (1, 'Musculación', 'NASM-CPT'),           -- Carlos es socio VIP y entrenador
 (2, 'Cardio y Fitness', 'ACE-CPT'),       -- María es entrenadora
 (3, 'Pilates y Flexibilidad', 'Mat-Pilates-Cert'),  -- Juan es entrenador
@@ -97,7 +89,7 @@ VALUES
 -- 5. Tabla clase
 
 INSERT INTO Clase (id_entrenador, nombre_clase, fecha, hora, dia_semana, cupo_maximo)
-VALUES 
+VALUES
 (1, 'Musculación Avanzada', '2026-02-23', '08:00:00', 'Lunes', 15),
 (1, 'Musculación Avanzada', '2026-02-25', '08:00:00', 'Miércoles', 15),
 (2, 'Cardio HIIT', '2026-02-24', '10:00:00', 'Martes', 20),
@@ -115,7 +107,7 @@ VALUES
 -- 6. Tabla equipamiento
 
 INSERT INTO Equipamiento (nombre_equipo, tipo, estado, fecha_adquisicion)
-VALUES 
+VALUES
 ('Mancuerna ajustable 20kg', 'Pesa Libre', 'Operativo', '2023-05-10'),
 ('Barra Olímpica', 'Pesa Libre', 'Operativo', '2023-06-15'),
 ('Máquina Leg Press', 'Máquina', 'Operativo', '2024-01-20'),
@@ -133,18 +125,18 @@ VALUES
 -- 7. Tabla pago
 
 INSERT INTO Pago (id_socio, cantidad, fecha_pago, metodo_pago)
-VALUES 
+VALUES
 (1, 99.99, '2026-01-15 10:30:00', 'Tarjeta Crédito'),
 (1, 99.99, '2026-02-15 11:00:00', 'Tarjeta Crédito'),
-(2, 49.99, '2026-02-01 09:15:00', 'Transferencia'),
-(3, 129.99, '2026-02-01 14:20:00', 'Tarjeta Débito'),
+(2, 29.99, '2026-02-01 09:15:00', 'Transferencia'),
+(3, 89.99, '2026-02-01 14:20:00', 'Tarjeta Débito'),
 (4, 99.99, '2026-01-20 16:45:00', 'PayPal'),
 (4, 99.99, '2026-02-20 16:45:00', 'PayPal'),
-(6, 59.99, '2026-02-10 13:30:00', 'Tarjeta Crédito'),
+(6, 29.99, '2026-02-10 13:30:00', 'Tarjeta Crédito'),
 (8, 79.99, '2026-01-05 09:00:00', 'Transferencia'),
 (10, 99.99, '2025-12-15 10:30:00', 'Tarjeta Crédito'),
-(12, 49.99, '2026-02-15 11:00:00', 'Tarjeta Débito'),
-(13, 129.99, '2026-02-01 15:30:00', 'Tarjeta Crédito'),
+(12, 29.99, '2026-02-15 11:00:00', 'Tarjeta Débito'),
+(13, 89.99, '2026-02-01 15:30:00', 'Tarjeta Crédito'),
 (15, 99.99, '2026-02-10 14:00:00', 'Transferencia'),
 (1, 150.00, '2026-02-18 12:00:00', 'Tarjeta Crédito'),
 (4, 150.00, '2026-02-17 10:30:00', 'PayPal'),
@@ -154,7 +146,7 @@ VALUES
 -- 8. Tabla asistencia
 
 INSERT INTO Asistencia (id_socio, id_clase, fecha_asistencia)
-VALUES 
+VALUES
 (1, 1, '2026-02-23 08:05:00'),
 (2, 3, '2026-02-24 10:05:00'),
 (3, 1, '2026-02-23 08:10:00'),
@@ -174,13 +166,14 @@ VALUES
 (10, 11, '2026-02-24 19:40:00'),
 (12, 6, '2026-02-24 18:15:00'),
 (13, 8, '2026-02-25 19:15:00'),
-(15, 5, '2026-02-23 09:45:00');
+(15, 5, '2026-02-23 09:45:00'),
+(1, 4, '2026-02-24 13:00:00');
 
 
 -- 9. Tabla equipamiento
 
 INSERT INTO Clase_Equipamiento (id_clase, id_equipamiento)
-VALUES 
+VALUES
 (1, 1),  -- Musculación Avanzada - Mancuerna
 (1, 2),  -- Musculación Avanzada - Barra
 (1, 9),  -- Musculación Avanzada - Banco

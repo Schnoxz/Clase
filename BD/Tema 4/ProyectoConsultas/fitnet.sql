@@ -12,14 +12,14 @@ CREATE TABLE Usuario (
     fecha_nacimiento DATE NOT NULL
 );
 
--- 2. Tabla Membresia 
+-- 2. Tabla Membresia
 -- Se crea antes que Socio para permitir la FK en Socio
 CREATE TABLE Membresia (
     id_membresia INT PRIMARY KEY AUTO_INCREMENT,
-    tipo VARCHAR(50) NOT NULL, -- Ej: Mensual, Anual, VIP
+    tipo VARCHAR(50) NOT NULL, -- Ej: Mensual, Trimestra, Anual, VIP
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
-    estado VARCHAR(50) DEFAULT 'Vigente'
+    estado VARCHAR(50) DEFAULT 'Vigente' -- Ej: Vigente, Caducada, Suspendida
 );
 
 -- 3. Tabla Hija: Socio
@@ -28,12 +28,12 @@ CREATE TABLE Socio (
     id_socio INT PRIMARY KEY,
     id_membresia INT, -- FK hacia Membresia según diagrama
     fecha_registro DATE DEFAULT (CURRENT_DATE),
-    estado VARCHAR(50) DEFAULT 'Activo',
+    estado VARCHAR(50) DEFAULT 'Activo', -- Ej: Activo, Inactivo
     FOREIGN KEY (id_socio) REFERENCES Usuario(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (id_membresia) REFERENCES Membresia(id_membresia) ON DELETE SET NULL
 );
 
--- 4. Tabla Hija: Entrenador 
+-- 4. Tabla Hija: Entrenador
 -- Relación 1:1 con Usuario
 CREATE TABLE Entrenador (
     id_entrenador INT PRIMARY KEY,
@@ -60,7 +60,7 @@ CREATE TABLE Equipamiento (
     id_equipamiento INT PRIMARY KEY AUTO_INCREMENT,
     nombre_equipo VARCHAR(100) NOT NULL,
     tipo VARCHAR(50),
-    estado VARCHAR(50) DEFAULT 'Operativo',
+    estado VARCHAR(50) DEFAULT 'Operativo', -- Ej: Operativo, En Mantenimiento, Reparación
     fecha_adquisicion DATE
 );
 
@@ -99,7 +99,7 @@ CREATE TABLE Clase_Equipamiento (
 -- Operaciones de insert, alter table, delete, update.
 
 -- A. INSERT
-INSERT INTO Usuario (nombre, apellido, email, fecha_nacimiento) 
+INSERT INTO Usuario (nombre, apellido, email, fecha_nacimiento)
 VALUES ('Carlos', 'Giménez', 'carlos@fitnet.es', '1990-10-15');
 
 INSERT INTO Membresia (tipo, fecha_inicio, fecha_fin, estado)
@@ -119,6 +119,8 @@ UPDATE Equipamiento SET estado = 'En Mantenimiento' WHERE id_equipamiento = 3;
 -- D. DELETE
 -- Borrar una asistencia específica
 DELETE FROM Asistencia WHERE id_socio = 1 AND id_clase = 10;
+
+
 
 
 
