@@ -1,0 +1,11 @@
+// Copiar un array manualmente Sin usar clone() ni Arrays.copyOf(), copia un array en otro usando un for
+public class array8 {
+    public static void main(String[] args) {
+        int[] array = {1, 2, 3, 4, 5};
+        int[] arrayclonado = new int[array.length];
+
+        for (int i = 0; i < array.length; i++) {
+            arrayclonado += array [i];            
+        }
+    }
+}
