@@ -18,11 +18,10 @@ public class Producto {
     private Categoria categoria;
 
     // Metodo constructor del producto
-    public Producto(String descripcion, double precioSinIva, int categoria) {
+    public Producto(String descripcion, double precioSinIva, int codigo) {
         this.codigo = codigo + 1;
         this.descripcion = descripcion;
         this.precioSinIva = precioSinIva;
-        this.categoria = categoria;
     }
 
     //Metodo para calcular el precio con IVA

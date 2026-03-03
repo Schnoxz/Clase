@@ -13,7 +13,7 @@ public class Ejercicio1 {
     private String[] vehiculos;
     private int contador;
 
-    // Consutructor
+    // Consutructor de la clase
     public GestionTaller(int capacidadMaxima) {
         vehiculos = new String[capacidadMaxima];
         contador = 0;
