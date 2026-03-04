@@ -32,9 +32,15 @@ public class array16 {
 
         // Obligatorio sobreescribir el compareTo con el override
         @Override
-        public int compareTo(Alumno otroAlumno) { // El compareTo siempre se declara int porque nos devuelve un valor int (1, 0, -1)
-            // Declaro double para poder hacer la comparacion
-            return Double.compare(this.nota, otroAlumno.nota);
+        public int compareTo(Alumno otroAlumno) {
+            // Codigo del compareTo sin double.compare
+            if (this.nota > otroAlumno.nota) {
+                return 1;
+            } else if (this.nota < otroAlumno.nota) {
+                return -1;
+            } else {
+                return 0;
+            }
         }
     }
 }

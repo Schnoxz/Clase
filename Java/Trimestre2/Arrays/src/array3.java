@@ -6,13 +6,13 @@ public class array3 {
         //Defino el array
         int[] numeros = {4, -3, 7, 6, -2, 8};
         // Defino una variable para acumular los positivos
-        int count = 0;
+        int contador = 0;
         for (int i = 0; i < numeros.length; i++) {
             if (numeros[i] > 0) { // Condicion dentro del for donde i sea positivo y se va sumando
-                count++;
+                contador++;
             }
         }
-        System.out.println("Hay " + count + " números positivos en el array.");
+        System.out.println("Hay " + contador + " números positivos en el array.");
     }
 
 }

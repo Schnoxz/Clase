@@ -2,8 +2,6 @@
 
 import java.util.Arrays;
 
-ç
-
 public class array11 {
 
     public static void main(String[] args) {
@@ -13,6 +11,7 @@ public class array11 {
         System.out.println("Array modificado: " + Arrays.toString(array));
     }
 
+    // Metodo que multiplica por 2 cada elemento del array
     public static void multiplicarPorDos(int[] array) {
         for (int i = 0; i < array.length; i++) {
             array[i] *= 2;

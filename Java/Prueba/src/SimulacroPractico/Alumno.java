@@ -48,4 +48,8 @@ public class Alumno implements Comparable<Alumno> {
         }
     }
 
+    @Override
+    public String toString() {
+        return nombre + " -> " + nota;
+    }
 }

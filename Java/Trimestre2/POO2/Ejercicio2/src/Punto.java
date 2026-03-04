@@ -27,7 +27,7 @@ public class Punto {
         this.y = y;
     }
 
-    //Metodo que imprime el punto
+    // Metodo que imprime el punto
     public String toString() {
         return x + "," + y;
     }

@@ -1,0 +1,101 @@
+{
+  "conversationId": "3d7a133b-e85a-4f9b-814f-ee0f65d79e02",
+  "title": "por que me saltan tantos errores",
+  "requesterUsername": "Schnoxz",
+  "responderUsername": "GitHub Copilot",
+  "turns": [
+    {
+      "message": {
+        "text": "por que me saltan tantos errores"
+      },
+      "currentDocument": {
+        "uri": "/Apuntes/src/ClasesConstructores/ClaseBasicaConstructor.java"
+      },
+      "references": [],
+      "ignoredSkills": [],
+      "userLanguage": "en",
+      "source": "panel",
+      "model": "GPT-5 mini",
+      "chatMode": "Agent",
+      "customChatModeId": "Agent",
+      "needToolCallConfirmation": true,
+      "turnId": "196d204b-d289-44fd-9843-f22a332bb6a5",
+      "role": "user",
+      "timestamp": "2026-03-04T10:18:25.178336700Z"
+    },
+    {
+      "reply": {
+        "annotations": [],
+        "references": [],
+        "hideText": false,
+        "notifications": [],
+        "followups": [],
+        "errorMessages": [
+          {
+            "error": {
+              "message": "You\u0027ve reached your monthly chat messages quota. Upgrade to Copilot Pro (30-day free trial) or wait for your allowance to renew. Request ID: 9eb2c2d6-c13a-47d2-aa81-130f0ccd3b78",
+              "code": 402
+            }
+          }
+        ],
+        "editAgentRounds": [],
+        "panelMessages": [],
+        "steps": [],
+        "agentMessages": [],
+        "data": {},
+        "modelName": "GPT-5 mini",
+        "billingMultiplier": 1.0
+      },
+      "turnId": "edc0704e-cb2a-46ad-a230-405392345018",
+      "role": "copilot",
+      "timestamp": "2026-03-04T10:18:25.655463500Z"
+    },
+    {
+      "message": {
+        "text": "por que me saltan tantos errores"
+      },
+      "currentDocument": {
+        "uri": "/Apuntes/src/ClasesConstructores/ClaseBasicaConstructor.java"
+      },
+      "references": [],
+      "ignoredSkills": [],
+      "userLanguage": "en",
+      "source": "panel",
+      "model": "Claude Haiku 4.5",
+      "chatMode": "Ask",
+      "needToolCallConfirmation": true,
+      "turnId": "c6866b44-3cb4-4173-bc63-9edee593b9ef",
+      "role": "user",
+      "timestamp": "2026-03-04T10:18:40.634615800Z"
+    },
+    {
+      "reply": {
+        "annotations": [],
+        "references": [],
+        "hideText": false,
+        "notifications": [],
+        "followups": [],
+        "errorMessages": [
+          {
+            "error": {
+              "message": "You\u0027ve reached your monthly chat messages quota. Upgrade to Copilot Pro (30-day free trial) or wait for your allowance to renew. Request ID: 70403b22-6860-4377-a1c7-1c1e954774bf",
+              "code": 402
+            }
+          }
+        ],
+        "editAgentRounds": [],
+        "panelMessages": [],
+        "steps": [],
+        "agentMessages": [],
+        "data": {},
+        "modelName": "Claude Haiku 4.5",
+        "billingMultiplier": 1.0
+      },
+      "turnId": "7b82381a-fc6a-49f7-8b75-8c35694d47f3",
+      "role": "copilot",
+      "timestamp": "2026-03-04T10:18:40.662093Z"
+    }
+  ],
+  "creationDate": "2026-03-04T10:18:25.169771700Z",
+  "lastMessageDate": "2026-03-04T10:18:41.223265Z"
+}

@@ -1,90 +1,48 @@
-import java.util.InputMismatchException;
+
 import java.util.Scanner;
 
 public class Calculadora {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        int a = leerEntero(sc, "Introduce el primer entero: ");
-        char op = leerOperacion(sc);
-
-        int b = 0;
-        boolean segundoOk = false;
-
-        while (!segundoOk) {
-            b = leerEntero(sc, "Introduce el segundo entero: ");
-
-            if (op == '/' && b == 0) {
-                System.out.println("Error: no se puede dividir entre 0. Vuelve a intentarlo.");
-            } else {
-                segundoOk = true;
-            }
-        }
-
-        try {
-            int resultado = calcular(a, b, op);
-            System.out.println("Resultado: " + a + " " + op + " " + b + " = " + resultado);
-        } catch (ArithmeticException e) {
-            System.out.println("Error aritmético: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        } finally {
-            System.out.println("Fin del programa");
-            sc.close();
-        }
-    }
-
     public static int leerEntero(Scanner sc, String mensaje) {
-        boolean ok = false;
-        int n = 0;
-
-        while (!ok) {
-            System.out.print(mensaje);
+        while (true) {
             try {
-                n = sc.nextInt();
-                sc.nextLine();
-                ok = true;
-            } catch (InputMismatchException e) {
-                System.out.println("Entrada inválida: debes escribir un entero.");
-                sc.nextLine();
+                System.out.print(mensaje);
+                return Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: introduce un número entero válido.");
             }
         }
-        return n;
     }
 
     public static char leerOperacion(Scanner sc) {
-        boolean ok = false;
-        char op = ' ';
-
-        while (!ok) {
-            System.out.print("Introduce la operación (+, -, *, /): ");
+        while (true) {
+            System.out.print("Introduce una operación (+, -, *, /): ");
             String linea = sc.nextLine().trim();
-
             if (linea.length() == 1) {
-                op = linea.charAt(0);
+                char op = linea.charAt(0);
                 if (op == '+' || op == '-' || op == '*' || op == '/') {
-                    ok = true;
-                } else {
-                    System.out.println("Operación inválida. Usa + - * /");
+                    return op;
                 }
-            } else {
-                System.out.println("Debes introducir un solo carácter.");
             }
+            System.out.println("Error: operación inválida. Usa +, -, * o /.");
         }
-
-        return op;
     }
 
-    public static int calcular(int a, int b, char op) {
-        int res;
-
-        if (op == '+') res = a + b;
-        else if (op == '-') res = a - b;
-        else if (op == '*') res = a * b;
-        else if (op == '/') res = a / b;
-        else throw new IllegalArgumentException("Operación no reconocida: " + op);
-
-        return res;
+    public static double calcular(int a, int b, char op) throws DivisionPorCeroException {
+        switch (op) {
+            case '+':
+                return a + b;
+            case '-':
+                return a - b;
+            case '*':
+                return a * b;
+            case '/':
+                if (b == 0) {
+                    throw new DivisionPorCeroException();
+                }
+                return (double) a / b;
+            default:
+                return 0;
+        }
     }
 }

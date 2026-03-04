@@ -1,0 +1,15 @@
+package Arrays;
+
+public class RecorridoForEach {
+	// Es mas comodo pero NO da indica y no puedes modificar arrays
+	
+	int[] nums = {3, 7, 1, 9, 4};
+	for (int n : nums) {
+	 System.out.println(n);
+	}
+	// Con objetos:
+	Persona[] personas = { new Persona("Ana", 20), new Persona("Luis", 30) };
+	for (Persona p : personas) {
+	 System.out.println(p.getNombre());
+	}
+}
