@@ -32,12 +32,14 @@ public class Main {
     public static Alumno pedirNotaAlumno(String nombre) {
         Alumno alumno = null;
         while (alumno == null) {
-            System.out.print("Nota de " + nombre + " (0-10): ");
-            double nota = teclado.nextDouble();
             try {
+                System.out.print("Nota de " + nombre + " (0-10): ");
+                double nota = Double.parseDouble(teclado.nextLine());
                 alumno = new Alumno(nombre, nota);
             } catch (NotaInvalidaException e) {
                 System.out.println("Error: " + e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: introduce un número válido.");
             }
         }
         return alumno;
@@ -64,7 +66,11 @@ public class Main {
             if (nuevaNota > 10) {
                 nuevaNota = 10;
             }
-            alumnos[i].setNota(nuevaNota);
+            try {
+                alumnos[i].setNota(nuevaNota);
+            } catch (NotaInvalidaException e) {
+                System.out.println("Error inesperado: " + e.getMessage());
+            }
         }
     }
 }

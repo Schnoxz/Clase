@@ -1,0 +1,34 @@
+package ClasesConstructores;
+
+public class VariosConstructores {
+	// Puedes tener varios constructores con distinto número o tipo de parámetros (sobrecarga de constructores)
+	
+	public class Rectangulo {
+		private double ancho;
+		private double alto;
+		
+		// Constructor 1: Sin parámetros, crea un rectángulo por defecto
+		public Rectangulo() {
+			this.ancho = 1.0;
+			this.alto = 1.0;
+		}
+		
+		// Constructor 2: Con un parámetro, crea un cuadrado
+		public Rectangulo(double lado) {
+			this.ancho = lado;
+			this.alto = lado;
+		}
+		
+		// Constructor 3: Completo
+		public Rectangulo(double ancho, double alto) {
+			this.ancho = ancho;
+			this.alto = alto;
+		}
+	
+	
+		public double area() {
+			return ancho * alto;
+			
+		}
+	}
+}

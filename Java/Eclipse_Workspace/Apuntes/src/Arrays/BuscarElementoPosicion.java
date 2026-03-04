@@ -1,0 +1,19 @@
+package Arrays;
+
+public class BuscarElementoPosicion {
+	int[] nums = {5, 3, 8, 1, 9};
+	int buscar = 8;
+	boolean encontrado = false;
+	
+{
+	for (int i = 0; i < nums.length; i++) {
+		if (nums[i] == buscar) {
+			System.out.println("Encontrado en posición: " + i);
+			encontrado = true;
+			break; // salir en cuanto lo encuentre
+		}
+		
+	}
+	if (!encontrado) System.out.println("No encontrado");
+}
+}

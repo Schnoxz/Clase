@@ -1,0 +1,26 @@
+package ClasesConstructores;
+
+public class AtributoStatic {
+	// static pertenece a la clase, no a los objetos, se comparte entre todas las instancias. Todos los objetos comparten el mismo valor
+	
+	public class Cuenta {
+		private static int totalCuentas = 0; // Compartido
+		private int numeroCuenta;
+		private double saldo;
+	
+	
+	public Cuenta (double saldoInicial) {
+		totalCuentas++; // Se incrementa en cada new Cuenta
+		this.numeroCuenta = totalCuentas; // Asigna un número único basado en el total
+		this.saldo = saldoInicial;
+	}
+	
+	public static int getTotalCuentas() {
+		return totalCuentas; // Método estático para acceder al atributo estático
+	}
+
+  }
+	
+	// En MAIN: Cuenta c1 = new Cuenta(100.0); Cuenta c2 = new Cuenta(200.0); 
+	// System.out.println(Cuenta.getTotalCuentas()); // Imprime 2
+}

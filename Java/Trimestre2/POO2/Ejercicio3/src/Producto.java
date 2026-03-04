@@ -1,37 +1,26 @@
-/*Crear una clase que represente Producto con las siguientes características:
-◦Tienen un código que los identifica de manera única y que se asigna automáticamente en el
-momento de la creación.
-◦Guardan la descripción y el precio sin IVA.
-◦Tienen una categoría. La categoría es una clase que tiene como atributos el nombre de la
-categoría y el IVA aplicable a los productos de esa categoría.
-La clase Producto debe proporcionar los métodos adecuados:
-◦Constructor.
-◦Métodos para consulta y modificación de los atributos.
-◦Método para calcular el precio de venta  del producto que se obtiene sumándole al precio el IVA
-correspondiente */
 
 public class Producto {
 
-    private int codigo;
+    // static significa que este contador es compartido por TODOS los objetos Producto.
+    // Cada vez que se crea un Producto nuevo, se incrementa y se asigna como código único.
+    private static int contadorCodigo = 0;
+
+    private int codigo;          // Código único asignado automáticamente
     private String descripcion;
     private double precioSinIva;
     private Categoria categoria;
 
-    // Metodo constructor del producto
-    public Producto(String descripcion, double precioSinIva, int codigo) {
-        this.codigo = codigo + 1;
+    // Constructor: recibe descripción, precio sin IVA y categoría.
+    // El código se asigna automáticamente incrementando el contador estático.
+    public Producto(String descripcion, double precioSinIva, Categoria categoria) {
+        contadorCodigo++;              // Incrementamos el contador compartido
+        this.codigo = contadorCodigo; // Asignamos el nuevo valor como código
         this.descripcion = descripcion;
         this.precioSinIva = precioSinIva;
+        this.categoria = categoria;
     }
 
-    //Metodo para calcular el precio con IVA
-    public double calcularPrecio() {
-        double porcentajeIva = categoria.getIva();
-        double precioFinal = precioSinIva + (precioSinIva * porcentajeIva / 100);
-        return precioFinal;
-    }
-
-    // Getters y setters
+    // Getters
     public int getCodigo() {
         return codigo;
     }
@@ -40,31 +29,35 @@ public class Producto {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public double getPrecioSinIva() {
         return precioSinIva;
     }
 
-    public void setPrecioSinIva(double precio) throws Exception {
-        if (precio < 0) {
-            throw new Exception("El iva debe ser positivo");
-        }
-        this.precioSinIva = precio;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public Categoria setCategoria() {
-        return categoria;
+    // Setters
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioSinIva(double precioSinIva) {
+        this.precioSinIva = precioSinIva;
     }
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
-    // Metodo para calcular precio sumando IVA
+    // Meotdo que calcula el precio de venta aplicando el IVA de la categoría.
+    public double calcularPrecioVenta() {
+        return precioSinIva * (1 + categoria.getIva() / 100);
+    }
+
+    // toString con Override obligatorio que muestra la información del producto
+    @Override
     public String toString() {
-        return "ID: " + codigo + " - " + descripcion + " - " + "Precio Final:" + calcularPrecio() + "€";
+        return "[" + codigo + "] " + descripcion + " | Sin IVA: " + precioSinIva + "€" + " | Con IVA: " + String.format("%.2f", calcularPrecioVenta()) + "€" + " | Categoría: " + categoria.getNombre();
     }
 }

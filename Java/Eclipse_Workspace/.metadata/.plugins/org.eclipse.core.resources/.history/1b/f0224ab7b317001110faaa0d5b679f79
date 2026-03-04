@@ -1,0 +1,44 @@
+package ClasesConstructores;
+
+public class ClaseBasicaConstructor {
+	//Una clase es una plantilla el constructor se llama igual que la clase, no tiene retorno y se ejecuta al crear un objeto con new
+	public class Persona {
+		private String nombre;
+		private int edad;
+	
+	
+	// Constructor
+	public Persona(String nombre, int edad) {
+		this.nombre = nombre; // this se refiere al objeto actual, se usa para diferenciar entre el atributo y el parámetro
+		this.edad = edad;
+	}
+
+	// Getters
+	public String getNombre() {
+		return nombre;
+	}
+	
+	public int getEdad() {
+		return edad;
+	}
+	
+	// Setters
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	public void setEdad(int edad) {
+		if (edad >= 0) { // Validación para evitar edades negativas
+			this.edad = edad;
+		} else {
+			System.out.println("La edad no puede ser negativa.");
+		}
+		
+		// toString (se llama al hacer System.out.println(objeto))
+		@Override
+		public String toString() {
+			return "Persona[" + nombre + ", " + edad + "]";
+		}
+	}
+	
+}

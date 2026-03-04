@@ -9,12 +9,5 @@ public class array8 {
         for (int i = 0; i < array.length; i++) { // Paso los elementos del array original al clonado
             arrayclonado[i] = array[i];
         }
-        for (int i = 0; i < arrayclonado.length; i++) { // Muestro el array clonado
-            if (i < arrayclonado.length - 1) { // Condicion hasta que no llegue al ultimo elemento del array
-                System.out.print(arrayclonado[i] + ", "); // Muestro los elementos del array divididos por la coma
-            } else {
-                System.out.print(arrayclonado[i]);
-            }
-        }
     }
 }
