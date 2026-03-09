@@ -1,0 +1,64 @@
+# Si no existe lo crea y si existe lo reemplaza por el nuevo código
+
+CREATE [OR REPLACE] PROCEDURE nombre (parámetros)
+BEGIN
+	-- cuerpo # Instrucciones que queremos ejecutar
+END
+
+
+parámetros: [ IN | OUT | INOUT ] nombreParametro tipo
+
+
+3.1.- Procedimientos almacenados
+
+Delimitador:
+
+DELIMITER $$
+# Comment es una columna en mysql que nos da un registro comentado de la funcion del Procedimiento
+
+comment 'Devuelve todos los datos de los Clientes de la tabla Clientes ordenador por nombre del cliente'
+
+CREATE PROCEDURE GetClientes()
+BEGIN
+	SELECT nombreCliente, ciudad, estado, codigoPostal, pais
+	FROM Clientes ORDER BY nombreCliente;
+END $$
+
+DELIMITER;
+
+Se crea un Procedimiento que genera esta consulta, para usarse se usa CALL y nombre del procedimiento : CALL GetClientes()
+
+
+Para las funciones de parámetros se usan al generar el Procedimiento
+
+# Se introduce por parametro un nombre que se le dará valor en la llamada pero aqui se define el tipo de valor
+
+DELIMITER $$
+CREATE OR REPLACE PROCEDURE saluda (IN nombre varchar(128))
+comment 'Saludo Inicial'
+BEGIN
+	# Nos concatena el Hola con el valor del parametro que se le pase
+	SELECT concat('Hola', ' ', nombre) as Saludo;
+END $$
+
+DELIMITER ;
+
+# Para llamar al procedimiento con parametro
+CALL saluda ('Javier')
+
+# Nos devuelve 
+
+Saludo
+Hola Javier
+
+
+Parametro de salida: 
+
+CREATE OR REPLACE PROCEDURE saluda (IN nombre varchar(128), OUT saluda varchar(128))
+comment 'Saludo con parametro de salida'
+BEGIN
+	# A los parametros de salida se les implemente el SET y variable
+	SET saludo = concat ('Hola', '', nombre) as Saludo;
+END $$
+
+DELIMITER ;
