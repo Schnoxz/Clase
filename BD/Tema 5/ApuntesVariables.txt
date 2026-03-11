@@ -1,0 +1,38 @@
+Una variable es un objeto de datos donde su valor puede cambiar durante la ejecución del procedimiento almacenados Se usan para almacenar resultados inmediatos en un procedimiento
+
+Para declarar una variable:
+
+DECLARE nombreVariable tipoDato(tamaño) [DEFAULT valor_por_defecto];
+
+Se especifica el nombre de la variable, luego el tipo de datos y su longitud, puede ser INT, VARCHAR, DATETIME...
+Se asigna un valor predeterminado con DEFAULT para que no sea NULL
+
+Se asigna con :
+
+SET nombre_variable = valor;
+
+También podemos usar SELECT INTO que asigna el resultado de una consulta directamente a la variable
+
+DECLARE cuentaProducto INT DEFAULT 0;
+SELECT COUNT(*) INTO cuentaProducto FROM Productos;
+
+
+-- EJEMPLO CON VARIABLE EN UN PROCEDIMIENTO --
+
+DELIMITER $$
+
+CREATE PROCEDURE cantidadUsuarioPorDepartamento (IN codDepartamento char(5)) --> OUT total INT para pasar como parámetro 
+BEGIN
+    -- Se declara la variable con un valor por defecto 0
+    DECLARE total INT DEFAULT 0;
+    -- Se crea una consulta que se asigna el valor devuelto con un INTO al nombre de la variable "total"
+    SELECT COUNT(*) INTO total FROM usuario WHERE departamento = codDepartamento
+
+    -- Seleccionamos la variable para que se muestre
+    SELECT total;
+END $$
+DELIMITER ;
+
+Si queremos usar parámetro
+call cantidadUsuarioPorDepartamento('IT', @total);
+select @total
