@@ -15,7 +15,6 @@ El diseño de **Interfaz de Usuario (UI)** se centra estrictamente en los aspect
 * **Objetivo final:** Asegurar que la interfaz sea visualmente atractiva, intuitiva y cohesiva.
 
 ## 3. Diferencias Clave: UX vs. UI
-Para un desarrollador web (DAW), es vital entender que aunque trabajan juntos, atacan problemas distintos:
 
 | Característica | UX (Experiencia de Usuario) | UI (Interfaz de Usuario) |
 | :--- | :--- | :--- |
@@ -24,4 +23,3 @@ Para un desarrollador web (DAW), es vital entender que aunque trabajan juntos, a
 | **Momento** | Define la estructura y el prototipo (esqueleto). | Se aplica una vez aprobada la estructura (piel). |
 | **Impacto** | Psicológico y funcional (¿funciona bien?). | Estético y emocional (¿se ve bien?). |
 
-> **Nota para el examen:** Recuerda que una UI excelente no puede salvar una UX deficiente. Si el usuario no encuentra lo que busca (UX), no importa lo bonito que sea el botón (UI).

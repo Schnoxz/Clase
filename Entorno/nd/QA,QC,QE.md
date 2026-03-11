@@ -1,7 +1,5 @@
 # Temario: QA, QC y QE en Pruebas de Software
 
-En el entorno de desarrollo profesional, la "calidad" se divide en tres áreas que a menudo se confunden. Es fundamental distinguir entre prevenir, detectar e integrar.
-
 ## 1. QA - Quality Assurance (Aseguramiento de la Calidad)
 Es un proceso **proactivo** y orientado al **proceso**.
 

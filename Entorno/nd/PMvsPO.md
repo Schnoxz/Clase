@@ -20,13 +20,13 @@ En el ciclo de vida del software, la gestión del producto se divide en dos enfo
 
 ## 3. Responsabilidades Específicas
 
-### Product Manager (PM) - La Estrategia
+### Product Manager (PM) 
 * **Product Discovery:** Identificar problemas del mercado y oportunidades de negocio.
 * **Definición de Visión:** Crear el Roadmap (hoja de ruta) a largo plazo.
 * **Éxito de Negocio:** Responsable del ROI (Retorno de Inversión) y el encaje en el mercado.
 * **Stakeholders:** Gestiona las expectativas de los directivos y clientes externos.
 
-### Product Owner (PO) - La Ejecución (Scrum)
+### Product Owner (PO) 
 * **Gestión del Backlog:** Crear, priorizar y refinar las *User Stories* (Historias de Usuario).
 * **Maximizar Valor:** Asegurar que el equipo de desarrollo trabaje en las tareas más importantes cada Sprint.
 * **Criterios de Aceptación:** Validar que las funcionalidades desarrolladas cumplen con lo solicitado.
@@ -35,7 +35,6 @@ En el ciclo de vida del software, la gestión del producto se divide en dos enfo
 ---
 
 ## 4. Contexto en el Entorno de Desarrollo (DAW)
-Como desarrollador, tu relación más estrecha será con el **Product Owner**. 
 
 * **Flujo de trabajo:** El PM define una necesidad -> El PO la traduce en tareas para ti -> Tú desarrollas la solución.
 * **En Startups:** Es muy común que ambos roles los desempeñe la **misma persona**.
