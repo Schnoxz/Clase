@@ -64,3 +64,103 @@ END $$
 DELIMITER ;
 
 
+
+3.6 Instrucciones condicionales (IF - IF ELSE)
+
+IF / IF-ELSE
+Ejecuta código según una condición.
+
+-- IF simple
+IF salario > 3000 THEN
+    SET categoria = 'Alto';
+END IF;
+
+-- IF-ELSE
+IF salario > 3000 THEN
+    SET categoria = 'Alto';
+ELSE
+    SET categoria = 'Bajo';
+END IF;
+
+-- IF-ELSEIF-ELSE
+IF salario > 5000 THEN
+    SET categoria = 'Alto';
+ELSEIF salario > 2000 THEN
+    SET categoria = 'Medio';
+ELSE
+    SET categoria = 'Bajo';
+END IF;
+
+CASE
+
+Compara un valor contra múltiples opciones.
+
+CASE departamento
+    WHEN 'DIRGE' THEN SET nivel = 'Dirección';
+    WHEN 'PROZS' THEN SET nivel = 'Producción';
+    ELSE SET nivel = 'Otro';
+END CASE;
+
+WHILE
+Repite mientras la condición sea TRUE. Puede ejecutarse 0 veces.
+
+SET i = 1;
+	WHILE i <= 5 DO
+    SET total = total + i;
+    SET i = i + 1;
+END WHILE;
+
+REPEAT
+Repite hasta que la condición sea TRUE. Se ejecuta al menos 1 vez (post-prueba).
+
+SET i = 1;
+REPEAT
+    SET total = total + i;
+    SET i = i + 1;
+UNTIL i > 5
+END REPEAT;
+
+LOOP
+Bucle sin condición propia, se sale con LEAVE.
+sqlSET i = 1;
+mi_bucle: LOOP
+    SET total = total + i;
+    SET i = i + 1;
+    IF i > 5 THEN
+        LEAVE mi_bucle;
+    END IF;
+END LOOP mi_bucle;
+
+Cursores
+Permiten recorrer fila a fila el resultado de una consulta.
+sqlDELIMITER $$
+CREATE PROCEDURE recorrerEmpleados()
+BEGIN
+    DECLARE fin INT DEFAULT 0;
+    DECLARE nombre VARCHAR(40);
+
+    -- 1. Declarar el cursor
+    DECLARE cur CURSOR FOR
+        SELECT NomEmp FROM empleado;
+
+    -- 2. Handler para cuando no hay más filas
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin = 1;
+
+    -- 3. Abrir
+    OPEN cur;
+
+    bucle: LOOP
+        -- 4. Leer siguiente fila
+        FETCH cur INTO nombre;
+        IF fin = 1 THEN LEAVE bucle; END IF;
+
+        -- hacer algo con 'nombre' ...
+
+    END LOOP;
+
+    -- 5. Cerrar
+    CLOSE cur;
+END$$
+DELIMITER ;
+
+

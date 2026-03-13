@@ -1,12 +1,11 @@
 
 -- PROCEDIMIENTO ac07listEmpleadosConHijos
--- Muestra los empleados que tienen hijos
 
+-- Muestra los empleados que tienen hijos
 DELIMITER $$
-CREATE PROCEDURE ac07listEmpleadosConHijos()
+CREATE OR REPLACE PROCEDURE ac07listEmpleadosConHijos()
 BEGIN
-    SELECT CodEmp, NomEmp, NumHi
-    FROM empleado
+    SELECT CodEmp, NomEmp, NumHi FROM empleado
     WHERE NumHi > 0;
 END$$
 DELIMITER ;
@@ -20,11 +19,9 @@ CALL ac07listEmpleadosConHijos();
 
 -- Nos muuestra la cantidad total de empleados
 DELIMITER $$
-CREATE PROCEDURE ac07contarEmpleados()
+CREATE OR REPLACE PROCEDURE ac07contarEmpleados()
 BEGIN
-    DECLARE totalEmpleados INT DEFAULT 0;
-    SELECT COUNT(*) INTO totalEmpleados FROM empleado;
-    SELECT totalEmpleados AS TotalEmpleados;
+    SELECT COUNT(*) AS totalEmpleados FROM empleado;
 END$$
 DELIMITER ;
 
@@ -34,9 +31,8 @@ CALL ac07contarEmpleados();
 
 
 -- Incrementa el salario de todos los empleados un 10%
--- ============================================================
 DELIMITER $$
-CREATE PROCEDURE ac07updSalarioEmpleados()
+CREATE OR REPLACE PROCEDURE ac07updSalarioEmpleados()
 BEGIN
     UPDATE empleado SET SalEmp = SalEmp * 1.10;
 END$$
@@ -47,8 +43,8 @@ CALL ac07updSalarioEmpleados();
 
 
 
--- Recuperar los procedimientos existentes en la base de datos
-SHOW PROCEDURE STATUS WHERE Db = 'empresa';
+-- Muestra los procedimientos existentes en la base de datos
+SHOW PROCEDURE STATUS WHERE db = 'empresa';
 
 
 
