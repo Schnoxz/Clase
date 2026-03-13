@@ -1,7 +1,5 @@
 package src.Ejercicio2;
-
 import java.util.Random;
-// Los metodos que se han definido private es porque solo se van a usar en la funcion (?) jugar que va a ser el principal que se encargue del funcionamiento del conecta
 
 public class juegoConecta4 {
 
@@ -37,7 +35,7 @@ public class juegoConecta4 {
 
     // Imprime el tablero por pantalla como si fuera una tabla de posición x y, con el contenido de cada celda
     public void mostrarTablero() { // public porque lo uso en el main
-        System.out.println("\n 0 1 2 3 4 5 6 7 8 9"); // Orden de las columnas para que el jugador sepa de forma visual las posiciones
+        System.out.println("\n  0 1 2 3 4 5 6 7 8 9"); // Orden de las columnas para que el jugador sepa de forma visual las posiciones
         for (int i = 0; i < FILAS; i++) { // Recorre las filas
             System.out.print(i + " "); // Imprime la fila
             for (int j = 0; j < COLUMNAS; j++) { // Recorre las columnas
@@ -50,7 +48,7 @@ public class juegoConecta4 {
 
     // Metodo para poner las fichas en su posicióm, funciona tal que se indica la columna y se busca la primera celda vacia desde abajo que es donde caen las fichas
     // Para saber si está llena o vacia hago que devuelva la fila en la que se ha puesto y si no un -1
-    private int depositar(int columna, char ficha) { // private porque solo lo uso en el jugar
+    private int ponerFicha(int columna, char ficha) { // private porque solo lo uso en el jugar
         for (int i = FILAS - 1; i >= 0; i--) {  // Empieza desde abajo hacia arriba
             if (tablero[i][columna] == vacio) {  // Si está vacia la posición
                 tablero[i][columna] = ficha;  // Coloca la ficha
@@ -106,7 +104,7 @@ public class juegoConecta4 {
 
     // Metodo que devuelve el carácter del jugador que tiene el turno actual
     public char getJugadorActual() {
-        return jugadores[turno]; // R o A
+        return jugadores[turno]; // Rojo o Amarillo
     }
 
     // Metodo que cambia el turno al otro jugador
@@ -122,7 +120,7 @@ public class juegoConecta4 {
             throw new columnaInvalidaException("Columna fuera de rango: " + columna); // Lanza la excepcion
         }
         char jugadorActual = getJugadorActual(); // Guardamos quién juega ahora
-        int fila = depositar(columna, jugadorActual); // Intentamos depositar la ficha que ha elegido el jugador
+        int fila = ponerFicha(columna, jugadorActual); // Intentamos depositar la ficha que ha elegido el jugador
         if (fila == -1) { // Condición para saber si la columna estaba llena
             return -1; // La columna estaba llena
         }
