@@ -8,8 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Creamos el objeto juego. El constructor ya inicializa el tablero
-        // y elige aleatoriamente quién empieza
+        // Creamos el objeto juego. El constructor ya inicializa el tablero y elige aleatoriamente quién empieza
         juegoConecta4 juego = new juegoConecta4();
 
         // Mostramos quién empieza (R o A)
@@ -17,16 +16,16 @@ public class Main {
 
         boolean activo = true; // Controla si el juego sigue o ha terminado
 
-        // Bucle principal del juego, donde el jugador elige una columna y
+        // Bucle principal del juego, donde el jugador elige una columna 
         while (activo) {
             juego.mostrarTablero(); // Pintamos el tablero en cada turno
+            // Se le pregunta al usuario que eliga una columna donde colocar la ficha
             System.out.print("Jugador " + juego.getJugadorActual() + " - Elige columna (0-9): ");
 
             int columna; // Columna elegida por el jugador
             try {
-                // Leemos la entrada del jugador y la convertimos a entero
-                // .trim() elimina espacios en blanco accidentales
-                columna = Integer.parseInt(teclado.nextLine().trim());
+                // Lee el dato de entrada del jugador y le da valor a columna
+                columna = teclado.nextInt();
             } catch (NumberFormatException e) {
                 // Si el jugador escribe una letra o algo que no sea número, capturamos el error
                 System.out.println("Entrada inválida.");
