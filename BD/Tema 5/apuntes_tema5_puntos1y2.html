@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 5 · SQL Avanzado — Apuntes</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1f2b;
+    --border: #252b3a;
+    --accent1: #4f9eff;
+    --accent2: #ff6b6b;
+    --accent3: #6bffa8;
+    --accent4: #ffd166;
+    --text: #e2e8f0;
+    --text-muted: #7a8499;
+    --code-bg: #0a0c12;
+    --keyword: #c792ea;
+    --string: #c3e88d;
+    --function: #82aaff;
+    --comment: #546e7a;
+    --number: #f78c6c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0d0f14 0%, #111827 50%, #0d0f14 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 200px;
+    background: radial-gradient(ellipse, rgba(79,158,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-block;
+    background: rgba(79,158,255,0.1);
+    border: 1px solid rgba(79,158,255,0.3);
+    color: var(--accent1);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  header h1 span { color: var(--accent1); }
+  header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  /* NAV PILLS */
+  .toc {
+    display: flex;
+    gap: 0.7rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .toc a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .toc a:hover { border-color: var(--accent1); color: var(--accent1); background: rgba(79,158,255,0.07); }
+
+  /* MAIN LAYOUT */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 5rem;
+  }
+
+  /* SECTION HEADER */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 3.5rem 0 1.5rem;
+  }
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent1);
+    opacity: 0.25;
+    line-height: 1;
+    min-width: 2.5rem;
+  }
+  .section-title h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    border-bottom: 2px solid var(--accent1);
+    padding-bottom: 0.25rem;
+  }
+
+  .subsection {
+    margin: 2rem 0;
+  }
+  .subsection h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent3);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .subsection h3::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent3);
+    flex-shrink: 0;
+  }
+
+  /* EXPLANATION TEXT */
+  p { margin-bottom: 0.9rem; color: var(--text); }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    border-left: 3px solid;
+    font-size: 0.95rem;
+  }
+  .callout.info { border-color: var(--accent1); background: rgba(79,158,255,0.07); }
+  .callout.warn { border-color: var(--accent4); background: rgba(255,209,102,0.07); }
+  .callout.success { border-color: var(--accent3); background: rgba(107,255,168,0.07); }
+  .callout.danger { border-color: var(--accent2); background: rgba(255,107,107,0.07); }
+  .callout strong { display: block; margin-bottom: 0.3rem; font-family: 'Syne', sans-serif; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .callout.info strong { color: var(--accent1); }
+  .callout.warn strong { color: var(--accent4); }
+  .callout.success strong { color: var(--accent3); }
+  .callout.danger strong { color: var(--accent2); }
+
+  /* CODE BLOCK */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 1.2rem 0;
+    overflow: hidden;
+  }
+  .code-label {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 0.45rem 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .code-label::before {
+    content: '●';
+    color: var(--accent2);
+    font-size: 0.8rem;
+  }
+  .code-block pre {
+    padding: 1.1rem 1.3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.87rem;
+    line-height: 1.65;
+    overflow-x: auto;
+    tab-size: 2;
+  }
+  /* Syntax highlighting */
+  .kw { color: var(--keyword); font-weight: 600; }
+  .fn { color: var(--function); }
+  .str { color: var(--string); }
+  .cm { color: var(--comment); font-style: italic; }
+  .nb { color: var(--number); }
+  .op { color: #89ddff; }
+  .wh { color: #fff; }
+  .punct { color: var(--text-muted); }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+    font-size: 0.92rem;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--accent1);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(37,43,58,0.6);
+    vertical-align: top;
+  }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1rem 0.45rem;
+    color: var(--accent3);
+  }
+
+  /* VISUAL FLOW */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+    justify-content: center;
+  }
+  .flow-step {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.8rem 1.3rem;
+    text-align: center;
+    min-width: 120px;
+  }
+  .flow-step .fs-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .flow-step .fs-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text);
+  }
+  .flow-step.highlight { border-color: var(--accent1); background: rgba(79,158,255,0.1); }
+  .flow-step.highlight .fs-label { color: var(--accent1); }
+  .flow-arrow {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+  }
+  .flow-branch {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-start;
+  }
+  .flow-branch-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+  .dot-ok { color: var(--accent3); }
+  .dot-err { color: var(--accent2); }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 2.5rem 0;
+  }
+
+  /* RECAP BOX */
+  .recap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  .recap h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+  }
+  .recap ul { list-style: none; }
+  .recap ul li {
+    padding: 0.3rem 0;
+    padding-left: 1.3rem;
+    position: relative;
+    font-size: 0.93rem;
+    color: var(--text);
+  }
+  .recap ul li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent4);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+  }
+
+  /* PILL TAG */
+  .pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .pill-blue { background: rgba(79,158,255,0.15); color: var(--accent1); }
+  .pill-green { background: rgba(107,255,168,0.15); color: var(--accent3); }
+  .pill-red { background: rgba(255,107,107,0.15); color: var(--accent2); }
+  .pill-yellow { background: rgba(255,209,102,0.15); color: var(--accent4); }
+
+  /* SCROLL */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.8rem; }
+    .section-num { font-size: 1.8rem; }
+    .flow { flex-direction: column; align-items: flex-start; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">1º DAM · Bases de Datos · Tema 05</div>
+  <h1>SQL <span>Avanzado</span></h1>
+  <p>Apuntes didácticos — Puntos 1 y 2: Gestión de Usuarios &amp; Transacciones</p>
+</header>
+
+<nav class="toc">
+  <a href="#usuarios">1. Gestión de usuarios</a>
+  <a href="#crear">1.1 Crear</a>
+  <a href="#borrar">1.2 Borrar</a>
+  <a href="#grant">1.3 GRANT</a>
+  <a href="#revoke">1.4 REVOKE</a>
+  <a href="#consultar">1.5–1.6 Consultar</a>
+  <a href="#transacciones">2. Transacciones</a>
+  <a href="#mysql-tx">2.1 MySQL TX</a>
+</nav>
+
+<main>
+
+  <!-- ==============================
+       SECCIÓN 1: GESTIÓN DE USUARIOS
+       ============================== -->
+  <div class="section-title" id="usuarios">
+    <div class="section-num">01</div>
+    <h2>Gestión de Usuarios</h2>
+  </div>
+
+  <p>
+    La seguridad en una base de datos pasa por controlar <strong>quién puede conectarse</strong> y <strong>qué puede hacer</strong>.
+    MySQL tiene su propio sistema de usuarios y privilegios: primero creas el usuario, luego le asignas permisos.
+  </p>
+
+  <div class="callout info">
+    <strong>📌 Idea clave</strong>
+    Un usuario en MySQL se identifica por dos cosas: <strong>nombre</strong> y <strong>host</strong> (desde dónde se conecta).
+    <code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">'usuario'@'localhost'</code> es diferente de
+    <code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">'usuario'@'%'</code>.
+    El <code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">%</code> significa "desde cualquier host".
+  </div>
+
+  <!-- 1.1 CREAR USUARIO -->
+  <div class="subsection" id="crear">
+    <h3>1.1 — Creación de usuarios</h3>
+    <p>Se usa <span class="pill pill-blue">CREATE USER</span> seguido de las credenciales:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Crear usuario</div>
+      <pre><span class="kw">CREATE USER</span> <span class="str">'nombre_usuario'</span><span class="op">@</span><span class="str">'localhost'</span> <span class="kw">IDENTIFIED BY</span> <span class="str">'contraseña_usuario'</span><span class="punct">;</span></pre>
+    </div>
+    <p>Si quieres que el usuario pueda conectarse <strong>desde cualquier máquina</strong>, cambia <code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">'localhost'</code> por <code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">'%'</code>:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Usuario desde cualquier host</div>
+      <pre><span class="kw">CREATE USER</span> <span class="str">'nombre_usuario'</span><span class="op">@</span><span class="str">'%'</span> <span class="kw">IDENTIFIED BY</span> <span class="str">'contraseña_usuario'</span><span class="punct">;</span></pre>
+    </div>
+  </div>
+
+  <!-- 1.2 BORRAR USUARIO -->
+  <div class="subsection" id="borrar">
+    <h3>1.2 — Borrado de usuarios</h3>
+    <p>Con <span class="pill pill-red">DROP USER</span> eliminamos un usuario por completo:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Eliminar usuario</div>
+      <pre><span class="kw">DROP USER</span> <span class="str">'nombre_usuario'</span><span class="op">@</span><span class="str">'localhost'</span><span class="punct">;</span></pre>
+    </div>
+    <div class="callout warn">
+      <strong>⚠️ Atención</strong>
+      Al borrar un usuario también se eliminan sus privilegios. Asegúrate de que realmente quieres hacerlo.
+    </div>
+  </div>
+
+  <!-- 1.3 GRANT -->
+  <div class="subsection" id="grant">
+    <h3>1.3 — Asignación de privilegios (GRANT)</h3>
+    <p>
+      Crear un usuario no le da acceso a nada. Los permisos se otorgan con <span class="pill pill-green">GRANT</span>.
+      Puedes dar <strong>todos los privilegios</strong> sobre una base de datos:
+    </p>
+    <div class="code-block">
+      <div class="code-label">SQL — Todos los privilegios sobre una base de datos</div>
+      <pre><span class="kw">GRANT ALL PRIVILEGES ON</span> <span class="fn">nombre_base_datos</span><span class="punct">.*</span> <span class="kw">TO</span> <span class="str">'nombre_usuario'</span><span class="op">@</span><span class="str">'localhost'</span><span class="punct">;</span></pre>
+    </div>
+    <p>O bien permisos <strong>específicos sobre una tabla concreta</strong>:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Permisos SELECT e INSERT sobre una tabla</div>
+      <pre><span class="kw">GRANT SELECT</span><span class="punct">,</span> <span class="kw">INSERT ON</span> <span class="fn">empresa</span><span class="punct">.</span><span class="fn">clientes</span> <span class="kw">TO</span> <span class="str">'nombre_usuario'</span><span class="op">@</span><span class="str">'localhost'</span><span class="punct">;</span></pre>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Privilegio</th><th>¿Qué permite?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>ALL PRIVILEGES</code></td><td>Todo (SELECT, INSERT, UPDATE, DELETE, CREATE, DROP…)</td></tr>
+        <tr><td><code>SELECT</code></td><td>Leer filas de una tabla</td></tr>
+        <tr><td><code>INSERT</code></td><td>Insertar nuevas filas</td></tr>
+        <tr><td><code>UPDATE</code></td><td>Modificar filas existentes</td></tr>
+        <tr><td><code>DELETE</code></td><td>Eliminar filas</td></tr>
+        <tr><td><code>CREATE</code></td><td>Crear tablas o bases de datos</td></tr>
+        <tr><td><code>DROP</code></td><td>Eliminar tablas o bases de datos</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout success">
+      <strong>✅ Principio de mínimo privilegio</strong>
+      Asigna solo los permisos que el usuario realmente necesita. No uses <code>ALL PRIVILEGES</code> a la ligera.
+    </div>
+  </div>
+
+  <!-- 1.4 REVOKE -->
+  <div class="subsection" id="revoke">
+    <h3>1.4 — Eliminación de permisos (REVOKE)</h3>
+    <p>Lo contrario de GRANT. Con <span class="pill pill-red">REVOKE</span> retiras un privilegio concreto:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Quitar el permiso INSERT</div>
+      <pre><span class="kw">REVOKE INSERT ON</span> <span class="fn">empresa</span><span class="punct">.</span><span class="fn">clientes</span> <span class="kw">FROM</span> <span class="str">'nombre_usuario'</span><span class="op">@</span><span class="str">'localhost'</span><span class="punct">;</span></pre>
+    </div>
+    <div class="callout info">
+      <strong>💡 Nota</strong>
+      La sintaxis es casi igual que GRANT pero cambia <code>TO</code> por <code>FROM</code>. Fácil de recordar.
+    </div>
+  </div>
+
+  <!-- 1.5 y 1.6 CONSULTAS -->
+  <div class="subsection" id="consultar">
+    <h3>1.5 — Consultar usuarios de la base de datos</h3>
+    <p>Los usuarios están almacenados en la tabla del sistema <code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">mysql.user</code>. Puedes consultarla directamente:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Ver todos los usuarios y sus permisos</div>
+      <pre><span class="kw">SELECT</span>
+    <span class="fn">user</span> <span class="kw">AS</span> UserName<span class="punct">,</span>
+    host <span class="kw">AS</span> Host<span class="punct">,</span>
+    db <span class="kw">AS</span> DatabaseName<span class="punct">,</span>
+    Select_priv<span class="punct">,</span>
+    Insert_priv<span class="punct">,</span>
+    Update_priv<span class="punct">,</span>
+    Delete_priv<span class="punct">,</span>
+    Create_priv<span class="punct">,</span>
+    Alter_priv
+<span class="kw">FROM</span> mysql<span class="punct">.</span>user<span class="punct">;</span></pre>
+    </div>
+
+    <h3 style="margin-top:1.5rem">1.6 — Mostrar privilegios de un usuario concreto</h3>
+    <p>Forma más directa y limpia de ver los privilegios de un usuario específico:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Ver privilegios de un usuario</div>
+      <pre><span class="kw">SHOW GRANTS FOR</span> <span class="str">'nombre_usuario'</span><span class="op">@</span><span class="str">'localhost'</span><span class="punct">;</span></pre>
+    </div>
+  </div>
+
+  <div class="recap">
+    <h4>🧠 Resumen del punto 1 — Chuleta rápida</h4>
+    <ul>
+      <li><strong>Crear usuario:</strong> <code style="color:var(--accent1);font-family:'JetBrains Mono',monospace">CREATE USER 'u'@'host' IDENTIFIED BY 'pass';</code></li>
+      <li><strong>Borrar usuario:</strong> <code style="color:var(--accent1);font-family:'JetBrains Mono',monospace">DROP USER 'u'@'host';</code></li>
+      <li><strong>Dar permisos:</strong> <code style="color:var(--accent1);font-family:'JetBrains Mono',monospace">GRANT privilegios ON db.tabla TO 'u'@'host';</code></li>
+      <li><strong>Quitar permisos:</strong> <code style="color:var(--accent1);font-family:'JetBrains Mono',monospace">REVOKE privilegios ON db.tabla FROM 'u'@'host';</code></li>
+      <li><strong>Ver permisos:</strong> <code style="color:var(--accent1);font-family:'JetBrains Mono',monospace">SHOW GRANTS FOR 'u'@'host';</code></li>
+      <li><code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">localhost</code> = solo local · <code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">%</code> = cualquier host</li>
+    </ul>
+  </div>
+
+
+  <div class="divider"></div>
+
+
+  <!-- ==============================
+       SECCIÓN 2: TRANSACCIONES
+       ============================== -->
+  <div class="section-title" id="transacciones">
+    <div class="section-num">02</div>
+    <h2>Transacciones</h2>
+  </div>
+
+  <p>
+    Una transacción es un <strong>conjunto de operaciones SQL que se tratan como una sola unidad</strong>.
+    O se ejecutan todas con éxito, o no se ejecuta ninguna. Esto garantiza la <strong>integridad de los datos</strong>.
+  </p>
+
+  <div class="callout info">
+    <strong>🔑 Propiedad ACID (lo que garantizan las transacciones)</strong>
+    Las transacciones son <strong>Atómicas</strong> (todo o nada), <strong>Consistentes</strong> (dejan la BD en estado válido),
+    <strong>Aisladas</strong> (no interfieren entre sí) y <strong>Durables</strong> (los cambios confirmados son permanentes).
+  </div>
+
+  <p>El ejemplo clásico: una <strong>transferencia bancaria</strong>. Hay que restar de una cuenta y sumar en otra.
+  Si la suma falla, la resta no debe haberse producido. Sin transacciones, los datos quedarían corruptos.</p>
+
+  <!-- FLUJO VISUAL -->
+  <p style="margin-top:1.2rem;margin-bottom:0.5rem;color:var(--text-muted);font-size:0.9rem">Ciclo de vida de una transacción:</p>
+  <div class="flow">
+    <div class="flow-step highlight">
+      <span class="fs-num">inicio</span>
+      <div class="fs-label">START TRANSACTION</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <span class="fs-num">operaciones</span>
+      <div class="fs-label">SQL 1, SQL 2…</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <span class="fs-num">¿éxito?</span>
+      <div class="fs-label">Verificación</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-branch">
+      <div class="flow-branch-item"><span class="dot-ok">✓</span> <strong style="color:var(--accent3)">COMMIT</strong> — cambios permanentes</div>
+      <div class="flow-branch-item"><span class="dot-err">✗</span> <strong style="color:var(--accent2)">ROLLBACK</strong> — deshacer todo</div>
+    </div>
+  </div>
+
+  <!-- EJEMPLO BANCARIO COMPLETO -->
+  <div class="subsection">
+    <h3>Ejemplo completo — Transferencia bancaria</h3>
+    <p>Transferir 1000€ de la cuenta <em>932656</em> a la cuenta <em>102656</em>:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Transacción bancaria completa</div>
+      <pre><span class="cm">-- 1. Iniciar la transacción</span>
+<span class="kw">START TRANSACTION</span><span class="punct">;</span>
+
+<span class="cm">-- 2. Restar de la cuenta de origen</span>
+<span class="kw">UPDATE</span> Cuentas <span class="kw">SET</span> balance <span class="op">=</span> balance <span class="op">-</span> <span class="nb">1000</span>
+<span class="kw">WHERE</span> numeroCuenta <span class="op">=</span> <span class="str">'932656'</span><span class="punct">;</span>
+
+<span class="cm">-- 3. Sumar en la cuenta de destino</span>
+<span class="kw">UPDATE</span> Cuentas <span class="kw">SET</span> balance <span class="op">=</span> balance <span class="op">+</span> <span class="nb">1000</span>
+<span class="kw">WHERE</span> numeroCuenta <span class="op">=</span> <span class="str">'102656'</span><span class="punct">;</span>
+
+<span class="cm">-- 4. Si todo OK → confirmar los cambios</span>
+<span class="kw">COMMIT</span><span class="punct">;</span>
+
+<span class="cm">-- 4. Si algo falla → deshacer todo</span>
+<span class="cm">-- ROLLBACK;</span></pre>
+    </div>
+  </div>
+
+  <div class="callout danger">
+    <strong>🚫 Las sentencias DDL no se pueden revertir</strong>
+    <code>CREATE TABLE</code>, <code>DROP TABLE</code>, <code>ALTER TABLE</code>… son sentencias DDL y hacen un COMMIT implícito automáticamente.
+    No puedes hacer ROLLBACK después de ellas.
+  </div>
+
+  <!-- 2.1 INSTRUCCIONES MYSQL -->
+  <div class="subsection" id="mysql-tx">
+    <h3>2.1 — Instrucciones de control en MySQL</h3>
+    <p>Estas son las cuatro herramientas principales para manejar transacciones en MySQL:</p>
+
+    <table>
+      <thead>
+        <tr><th>Comando</th><th>Función</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>START TRANSACTION</code> o <code>BEGIN</code></td>
+          <td>Inicia una nueva transacción explícita. A partir de aquí los cambios no son permanentes hasta el COMMIT.</td>
+        </tr>
+        <tr>
+          <td><code>COMMIT</code></td>
+          <td>Confirma todos los cambios de la transacción y los hace <strong>permanentes</strong> en la base de datos.</td>
+        </tr>
+        <tr>
+          <td><code>ROLLBACK</code></td>
+          <td>Deshace <strong>todos los cambios</strong> realizados desde el START TRANSACTION. Como si no hubieran ocurrido.</td>
+        </tr>
+        <tr>
+          <td><code>SET autocommit</code></td>
+          <td>Activa o desactiva el modo de confirmación automática para la sesión actual.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Para desactivar/activar el autocommit:</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Autocommit</div>
+      <pre><span class="kw">SET autocommit</span> <span class="op">=</span> <span class="nb">0</span><span class="punct">;</span>   <span class="cm">-- desactiva el autocommit (control manual)</span>
+<span class="kw">SET autocommit</span> <span class="op">=</span> <span class="nb">1</span><span class="punct">;</span>   <span class="cm">-- activa el autocommit (comportamiento por defecto)</span></pre>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚙️ Autocommit en MySQL</strong>
+      Por defecto, MySQL tiene el <strong>autocommit activado</strong>. Esto significa que <em>cada sentencia SQL es su propia transacción automática</em>
+      y se confirma inmediatamente. Para usar transacciones manuales, debes usar <code>START TRANSACTION</code>
+      (que suspende el autocommit temporalmente) o hacer <code>SET autocommit = 0</code>.
+    </div>
+
+    <p>Ejemplo práctico con control de errores (patrón habitual en un examen):</p>
+    <div class="code-block">
+      <div class="code-label">SQL — Patrón transacción con control manual</div>
+      <pre><span class="kw">START TRANSACTION</span><span class="punct">;</span>
+
+<span class="kw">INSERT INTO</span> pedidos <span class="punct">(</span>id_cliente<span class="punct">,</span> producto<span class="punct">,</span> cantidad<span class="punct">)</span>
+<span class="kw">VALUES</span> <span class="punct">(</span><span class="nb">1</span><span class="punct">,</span> <span class="str">'Laptop'</span><span class="punct">,</span> <span class="nb">2</span><span class="punct">);</span>
+
+<span class="kw">UPDATE</span> stock <span class="kw">SET</span> unidades <span class="op">=</span> unidades <span class="op">-</span> <span class="nb">2</span>
+<span class="kw">WHERE</span> producto <span class="op">=</span> <span class="str">'Laptop'</span><span class="punct">;</span>
+
+<span class="cm">-- Si todo ha ido bien:</span>
+<span class="kw">COMMIT</span><span class="punct">;</span>
+
+<span class="cm">-- Si ha habido algún error:</span>
+<span class="cm">-- ROLLBACK;</span></pre>
+    </div>
+  </div>
+
+  <div class="recap">
+    <h4>🧠 Resumen del punto 2 — Lo que debes tener claro</h4>
+    <ul>
+      <li>Una transacción agrupa varias sentencias en <strong>una unidad atómica</strong> (todo o nada).</li>
+      <li><code style="color:var(--accent1);font-family:'JetBrains Mono',monospace">START TRANSACTION</code> abre la transacción.</li>
+      <li><code style="color:var(--accent3);font-family:'JetBrains Mono',monospace">COMMIT</code> confirma y hace permanentes los cambios.</li>
+      <li><code style="color:var(--accent2);font-family:'JetBrains Mono',monospace">ROLLBACK</code> deshace todos los cambios de la transacción.</li>
+      <li>MySQL tiene <strong>autocommit = 1</strong> por defecto → cada sentencia se confirma sola.</li>
+      <li>Las sentencias <strong>DDL</strong> (CREATE, DROP, ALTER) hacen COMMIT implícito y no se pueden revertir.</li>
+      <li><code style="color:var(--accent4);font-family:'JetBrains Mono',monospace">SET autocommit = 0</code> para control manual sin START TRANSACTION.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  Apuntes generados para 1º DAM · Bases de Datos · Tema 05 — SQL Avanzado
+</footer>
+
+</body>
+</html>
