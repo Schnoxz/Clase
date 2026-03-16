@@ -1,4 +1,5 @@
 package src.Ejercicio2;
+
 import java.util.Random;
 
 public class juegoConecta4 {
@@ -60,10 +61,11 @@ public class juegoConecta4 {
 
     // Metodo que comprueba el ganado, recibiendo la fila y columna donde cayó la última ficha para saber dónde buscar, recorriendo la misma hasta llegar a 4 fichas seguidas
     private boolean comprobarGanador(int fila, int columna, char ficha) { // private porque solo lo uso en el jugar
-        int count = 0;
+        int count = 0; // Contador de fichas seguidas
+        // Al contrario que en el método de poner ficha, se recorre desde arriba hacia abajo
         // Recorrido horizontal de la fila donde cayó la úñtima ficha
         // Si encuentra 4 celdas seguidas con la misma ficha, hay ganador
-        for (int j = 0; j < COLUMNAS; j++) {
+        for (int j = 0; j < COLUMNAS; j++) { // de 0 a 9
             if (tablero[fila][j] == ficha) { // Si en la celda hay una ficha de ese jugador, se suma 1 al contador
                 count += 1;
             } else { // Si no se reinicia
@@ -73,12 +75,46 @@ public class juegoConecta4 {
                 return true;
             }
         }
-        count = 0; // Reinicio el contador, que ya me ha pasado de tener fallos y no saber por qué, no habia reiniciado el contador y seguia sumando verticalmente
+        count = 0; // Reinicio el contador, que ya me ha pasado de tener fallos y no saber por qué, no habia reiniciado el contador y seguia sumando verticalmente y demás
 
         // Ahora recorro verticalmente la columna donde ha caido la ficha
         // Igual que antes pero de forma vertical, se va contando cuantas fichas hay seguidas hasta llegar a 4
         for (int i = 0; i < FILAS; i++) {
             if (tablero[i][columna] == ficha) {
+                count += 1;
+            } else {
+                count = 0;
+            }
+            if (count == 4) {
+                return true;
+            }
+        }
+
+        count = 0; // Reinicio el contador,
+        // Recorro diagonla hacia abajo derehca
+        for (int i = 0; i < FILAS; i++) {
+            // Para el recorrido diagonal, se avanza siempre una casilla de cada, por ejemplo avanza una fila y columna pero un casilla hacia abajo, por lo que es igual que sumar fila e indice y restar columna para ir encontrando si hay 4 fichas iguales seguidas
+            int f = fila - columna + i;
+            if (f < 0 || f >= FILAS) {
+                continue; // Si se sumple la condición es que se sale del tablero y se pasa al siguiente
+            }
+            if (tablero[f][i] == ficha) {
+                count += 1;
+            } else {
+                count = 0;
+            }
+            if (count == 4) {
+                return true;
+            }
+        }
+
+        count = 0; // Reinicio el contador,
+        for (int i = 0; i < FILAS; i++) {
+            int f = fila + columna - i; // Recorro diagonal hacia abajo izquierda
+            if (f < 0 || f >= FILAS) {
+                continue;
+            }
+            if (tablero[f][i] == ficha) {
                 count += 1;
             } else {
                 count = 0;
