@@ -1,0 +1,77 @@
+PMV es Producto minimo viable, es decir, fase beta
+
+Pre alpha, alpha, beta, gamma, delta, RTM release to marketing, general availability, gold
+
+QA, control de garantias
+Diseñan y definen parametros de aceptacion, trabajan junto a los desarrolladores, presentes en todo el desarrollo, orientado al proceso, diseñan y ejecutan antes del producto final, pruebas en white box
+
+QC, control de calidad
+Control de comportamiento del producto final, trabajan con el QA, solo cuando acaba el producto, orientado al producto, ejecución en la pre producción, pruebas en black box
+
+Procedimiento de pruebas: 
+
+Introduccion
+Partes a probar
+Caracteristicas
+Criterios de validez
+Requerimientos de entorno
+Pasos para ejecutar las prueabs
+
+Tipos de pruebas:
+
+Caja blanca: analiza el codigo como se hace, estructural y reusabilidad
+- Pruebas de cubrimiento: ejecutar todas las lineas al menos una vez
+- Pruebas de condiciones: probar todas las condiciones y comprobar resultados
+- Pruebas de bucles: probar en bucle una cantidad especial de veces, como 1 o -1
+
+Caja negra: evalua lo que hace, pruebas funcionales, rendimiento y compatibilidad con los dispositivos
+
+- Pruebas de clase de equivalencia de datos: probar toda clase de datos validos e invalidos
+- Prueba de valores limite:generar valores que puedan probar que el programa funciona
+- Prueba de interfaces: probar el GUI como un usuario final, se comprueba la accesibilidad y usabilidad
+
+Regresivas: Cuando se realiza un cambio se comprueba que no estropee nada que ya funcionara antes
+
+
+Planificacion de pruebas, unitarias, aceptacion , integracion
+
+Herramientas de dupuracion Junit
+
+
+UI --> User Interface, apariencia y tactil con el que el usuario interactua, elementos graficos y colores
+
+UX --> User Experience, porqué de la estructura y experiencia de usuario final, crear productos que realmente sirvan y el usuario resuelva su problema.
+
+Si el portal web es feo pero funciona, te hace el apaño pero lo malo seria ser muy bonito y que no sirva para nada, el usuario no pueda consultar ni hacer nada dentro de la web porque o bien no funciona o está escondido y poco visible
+
+
+
+Producto Manager vs Product Owner
+
+PM es el que se encarga del producto cara al mercado y exterior, tiene una vision global de la estrategia y el negocio se basa en rentabilidad y objetivos de empresa, se entiende con los clientes y decide la funcionalidad del producto
+
+PO se orienta al desarrollo del producto junto a un equipo, trabajo SCRUM, traduce la vision del PM en tareas de desarrollo, tiene BACKLOG gestiona y prioriza tareas del equipo, maximiza el trabajo
+
+SCRUM
+framework agil y ligero para el desarrollo y mantenimiento, iterativo e incremental, el producto se construye en ciclos cortos llamados sprint
+
+Scrum master, organiza y modera, se asegura de que cumplan con el SCRUM y controla el proceso, 
+simplemente define como se trabaja y el que se trabaja
+
+Developer team, se encarga de la tarea principal basandose en el backlog, hay analistas diseñadores, programadores y tester
+
+Documentacion: Product Backlog, funcionalidad y requisitos del clientes. Scrum Backlog, subtareas del product backlog que el equipo se encarga de completar en un ciclo
+
+Sprint planning, el team y el Scrum master planifican soluciones para la fase en la que trabajan
+Daily meeting, reuniones berves en la que se planifica tareas diarias
+Sprint review, se presentan las tareas realizadas con el cliente, las pendientes y validan
+Sprint retrospective, reunion interna para feedback sobre el Sprint terminado, mejora y analisis de errores
+
+
+VSCode vs. VSCodium.
+
+VSCode es de Microsoft e incluye su famosa telemetría y su propia licencia
+VSCodium usa el mismo código pero de forma open source y con licencia MIT
+
+Casos de prueba vs casos de uso
+Validacion tecnica, flujo de uso como usuario final y la funcionalidad 
