@@ -1,0 +1,949 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║           JAVA — CUADERNO DE ESTUDIO Y REFERENCIA RÁPIDA           ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+Índice:
+  1.  Estructura de un programa Java
+  2.  Variables y tipos de datos
+  3.  Operadores
+  4.  Entrada de datos — Scanner
+  5.  Strings y sus métodos
+  6.  Control de flujo — condicionales
+  7.  Control de flujo — bucles
+  8.  Métodos
+  9.  Arrays unidimensionales
+  10. Matrices — arrays bidimensionales
+  11. Excepciones
+  12. POO — Clases y objetos
+  13. POO — Herencia
+  14. POO — Polimorfismo
+  15. POO — Sobrecarga
+  16. POO — Interfaces
+  17. Clases abstractas
+  18. Reglas de estilo y buenas prácticas
+
+
+══════════════════════════════════════════════════════════════════════
+1. ESTRUCTURA DE UN PROGRAMA JAVA
+══════════════════════════════════════════════════════════════════════
+
+public class MiPrograma {
+    public static void main(String[] args) {
+        // Aquí va tu código
+        System.out.println("Hola, mundo!");
+    }
+}
+
+REGLAS:
+  - El nombre del archivo debe coincidir exactamente con el nombre de la clase
+  - El método main es el punto de entrada, Java empieza aquí
+  - Cada instrucción termina con ;
+  - Las llaves { } delimitan bloques de código
+
+
+══════════════════════════════════════════════════════════════════════
+2. VARIABLES Y TIPOS DE DATOS
+══════════════════════════════════════════════════════════════════════
+
+TIPOS PRIMITIVOS:
+  int     numero = 25;           // entero
+  double  precio = 9.99;         // decimal
+  boolean activo = true;         // true o false
+  char    letra = 'A';           // un solo carácter, comillas simples
+
+TIPO REFERENCIA:
+  String  nombre = "Ana";        // texto, comillas dobles, empieza en mayúscula
+
+DECLARACIÓN SIN VALOR INICIAL:
+  int numero;                    // declarada pero no inicializada
+  int numero = 0;                // siempre mejor inicializar
+
+CONSTANTES (nunca cambian):
+  private static final int MAX_INTENTOS = 3;   // MAYÚSCULAS_CON_GUION
+  private static final double PI = 3.14159;
+
+CONVERSIÓN DE TIPOS (casting):
+  int    entero  = (int) 9.99;   // → 9, trunca el decimal
+  double decimal = (double) 5;   // → 5.0
+
+DIFERENCIA double vs Double:
+  double  → tipo primitivo (minúscula), más eficiente
+  Double  → clase objeto (mayúscula), usada en colecciones
+
+
+══════════════════════════════════════════════════════════════════════
+3. OPERADORES
+══════════════════════════════════════════════════════════════════════
+
+ARITMÉTICOS:
+  +   suma
+  -   resta
+  *   multiplicación
+  /   división
+  %   módulo (resto de la división) → 10 % 3 = 1
+
+  Atajo:
+  numero++;      // equivale a: numero = numero + 1
+  numero--;      // equivale a: numero = numero - 1
+  numero += 5;   // equivale a: numero = numero + 5
+  numero *= 2;   // equivale a: numero = numero * 2
+
+RELACIONALES (devuelven boolean):
+  ==   igual que        (para primitivos; para objetos usa .equals())
+  !=   distinto de
+  >    mayor que
+  <    menor que
+  >=   mayor o igual
+  <=   menor o igual
+
+LÓGICOS:
+  &&   AND → las dos condiciones deben ser true
+  ||   OR  → al menos una condición debe ser true
+  !    NOT → invierte el boolean
+
+OPERADOR TERNARIO (if/else en una línea):
+  tipo variable = condicion ? valorSiTrue : valorSiFalse;
+
+  Ejemplo:
+  String resultado = (edad >= 18) ? "Mayor de edad" : "Menor de edad";
+  int maxDias = esBisiesto(anio) ? 29 : 28;
+
+
+══════════════════════════════════════════════════════════════════════
+4. ENTRADA DE DATOS — SCANNER
+══════════════════════════════════════════════════════════════════════
+
+import java.util.Scanner;
+
+Scanner teclado = new Scanner(System.in);
+
+MÉTODOS:
+  teclado.nextLine()    // lee una línea completa de texto (String)
+  teclado.next()        // lee hasta el primer espacio
+  teclado.nextInt()     // lee un entero
+  teclado.nextDouble()  // lee un decimal
+
+REGLA DE ORO — mezclar nextInt() con nextLine():
+  Cuando usas nextInt() el ENTER queda pendiente en el buffer.
+  Si luego usas nextLine() recoge ese ENTER vacío y no pregunta nada.
+
+  SOLUCIÓN: añadir un nextLine() de limpieza después de nextInt():
+
+  int edad = teclado.nextInt();
+  teclado.nextLine();            // limpia el ENTER pendiente
+  String nombre = teclado.nextLine(); // ahora sí funciona
+
+CERRAR EL SCANNER cuando ya no lo necesitas:
+  teclado.close();
+
+
+══════════════════════════════════════════════════════════════════════
+5. STRINGS Y SUS MÉTODOS
+══════════════════════════════════════════════════════════════════════
+
+String texto = "Hola Mundo";
+
+MÉTODOS ÚTILES:
+  texto.length()                    // 10 → número de caracteres
+  texto.charAt(0)                   // 'H' → carácter en posición 0 (empieza en 0)
+  texto.toUpperCase()               // "HOLA MUNDO"
+  texto.toLowerCase()               // "hola mundo"
+  texto.trim()                      // elimina espacios al inicio y final
+  texto.substring(5)                // "Mundo" → desde posición 5 hasta el final
+  texto.substring(0, 4)             // "Hola" → de 0 a 4 sin incluir 4
+  texto.contains("Mundo")           // true
+  texto.startsWith("Hola")          // true
+  texto.endsWith("Mundo")           // true
+  texto.replace("Mundo", "Java")    // "Hola Java"
+  texto.isEmpty()                   // true si está vacío
+  texto.split(" ")                  // ["Hola", "Mundo"] → divide por espacios
+  texto.equals("Hola Mundo")        // true → SIEMPRE usa equals para comparar Strings
+  texto.equalsIgnoreCase("hola")    // true → ignora mayúsculas/minúsculas
+
+COMPARACIÓN — NUNCA uses == con Strings:
+  //  compara referencias de memoria, no el contenido
+  if (nombre == "Ana")
+
+  //  compara el contenido
+  if (nombre.equals("Ana"))
+
+FORMATEAR STRINGS con String.format():
+  String fecha = String.format("%02d/%02d/%d", dia, mes, anio);
+
+  Códigos de formato:
+    %d    → entero
+    %s    → String
+    %f    → decimal
+    %.2f  → decimal con 2 cifras
+    %02d  → entero con ceros a la izquierda (ej: 07)
+
+RECORRER UN STRING carácter a carácter:
+  for (int i = 0; i < texto.length(); i++) {
+      char c = texto.charAt(i);
+      // hacer algo con c
+  }
+
+COMPARAR CARACTERES:
+  char c = 'a';
+  if (c >= 'a' && c <= 'z') { } // es minúscula
+  if (c >= 'A' && c <= 'Z') { } // es mayúscula
+  if (c >= '0' && c <= '9') { } // es dígito
+
+CONVERTIR CARÁCTER a mayúscula manualmente:
+  letra = (char) (letra - ('a' - 'A'));
+
+
+══════════════════════════════════════════════════════════════════════
+6. CONTROL DE FLUJO — CONDICIONALES
+══════════════════════════════════════════════════════════════════════
+
+IF / ELSE IF / ELSE:
+  if (condicion) {
+      // se ejecuta si condicion es true
+  } else if (otraCondicion) {
+      // se ejecuta si la primera es false y esta es true
+  } else {
+      // se ejecuta si ninguna anterior fue true
+  }
+
+SWITCH:
+  switch (variable) {
+      case 1:
+          // código
+          break;
+      case 2:
+          // código
+          break;
+      case 4: case 6: case 9:   // varios casos juntos
+          // código
+          break;
+      default:
+          // si ningún case coincide
+  }
+
+  IMPORTANTE: sin break, Java sigue ejecutando el siguiente case (fall-through).
+
+
+══════════════════════════════════════════════════════════════════════
+7. CONTROL DE FLUJO — BUCLES
+══════════════════════════════════════════════════════════════════════
+
+FOR (cuando sabes cuántas veces repetir):
+  for (int i = 0; i < 10; i++) {
+      // i va de 0 a 9
+  }
+
+  // Partes del for:
+  for (inicio ; condición para continuar ; incremento)
+
+FOR-EACH (para recorrer arrays y colecciones):
+  for (int numero : arrayNumeros) {
+      System.out.println(numero);
+  }
+  for (String texto : arrayTextos) {
+      System.out.println(texto);
+  }
+
+WHILE (mientras se cumpla la condición):
+  while (condicion) {
+      // se repite mientras condicion sea true
+  }
+
+DO-WHILE (ejecuta al menos una vez, comprueba al final):
+  do {
+      // se ejecuta siempre al menos una vez
+  } while (condicion);
+
+  USO TÍPICO — pedir datos hasta que sean válidos:
+  int numero;
+  boolean valido;
+  do {
+      valido = true;
+      try {
+          System.out.print("Introduce un número: ");
+          numero = teclado.nextInt();
+          // validación
+      } catch (Exception e) {
+          System.out.println("Error: carácter inválido.");
+          teclado.nextLine(); // limpia el buffer
+          valido = false;
+      }
+  } while (!valido);
+
+BREAK Y CONTINUE:
+  break;     // sale del bucle inmediatamente
+  continue;  // salta al siguiente ciclo sin ejecutar lo que queda
+
+CUÁNDO USAR CADA UNO:
+  for       → sabes cuántas veces se repite
+  while     → se repite mientras algo sea cierto
+  do-while  → siempre ejecuta al menos una vez (pedir datos al usuario)
+
+
+══════════════════════════════════════════════════════════════════════
+8. MÉTODOS
+══════════════════════════════════════════════════════════════════════
+
+ESTRUCTURA:
+  [modificador] [static?] [tipo_retorno] nombreMetodo([parámetros]) {
+      // cuerpo
+      return valor; // solo si tipo_retorno != void
+  }
+
+EJEMPLOS:
+  public void mostrarInfo() { }                          // no devuelve nada
+  public int sumar(int a, int b) { return a + b; }       // devuelve int
+  public String getNombre() { return nombre; }           // devuelve String
+  public boolean esMayor(int edad) { return edad >= 18; } // devuelve boolean
+  public int[] invertir(int[] array) { return invertido; } // devuelve array
+
+TIPOS DE RETORNO:
+  void    → no devuelve nada
+  int     → devuelve entero
+  double  → devuelve decimal
+  String  → devuelve texto
+  boolean → devuelve true/false
+  int[]   → devuelve array de enteros
+
+MODIFICADORES DE ACCESO:
+  public    → cualquiera puede acceder
+  private   → solo la propia clase
+  protected → la clase y sus clases hijas (herencia)
+
+STATIC:
+  Con static    → se llama desde la clase: Clase.metodo()
+  Sin static    → necesitas un objeto: objeto.metodo()
+  En el main    → el main es static, solo puede llamar a otros métodos static
+                  o crear objetos y llamar a sus métodos
+
+THIS:
+  this.nombre = nombre;  // distingue atributo de parámetro con mismo nombre
+
+PASO POR VALOR (tipos primitivos):
+  El método recibe una copia, el original no se modifica.
+  Si quieres el resultado, el método debe devolverlo con return.
+
+  int n = 5;
+  duplicar(n);           // n sigue siendo 5
+  n = duplicar(n);       // ahora n vale 10
+
+
+══════════════════════════════════════════════════════════════════════
+9. ARRAYS UNIDIMENSIONALES
+══════════════════════════════════════════════════════════════════════
+
+DECLARACIÓN:
+  int[]    numeros  = new int[5];             // 5 enteros, todos a 0
+  double[] decimales = new double[3];         // 3 decimales, todos a 0.0
+  String[] textos   = new String[4];          // 4 Strings, todos a null
+
+  int[]    numeros  = {10, 20, 30, 40, 50};   // con valores
+  String[] dias     = {"Lunes", "Martes", "Miércoles"};
+
+ACCESO:
+  numeros[0]          // primer elemento (índice empieza en 0)
+  numeros[4]          // quinto elemento
+  numeros.length      // número de elementos del array
+
+MODIFICAR:
+  numeros[2] = 99;    // cambia el tercer elemento
+
+RECORRER — for clásico (cuando necesitas el índice):
+  for (int i = 0; i < numeros.length; i++) {
+      System.out.println(numeros[i]);
+  }
+
+RECORRER — for-each (cuando solo necesitas el valor):
+  for (int numero : numeros) {
+      System.out.println(numero);
+  }
+
+MOSTRAR ARRAY completo:
+  import java.util.Arrays;
+  System.out.println(Arrays.toString(numeros)); // [10, 20, 30, 40, 50]
+
+ORDENAR:
+  Arrays.sort(numeros); // ordena de menor a mayor
+
+PASAR UN ARRAY A UN MÉTODO:
+  public static void mostrar(int[] array) { }
+  mostrar(numeros);
+
+DEVOLVER UN ARRAY DESDE UN MÉTODO:
+  public static int[] invertir(int[] original) {
+      int[] invertido = new int[original.length];
+      for (int i = 0; i < original.length; i++) {
+          invertido[i] = original[original.length - 1 - i];
+      }
+      return invertido;
+  }
+
+MAYOR Y MENOR en un array:
+  int mayor = numeros[0];
+  int menor = numeros[0];
+  for (int i = 1; i < numeros.length; i++) {
+      if (numeros[i] > mayor) mayor = numeros[i];
+      if (numeros[i] < menor) menor = numeros[i];
+  }
+
+
+═══════════════════════════════════════════════════════════════════════
+10. MATRICES — ARRAYS BIDIMENSIONALES
+══════════════════════════════════════════════════════════════════════
+
+DECLARACIÓN:
+  int[][] matriz = new int[3][4];   // 3 filas, 4 columnas
+
+  int[][] matriz = {
+      {1, 2, 3},
+      {4, 5, 6},
+      {7, 8, 9}
+  };
+
+ACCESO → [fila][columna] (ambos empiezan en 0):
+  matriz[0][0]   // 1 → fila 0, columna 0
+  matriz[1][2]   // 6 → fila 1, columna 2
+  matriz[2][1]   // 8 → fila 2, columna 1
+
+TAMAÑO:
+  matriz.length       // número de filas
+  matriz[0].length    // número de columnas de la fila 0
+
+RECORRER con bucle anidado:
+  for (int i = 0; i < matriz.length; i++) {
+      for (int j = 0; j < matriz[i].length; j++) {
+          System.out.print(matriz[i][j] + " ");
+      }
+      System.out.println(); // salto de línea al acabar cada fila
+  }
+
+RECORRER con for-each:
+  for (int[] fila : matriz) {
+      for (int valor : fila) {
+          System.out.print(valor + " ");
+      }
+      System.out.println();
+  }
+
+MOSTRAR MATRIZ ALINEADA con printf:
+  for (int[] fila : matriz) {
+      for (int valor : fila) {
+          System.out.printf("%4d", valor); // cada número ocupa 4 espacios
+      }
+      System.out.println();
+  }
+  // Resultado:
+  //    1   2   3
+  //    4   5   6
+  //    7   8   9
+
+RELLENAR DESDE TECLADO:
+  public static int[][] pedirMatriz(String nombre, int filas, int columnas) {
+      int[][] matriz = new int[filas][columnas];
+      System.out.println("Introduce los valores de la matriz " + nombre + ":");
+      for (int i = 0; i < filas; i++) {
+          for (int j = 0; j < columnas; j++) {
+              boolean valido;
+              do {
+                  valido = true;
+                  try {
+                      System.out.print("  " + nombre + "[" + i + "][" + j + "]: ");
+                      matriz[i][j] = teclado.nextInt();
+                  } catch (Exception e) {
+                      System.out.println("  Error: solo se permiten números.");
+                      teclado.nextLine();
+                      valido = false;
+                  }
+              } while (!valido);
+          }
+      }
+      return matriz;
+  }
+
+DIAGONAL PRINCIPAL (solo matrices cuadradas):
+  for (int i = 0; i < matriz.length; i++) {
+      System.out.println(matriz[i][i]); // fila == columna
+  }
+
+TRANSPUESTA (intercambia filas por columnas):
+  int[][] transpuesta = new int[cols][filas];
+  for (int i = 0; i < matriz.length; i++) {
+      for (int j = 0; j < matriz[i].length; j++) {
+          transpuesta[j][i] = matriz[i][j];
+      }
+  }
+
+SUMA DE DOS MATRICES (mismas dimensiones):
+  // Cada posición del resultado = misma posición de A + misma posición de B
+  int[][] resultado = new int[a.length][a[0].length];
+  for (int i = 0; i < a.length; i++) {
+      for (int j = 0; j < a[i].length; j++) {
+          resultado[i][j] = a[i][j] + b[i][j];
+      }
+  }
+
+BUSCAR EL MAYOR (empieza siempre con el primer elemento):
+  int mayor = matriz[0][0];         // nunca uses 0, puede haber negativos
+  for (int[] fila : matriz) {
+      for (int valor : fila) {
+          if (valor > mayor) {
+              mayor = valor;
+          }
+      }
+  }
+
+LLAMAR A MÉTODOS DE OTRA CLASE:
+  // Si los métodos están en GestorMatriz → NombreClase.metodo()
+  int[][] matrizA = GestorMatriz.pedirMatriz("A", 3, 3);
+  GestorMatriz.mostrarMatriz(matrizA);
+
+  // La suma devuelve una matriz, no un valor → nunca imprimas directamente
+  // ERROR:
+        System.out.println(GestorMatriz.sumarMatrices(a, b)); → imprime referencia
+  // CORRECTO:
+        System.out.println("Suma:"); GestorMatriz.mostrarMatriz(GestorMatriz.sumarMatrices(matrizA, matrizB));
+
+
+
+══════════════════════════════════════════════════════════════════════
+11. EXCEPCIONES
+══════════════════════════════════════════════════════════════════════
+
+LOS TRES MOMENTOS:
+
+  1. DEFINES la excepción (clase propia):
+     public class MiExcepcion extends Exception {
+         public MiExcepcion(String mensaje) {
+             super(mensaje);
+         }
+     }
+
+  2. LANZAS la excepción cuando algo falla (throw):
+     public void metodo(int valor) throws MiExcepcion {
+         if (valor < 0) {
+             throw new MiExcepcion("El valor no puede ser negativo.");
+         }
+         // código normal
+     }
+
+  3. CAPTURAS y gestionas (try/catch):
+     try {
+         metodo(-5);
+     } catch (MiExcepcion e) {
+         System.out.println("Error: " + e.getMessage());
+     } catch (Exception e) {
+         System.out.println("Error inesperado: " + e.getMessage());
+     } finally {
+         // se ejecuta siempre, haya error o no (opcional)
+     }
+
+REGLAS:
+  - throws en la firma → el método avisa que puede fallar
+  - Si capturas la excepción dentro del método → no necesitas throws
+  - Si la dejas subir al que te llama → necesitas throws
+  - Siempre captura primero las más específicas y luego Exception
+  - El main nunca debe propagarla con throws, siempre capturarla
+
+CHECKED vs UNCHECKED:
+  Checked   (extends Exception)        → Java te obliga a capturarla
+  Unchecked (extends RuntimeException) → Java no te obliga
+
+  Para validaciones de usuario → usa Checked
+  Para errores de programación → usa Unchecked
+
+EXCEPCIONES COMUNES DE JAVA:
+  NullPointerException        → accediste a algo que es null
+  ArrayIndexOutOfBoundsException → índice fuera del rango del array
+  NumberFormatException       → intentaste convertir un String no numérico
+  ClassCastException          → conversión de tipos incompatible
+  InputMismatchException      → el usuario introdujo el tipo incorrecto en Scanner
+
+
+══════════════════════════════════════════════════════════════════════
+12. POO — CLASES Y OBJETOS
+══════════════════════════════════════════════════════════════════════
+
+ESTRUCTURA DE UNA CLASE:
+  public class Persona {
+
+      // ATRIBUTOS (siempre private)
+      private String nombre;
+      private int edad;
+
+      // CONSTRUCTOR (mismo nombre que la clase, sin tipo de retorno)
+      public Persona(String nombre, int edad) {
+          this.nombre = nombre;
+          this.edad = edad;
+      }
+
+      // GETTERS (public, devuelven el valor del atributo)
+      public String getNombre() { return nombre; }
+      public int getEdad()      { return edad; }
+
+      // SETTERS (public, reciben el nuevo valor)
+      public void setNombre(String nombre) { this.nombre = nombre; }
+      public void setEdad(int edad) {
+          if (edad >= 0) {         // el setter puede validar
+              this.edad = edad;
+          }
+      }
+
+      // MÉTODOS (comportamientos del objeto)
+      public void saludar() {
+          System.out.println("Hola, soy " + nombre);
+      }
+
+      public boolean esMayorDeEdad() {
+          return edad >= 18;
+      }
+  }
+
+CREAR Y USAR UN OBJETO:
+  Persona p = new Persona("Ana", 25);  // new → crea el objeto
+  p.saludar();                         // llama al método
+  String nombre = p.getNombre();       // usa el getter
+  p.setEdad(26);                       // usa el setter
+
+REGLA DE ORO:
+  Atributos → siempre private
+  Métodos   → siempre public (salvo los auxiliares internos → private)
+  Constructor → solo inicializa atributos, nada más
+
+THIS:
+  this.nombre = nombre;  // this = este objeto, distingue atributo de parámetro
+
+CUÁNDO PONER SETTER:
+  ¿Puede cambiar este dato después de crear el objeto?
+    Sí → getter + setter
+    No → solo getter
+
+ESTRUCTURA DE FICHEROS:
+  Cada clase va en su propio archivo .java
+  El nombre del archivo debe coincidir exactamente con el nombre de la clase
+
+
+══════════════════════════════════════════════════════════════════════
+13. POO — HERENCIA
+══════════════════════════════════════════════════════════════════════
+
+CONCEPTO:
+  Una clase hija hereda todos los atributos y métodos public/protected
+  de la clase padre. No hereda los private.
+
+SINTAXIS:
+  public class Hijo extends Padre { }
+
+SUPER:
+  super(params)       → llama al constructor del padre (siempre primera línea)
+  super.metodo()      → llama a un método del padre desde la hija
+
+EJEMPLO:
+  public class Animal {
+      private String nombre;
+      private int edad;
+
+      public Animal(String nombre, int edad) {
+          this.nombre = nombre;
+          this.edad = edad;
+      }
+
+      public void mostrarInfo() {
+          System.out.println("Nombre: " + nombre);
+          System.out.println("Edad: " + edad);
+      }
+
+      public String getNombre() { return nombre; }
+      public int getEdad()      { return edad; }
+  }
+
+  public class Perro extends Animal {
+      private String raza;
+
+      public Perro(String nombre, int edad, String raza) {
+          super(nombre, edad);   // llama al constructor de Animal
+          this.raza = raza;
+      }
+
+      @Override
+      public void mostrarInfo() {
+          super.mostrarInfo();                    // reutiliza el del padre
+          System.out.println("Raza: " + raza);   // añade lo suyo
+      }
+  }
+
+HERENCIA MULTINIVEL (cadena de llamadas):
+  GerenteTecnico extends Gerente extends Empleado
+
+  gerenteTecnico.mostrarInfo()
+    → super → Gerente.mostrarInfo()
+        → super → Empleado.mostrarInfo()
+            → imprime nombre, salario, departamento
+        → imprime numEmpleadosACargo
+    → imprime areasTecnicas
+
+REGLAS:
+  - Una clase solo puede extender UNA clase (herencia simple)
+  - super() debe ser la primera línea del constructor hijo
+  - Los atributos private del padre NO son accesibles directamente
+    en la hija, solo a través de getters
+
+
+══════════════════════════════════════════════════════════════════════
+14. POO — POLIMORFISMO
+══════════════════════════════════════════════════════════════════════
+
+CONCEPTO:
+  El mismo método se comporta diferente según el objeto que lo ejecuta.
+
+@OVERRIDE — sobreescritura:
+  La hija redefine un método del padre con la misma firma.
+
+  public class Animal {
+      public void hacerSonido() {
+          System.out.println("...");
+      }
+  }
+
+  public class Perro extends Animal {
+      @Override
+      public void hacerSonido() {
+          System.out.println("Guau!");
+      }
+  }
+
+  public class Gato extends Animal {
+      @Override
+      public void hacerSonido() {
+          System.out.println("Miau!");
+      }
+  }
+
+EL PODER DEL POLIMORFISMO — array de tipo padre:
+  Animal[] animales = new Animal[3];
+  animales[0] = new Perro("Rex", 3, "Pastor Alemán");
+  animales[1] = new Gato("Luna", 2, false);
+  animales[2] = new Perro("Toby", 5, "Labrador");
+
+  for (Animal animal : animales) {
+      animal.hacerSonido(); // cada uno hace su sonido propio
+  }
+  // Guau! / Miau! / Guau!
+
+INSTANCEOF — comprobar el tipo real:
+  if (animal instanceof Perro) {
+      Perro perro = (Perro) animal;  // casting
+      System.out.println(perro.getRaza());
+  }
+
+
+══════════════════════════════════════════════════════════════════════
+15. POO — SOBRECARGA (OVERLOAD)
+══════════════════════════════════════════════════════════════════════
+
+CONCEPTO:
+  Mismo nombre de método en la misma clase, distintos parámetros.
+  Java elige cuál usar según lo que le pases.
+
+EJEMPLO:
+  public class Calculadora {
+
+      public int sumar(int a, int b) {
+          return a + b;
+      }
+
+      public double sumar(double a, double b) {
+          return a + b;
+      }
+
+      public int sumar(int a, int b, int c) {
+          return a + b + c;
+      }
+  }
+
+  sumar(2, 3)        → usa el primero   → 5
+  sumar(2.0, 3.5)    → usa el segundo   → 5.5
+  sumar(1, 2, 3)     → usa el tercero   → 6
+
+DIFERENCIA SOBRECARGA vs SOBREESCRITURA:
+                    Sobrecarga          Sobreescritura (@Override)
+  Dónde:           misma clase          padre → hija
+  Nombre:          igual                igual
+  Parámetros:      distintos            iguales
+  Anotación:       ninguna              @Override
+
+
+══════════════════════════════════════════════════════════════════════
+16. POO — INTERFACES
+══════════════════════════════════════════════════════════════════════
+
+CONCEPTO:
+  Una interfaz define un CONTRATO: qué métodos debe tener una clase,
+  sin implementar cómo lo hace. Es como una promesa: "si implementas
+  esta interfaz, garantizas que tienes estos métodos".
+
+CUÁNDO USAR:
+  - Herencia → "es un tipo de" (Perro ES UN Animal)
+  - Interfaz → "puede hacer" (Perro PUEDE hacer Nadar, Correr)
+  - Una clase puede implementar MÚLTIPLES interfaces (soluciona la
+    limitación de herencia simple)
+
+DEFINIR UNA INTERFAZ:
+  public interface Volador {
+      void volar();                           // abstracto por defecto
+      double calcularVelocidadMaxima();        // abstracto por defecto
+
+      default void aterrizar() {              // método con implementación
+          System.out.println("Aterrizando...");
+      }
+  }
+
+  public interface Nadador {
+      void nadar();
+  }
+
+IMPLEMENTAR UNA INTERFAZ:
+  public class Pato extends Animal implements Volador, Nadador {
+
+      @Override
+      public void volar() {
+          System.out.println("El pato vuela bajo");
+      }
+
+      @Override
+      public double calcularVelocidadMaxima() {
+          return 80.0;
+      }
+
+      @Override
+      public void nadar() {
+          System.out.println("El pato nada");
+      }
+  }
+
+USO POLIMÓRFICO con interfaces:
+  Volador[] voladores = new Volador[2];
+  voladores[0] = new Pato("Donald", 3);
+  voladores[1] = new Aguila("Sam", 5);
+
+  for (Volador v : voladores) {
+      v.volar();
+  }
+
+REGLAS:
+  - Los métodos de una interfaz son public abstract por defecto
+  - Una clase puede implementar múltiples interfaces separadas por coma
+  - Una clase DEBE implementar todos los métodos de la interfaz
+    (salvo los default)
+  - Una interfaz puede extender otra interfaz con extends
+
+
+══════════════════════════════════════════════════════════════════════
+17. CLASES ABSTRACTAS
+══════════════════════════════════════════════════════════════════════
+
+CONCEPTO:
+  A medio camino entre clase normal e interfaz.
+  Puede tener métodos implementados Y métodos abstractos (sin implementar).
+  NO se puede instanciar (no puedes hacer new ClaseAbstracta()).
+
+CUÁNDO USAR:
+  Interfaz       → solo define el contrato, sin implementación
+  Clase abstracta → define el contrato PERO comparte código común
+  Clase normal   → implementación completa, se puede instanciar
+
+EJEMPLO:
+  public abstract class Figura {
+      private String color;
+
+      public Figura(String color) {
+          this.color = color;
+      }
+
+      // Método abstracto → las hijas DEBEN implementarlo
+      public abstract double calcularArea();
+      public abstract double calcularPerimetro();
+
+      // Método normal → compartido por todas las hijas
+      public void mostrarInfo() {
+          System.out.println("Color: " + color);
+          System.out.println("Área: " + calcularArea());
+      }
+
+      public String getColor() { return color; }
+  }
+
+  public class Circulo extends Figura {
+      private double radio;
+
+      public Circulo(String color, double radio) {
+          super(color);
+          this.radio = radio;
+      }
+
+      @Override
+      public double calcularArea() {
+          return Math.PI * radio * radio;
+      }
+
+      @Override
+      public double calcularPerimetro() {
+          return 2 * Math.PI * radio;
+      }
+  }
+
+RESUMEN DE CUÁNDO USAR CADA UNO:
+  Clase normal    → objeto completo con estado y comportamiento
+  Clase abstracta → base común con algo sin implementar
+  Interfaz        → contrato puro, sin estado
+
+
+══════════════════════════════════════════════════════════════════════
+18. REGLAS DE ESTILO Y BUENAS PRÁCTICAS
+══════════════════════════════════════════════════════════════════════
+
+NOMBRES:
+  Clases          → PascalCase:     MiClase, CocheElectrico
+  Métodos         → camelCase:      calcularBonus(), getNombre()
+  Variables       → camelCase:      velocidadActual, numEmpleados
+  Constantes      → MAYÚSCULAS:     MAX_INTENTOS, AÑO_ACTUAL
+  Paquetes        → minúsculas:     com.empresa.proyecto
+
+PRINCIPIOS BÁSICOS:
+  - Un archivo = una clase pública
+  - Una clase = una responsabilidad (SRP)
+  - Atributos siempre private
+  - Métodos auxiliares internos → private
+  - Métodos de uso externo → public
+  - El constructor solo inicializa atributos
+  - El main solo crea objetos y llama métodos, sin lógica suelta
+  - Cada método hace una sola cosa
+  - No repitas código, extráelo a un método
+
+IMPORTS:
+  import java.util.Scanner;        //  importa solo lo necesario
+  import java.util.*;              //  importa todo el paquete
+
+COMENTARIOS:
+  // Comentario de una línea
+  /* Comentario
+     de varias líneas */
+
+  Comenta el POR QUÉ, no el QUÉ:
+  //  Limpiamos el buffer para que nextLine() funcione después de nextInt()
+  teclado.nextLine();
+
+  //   obvio e innecesario
+  // incrementamos i en 1
+  i++;
+
+ESTRUCTURA RECOMENDADA DE UNA CLASE:
+  1. Atributos (private)
+  2. Constructor(es)
+  3. Getters
+  4. Setters
+  5. Métodos de negocio
+  6. Métodos auxiliares (private)
+  7. toString() si es necesario
+
+══════════════════════════════════════════════════════════════════════
+══════════════════════════════════════════════════════════════════════
