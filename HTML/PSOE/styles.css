@@ -1,148 +1,889 @@
+/* =============================================
+   VARIABLES GLOBALES
+   Cambia aquí los colores y afecta a toda la web
+============================================= */
+:root {
+  --rojo:        #c0392b;
+  --rojo-dark:   #96281b;
+  --rojo-light:  #e74c3c;
+  --rojo-fondo:  #e00e0e;
+  --negro:       #111318;
+  --gris-oscuro: #2c2c2c;
+  --gris-medio:  #6b7280;
+  --gris-borde:  #e2e2e6;
+  --gris-fondo:  #f4f4f5;
+  --blanco:      #ffffff;
+  --fuente-titulo: 'Oswald', sans-serif;
+  --fuente-cuerpo: 'Source Sans 3', system-ui, sans-serif;
+}
 
+/* =============================================
+   RESET Y BASE
+============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-/* Estilos base de la página: márgenes, tipografía y color de fondo */
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: #f3f7fb; /* color de fondo  */
-  color: #111;
+  font-family: var(--fuente-cuerpo);
+  background: var(--gris-fondo);
+  color: var(--negro);
+  line-height: 1.6;
 }
 
-/* Cabecera: fondo sólido, color de texto y padding */
+a    { color: inherit; text-decoration: none; }
+img  { display: block; max-width: 100%; }
+ul   { list-style: none; }
+s    { opacity: 0.6; }
+
+/* =============================================
+   CABECERA
+   3 columnas flex: izquierda | centro | derecha
+   Las columnas laterales tienen flex:1 para que
+   el centro quede matemáticamente centrado
+============================================= */
 header {
-  background: #e00e0e; /* color rojo para el fondo de la cabecera */
-  color: #fff;         /* color blanco para el texto */
-  padding: 1px 1px; 
-  margin: 0 auto; 
-  height: 240px;  
-  flex-wrap: wrap;
+  background: var(--rojo-fondo);
+  color: var(--blanco);
 }
 
-/* Imagen dentro de la cabecera */
-  header img {
-  max-width: 220px;
-  height: auto;
-  display: inline-block;
-  margin: 0;
-}
-
-
-/* Contenedor lateral dentro del header: alineación y ajustes de imagen */
-.header-side {
-  position: absolute; 
-  top: 8px;          
-  left: 8px;          
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
   margin: 0 auto;
-  text-align: left;
+  padding: 0 24px;
+  height: 200px;
 }
 
-/* ajustar tamaño para que quede a la misma altura visual que el logo */
-.header-side img {
-  max-height: 400px;  
-  height: auto;
+/* Misma proporción en ambos lados → centro queda centrado */
+.header-col-izq,
+.header-col-der {
+  flex: 1;
+}
+
+.header-col-der {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.header-col-centro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+/* Lema superior pequeño */
+.header-lema {
+  font-size: 0.72rem;
+  opacity: 0.7;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Título principal con Oswald */
+.header-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Logo PSOE */
+.header-logo {
+  height: 64px;
+  width: auto;
+  background: rgba(0,0,0,0.18);
+  border-radius: 6px;
+  padding: 4px 6px;
+  transition: transform 0.2s;
+}
+
+.header-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Sublema con tachado irónico */
+.header-sublema {
+  font-size: 0.78rem;
+  opacity: 0.75;
+  letter-spacing: 0.05em;
+}
+
+/* Foto de Sánchez */
+.header-foto {
+  max-height: 200px;
+  width: auto;
+  filter: drop-shadow(2px 6px 10px rgba(0,0,0,0.35));
+  transition: transform 0.25s;
+}
+
+.header-foto:hover {
+  transform: scale(1.04);
+}
+
+/* =============================================
+   NAVEGACIÓN STICKY
+   Se pega al top al hacer scroll gracias a sticky
+   z-index alto para quedar encima del contenido
+============================================= */
+.nav-principal {
+  background: #900;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-top: 3px solid rgba(255,255,255,0.15);
+}
+
+.nav-principal a {
+  color: var(--blanco);
+  padding: 13px 28px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border-bottom: 3px solid transparent;   /* reserva espacio sin mover el texto */
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nav-principal a:hover {
+  background: var(--rojo);
+  border-bottom-color: var(--blanco);
+}
+
+/* =============================================
+   CARRUSEL HERO — técnica del tren
+   .hero-tren mide 300%, las 3 diapositivas en fila
+   @keyframes mueve el tren con translateX
+   overflow:hidden oculta lo que está fuera del área
+   → nunca se ve negro porque no hay hueco entre imágenes
+============================================= */
+@keyframes tren {
+  0%            { transform: translateX(0); }
+  28%           { transform: translateX(0); }           /* dia-1 visible */
+  33%           { transform: translateX(-33.333%); }    /* desliza a dia-2 */
+  61%           { transform: translateX(-33.333%); }    /* dia-2 visible */
+  66%           { transform: translateX(-66.666%); }    /* desliza a dia-3 */
+  94%           { transform: translateX(-66.666%); }    /* dia-3 visible */
+  99%           { transform: translateX(-66.666%); }
+  99.01%, 100%  { transform: translateX(0); }           /* salto invisible al inicio */
+}
+
+.hero-carrusel {
+  width: 100%;
+  height: 360px;
+  overflow: hidden;    /* solo se ve 1/3 del tren */
+  position: relative;
+}
+
+/* El tren: 300% de ancho, las 3 fotos pegadas en fila */
+.hero-tren {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  animation: tren 15s ease-in-out infinite;
+}
+
+/* Cada diapositiva = 1/3 del tren = 100% del área visible */
+.hero-dia {
+  width: 33.333%;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* La imagen cubre toda la diapositiva sin deformarse */
+.hero-dia-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
   display: block;
 }
 
-.hero-banner {
-  margin-top: 120px;    /* ajusta si hace falta */
+/* Degradado oscuro encima de la imagen — para que el texto se lea
+   ::after crea una capa virtual sin HTML extra */
+.hero-dia::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.05) 0%,
+    rgba(0,0,0,0.70) 100%
+  );
+}
+
+/* Contenedor del texto — encima del ::after con z-index */
+.hero-dia-overlay {
+  position: absolute;
+  bottom: 36px;
+  left: 0;
+  right: 0;
+  padding: 0 64px;
+  color: var(--blanco);
+  text-align: center;
   z-index: 1;
-  background-repeat: no-repeat;
-  background-position: center top; /* centra y sitúa en la parte superior */
-  background-size: contain;        /* muestra la imagen completa sin recortar */
-  min-height: 320px;               /* fuerza altura suficiente para la imagen */
-  padding: 2rem 1rem;              /* espacio interior (opcional) */
 }
 
-/* Caja superior fija para introducir un nombre */
-#name-box {
-  position: fixed;             
-  top: 12px;                   
-  right: 12px;                 
-  width: 220px;              
-  background: #fff;            
-  border: 1px solid #ccc;      
-  padding: 8px;               
-  border-radius: 6px;         
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);    
-  font-family: sans-serif;     
+/* Etiqueta de categoría */
+.hero-dia-tag {
+  display: inline-block;
+  background: var(--rojo);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-bottom: 10px;
 }
 
-/* Input dentro de la caja de nombre: ocupa todo el ancho y tiene padding */
-#name-box input {
-  width: 100%;
-  padding: 6px;
-  margin-bottom: 6px;
-  box-sizing: border-box; /* incluye padding en el cálculo del ancho */
+/* Titular de la noticia */
+.hero-dia-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.55);
+  max-width: 700px;
+  margin: 0 auto 16px;
 }
 
-/* Botón dentro de la caja de nombre: ancho completo */
-#name-box button {
-  width: 100%;
-  padding: 6px;
+/* Botón de enlace */
+.hero-dia-enlace {
+  display: inline-block;
+  background: var(--blanco);
+  color: var(--rojo);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 9px 22px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  transition: background 0.2s, color 0.2s;
 }
 
-/* Contenedor principal: ancho máximo y márgenes automáticos para centrar */
-main {
+.hero-dia-enlace:hover {
+  background: var(--rojo);
+  color: var(--blanco);
+}
+
+/* =============================================
+   TICKER DE NOTICIAS
+   @keyframes mueve el texto de derecha a izquierda
+   animation-duration largo para que se lea bien
+============================================= */
+@keyframes ticker {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(-100%); }
+}
+
+.ticker-wrap {
+  background: var(--negro);
+  overflow: hidden;
+  padding: 10px 0;
+  border-bottom: 2px solid var(--rojo);
+}
+
+.ticker-inner {
+  display: inline-flex;
+  gap: 80px;
+  white-space: nowrap;
+  animation: ticker 35s linear infinite;
+}
+
+.ticker-inner span {
+  color: var(--blanco);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* =============================================
+   ESTILOS COMUNES DE SECCIONES
+   .seccion-cabecera, .seccion-titulo, .seccion-sub
+   se reutilizan en todas las secciones
+============================================= */
+.seccion-noticias,
+.seccion-imputados,
+.seccion-dinero,
+.seccion-org,
+.seccion-contador {
   max-width: 1100px;
-  margin: 20px auto; /* separación superior e inferior, centrado horizontal */
-  padding: 0 16px 40px; /* padding lateral y espacio inferior */
+  margin: 2.5rem auto;
+  padding: 0 24px;
 }
 
-/* Lista principal: fondo blanco, borde y separaciones, centrado del texto */
-ul {
-  text-align: center;          /* centra el texto dentro de la caja de la lista */
-  background: #fff;            /* fondo de la lista */
-  border: 1px solid #e0e6ef;   /* borde suave */
-  padding: 12px 16px;          /* espacio interior */
-  border-radius: 8px;          /* esquinas redondeadas */
-  list-style: none;          
-  margin: 12px 0 0 0;          /* separación superior */
+.seccion-cabecera {
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--rojo);
+  padding-left: 14px;
 }
 
-/* Cada elemento de la lista: usamos flex para centrar horizontal/verticalmente */
-ul li {
-  display: flex;                       /* hace el li un contenedor flex */
-  align-items: center;                 /* centra verticalmente el contenido */
-  justify-content: center;             /* centra horizontalmente el contenido */
-  padding: 10px 0;                      /* separación vertical dentro del li */
-  border-bottom: 1px dashed #eef3fb;  
+.seccion-titulo {
+  font-family: var(--fuente-titulo);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--negro);
+  line-height: 1.1;
 }
 
-
- .lista-nombres {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-  }
-
-  .lista-nombres button {
-    background-color: #fa0f0f; /* Verde */
-      width: 500px;
-      color: white;
-      border:0;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-  }
-
-  .lista-nombres button:hover {
-    background-color: purple;
-  }
-
-  .lista-nombres button.destacado {
-    background-color: #4caf50;
-    color: white;
-  }
-
-
-footer {
- color: #9d0eb9;
+.seccion-sub {
+  font-size: 0.88rem;
+  color: var(--gris-medio);
+  margin-top: 4px;
 }
 
+/* =============================================
+   SECCIÓN NOTICIAS
+   Grid de 3 columnas, se adapta a 1 en móvil
+============================================= */
+.noticias-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
 
+.noticia-card {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.noticia-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.noticia-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.noticia-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.35s;
+}
+
+.noticia-card:hover .noticia-img {
+  transform: scale(1.04);
+}
+
+/* Etiqueta de categoría sobre la imagen */
+.noticia-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.noticia-tag-viral {
+  background: #7c3aed;  /* morado para "viral" — diferente del rojo habitual */
+}
+
+.noticia-caption {
+  padding: 14px 16px 18px;
+}
+
+.noticia-fecha {
+  font-size: 0.74rem;
+  color: var(--gris-medio);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.noticia-titular {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--negro);
+  margin-bottom: 12px;
+}
+
+.noticia-enlace {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--rojo);
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s;
+}
+
+.noticia-enlace:hover {
+  opacity: 0.7;
+}
+
+/* =============================================
+   CONTENIDO PRINCIPAL (main)
+============================================= */
+.contenido-principal {
+  background: var(--gris-fondo);
+}
+
+/* =============================================
+   SECCIÓN IMPUTADOS
+   Grid auto-fill: los botones se colocan solos
+   según el ancho disponible
+============================================= */
+.seccion-imputados {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 28px 32px;
+  max-width: 1100px;
+}
+
+.lista-imputados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.btn-imputado {
+  width: 100%;
+  background: var(--gris-fondo);
+  color: var(--negro);
+  border: 1.5px solid var(--gris-borde);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+/* Punto rojo decorativo antes del nombre */
+.btn-imputado::before {
+  content: '●';
+  color: var(--rojo);
+  margin-right: 8px;
+  font-size: 0.6rem;
+  vertical-align: middle;
+}
+
+.btn-imputado:hover {
+  background: #fff0f0;
+  border-color: var(--rojo-light);
+  color: var(--rojo-dark);
+  transform: translateX(3px);   /* pequeño desplazamiento al hacer hover */
+}
+
+/* Botones de condenados en firme — color más oscuro */
+.btn-condenado {
+  background: #fff0f0;
+  border-color: var(--rojo);
+  color: var(--rojo-dark);
+}
+
+.btn-condenado:hover {
+  background: var(--rojo);
+  color: var(--blanco);
+}
+
+/* Leyenda de colores */
+.leyenda {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.leyenda-item {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.leyenda-rojo  { background: var(--gris-fondo); border: 1.5px solid var(--gris-borde); color: var(--gris-oscuro); }
+.leyenda-oscuro { background: #fff0f0; border: 1.5px solid var(--rojo); color: var(--rojo-dark); }
+
+/* =============================================
+   SECCIÓN DINERO — gráfico de barras CSS
+   .grafico-label ancho fijo → barras alineadas
+   .barra-wrap flex:1 → ocupa el resto del ancho
+   .barra width% en el HTML → longitud proporcional
+============================================= */
+.seccion-dinero {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 28px 32px;
+}
+
+.grafico {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.grafico-fila {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.grafico-label {
+  width: 150px;
+  flex-shrink: 0;           /* no se encoge en pantallas pequeñas */
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: right;
+  color: var(--gris-oscuro);
+}
+
+.barra-wrap {
+  flex: 1;
+  background: var(--gris-fondo);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barra {
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 9px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  min-width: 70px;
+  transition: width 0.5s ease;
+}
+
+/* Total destacado al final del gráfico */
+.grafico-total {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--gris-borde);
+  font-size: 0.88rem;
+  color: var(--gris-medio);
+}
+
+.grafico-total strong {
+  font-family: var(--fuente-titulo);
+  font-size: 1.3rem;
+  color: var(--rojo);
+}
+
+/* =============================================
+   SECCIÓN ORGANIGRAMA
+   Niveles con flex, conectores visuales con CSS
+============================================= */
+.seccion-org {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 28px 32px;
+}
+
+.org-nivel {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Línea vertical que conecta los niveles */
+.org-conector {
+  width: 2px;
+  height: 24px;
+  background: var(--gris-borde);
+  margin: 6px auto;
+}
+
+.org-cargo {
+  background: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: center;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: transform 0.2s;
+}
+
+.org-cargo:hover {
+  transform: translateY(-2px);
+}
+
+.org-cargo strong {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gris-medio);
+}
+
+.org-cargo span {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--negro);
+}
+
+/* Cargo de la cúpula — rojo destacado */
+.org-top {
+  background: var(--rojo);
+  border-color: var(--rojo-dark);
+  color: var(--blanco);
+}
+
+.org-top strong { color: rgba(255,255,255,0.75); }
+.org-top span   { color: var(--blanco); }
+
+/* Cargos con causas abiertas — fondo rosado */
+.org-sospechoso {
+  background: #fff5f5;
+  border-color: #fca5a5;
+}
+
+.org-sospechoso span em {
+  font-style: normal;
+  color: var(--rojo-dark);
+}
+
+/* Nota pequeña debajo del nombre */
+.org-nota {
+  font-size: 0.68rem;
+  color: var(--rojo);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* =============================================
+   SECCIÓN CONTADOR — tarjetas de estadísticas
+   @keyframes pulso hace que el número "lata"
+============================================= */
+@keyframes pulso {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
+}
+
+.seccion-contador {
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 28px 32px;
+}
+
+.contador-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.contador-card {
+  background: var(--gris-fondo);
+  border: 1px solid var(--gris-borde);
+  border-radius: 8px;
+  padding: 20px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contador-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.contador-numero {
+  font-family: var(--fuente-titulo);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--rojo);
+  animation: pulso 3s ease-in-out infinite;
+}
+
+.contador-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--negro);
+}
+
+.contador-desc {
+  font-size: 0.74rem;
+  color: var(--gris-medio);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   PIE DE PÁGINA
+   3 columnas flex + barra de copyright
+============================================= */
+.pie-pagina {
+  background: var(--negro);
+  color: rgba(255,255,255,0.75);
+  margin-top: 3rem;
+}
+
+.pie-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 32px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+}
+
+.pie-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Logo en el footer */
+.pie-logo {
+  height: 48px;
+  width: auto;
+  opacity: 0.75;
+  filter: grayscale(30%);
+}
+
+.pie-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.55);
+}
+
+.pie-aviso {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
+  border-left: 2px solid var(--rojo);
+  padding-left: 10px;
+}
+
+.pie-titulo-col {
+  font-family: var(--fuente-titulo);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--blanco);
+  margin-bottom: 4px;
+}
+
+/* Lista de navegación del footer */
+.pie-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pie-nav a {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.2s;
+}
+
+.pie-nav a:hover {
+  color: var(--blanco);
+}
+
+/* Barra final de copyright */
+.pie-copyright {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+  padding: 16px 24px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.pie-psoe-tag {
+  color: var(--rojo-light);
+  font-weight: 700;
+  margin-left: 8px;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   RESPONSIVE — móvil y tablet
+   max-width:768px → pantallas pequeñas
+   max-width:480px → móviles muy pequeños
+============================================= */
+@media (max-width: 768px) {
+
+  .header-inner    { height: auto; padding: 16px; flex-wrap: wrap; }
+  .header-titulo   { font-size: 1.8rem; }
+  .header-col-der  { display: none; }     /* la columna vacía desaparece en móvil */
+  .header-foto     { max-height: 120px; }
+
+  .nav-principal a { padding: 12px 14px; font-size: 0.75rem; letter-spacing: 0.04em; }
+
+  .hero-carrusel   { height: 260px; }
+  .hero-dia-titulo { font-size: 1.3rem; }
+  .hero-dia-overlay { padding: 0 20px; bottom: 20px; }
+
+  .noticias-grid   { grid-template-columns: 1fr; }
+  .contador-grid   { grid-template-columns: repeat(2, 1fr); }
+
+  .pie-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 32px 16px 24px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .nav-principal   { flex-wrap: wrap; }
+  .nav-principal a { padding: 10px 12px; font-size: 0.7rem; }
+  .contador-grid   { grid-template-columns: 1fr 1fr; }
+  .lista-imputados { grid-template-columns: 1fr; }
+
+}
+
+/* Enlace al organigrama completo */
+.enlace-organigrama {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--rojo);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.2s;
+}
+.enlace-organigrama:hover {
+  border-bottom-color: var(--rojo);
+}
+
+/* Texto pequeño dentro de los botones de imputados */
+.btn-imputado small {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-top: 2px;
+}
