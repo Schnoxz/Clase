@@ -1,0 +1,67 @@
+-- sumar los números desde el número 1 hasta un numero dado 
+
+DELIMITER ??
+CREATE OR REPLACE PROCEDURE sumatorio(numero INTEGER, OUT resultado INTEGER)    
+BEGIN
+	DECLARE contador INT;
+    SET resultado = 0;
+    SET contador = 1;
+    WHILE contador <= numero DO
+        SET resultado = resultado + contador;
+        SET contador = contador + 1;
+    END WHILE;
+END ??
+DELIMITER ;
+
+    
+-- Llamada
+CALL sumatorio(10, @resultado);
+SELECT @resultado;
+
+
+
+-- Ejercicio con REPEAT
+
+DELIMITER ??
+CREATE OR REPLACE PROCEDURE sumatorio(numero INTEGER, OUT resultado INTEGER)    
+BEGIN
+    DECLARE contador INT;
+    SET resultado = 0;
+    SET contador = numero;
+    REPEAT
+        SET resultado = resultado + contador;
+        SET contador = contador - 1;
+    UNTIL contador < 1 
+    END REPEAT;
+END ??
+DELIMITER ;
+
+-- Llamada
+CALL sumatorio(10, @resultado);
+SELECT @resultado;
+
+
+
+
+
+-- Ejercicio con LOOP
+
+DELIMITER ??
+CREATE OR REPLACE PROCEDURE sumatorio(numero INTEGER, OUT resultado INTEGER)    
+BEGIN
+    DECLARE contador INT;
+    SET resultado = 0;
+    SET contador = numero;
+    bucle: LOOP
+        if contador > numero THEN
+        LEAVE bucle;
+        END IF;
+        set resultado = resultado + contador;
+        set contador = contador + 1;
+    END LOOP
+END $$
+DELIMITER ;
+
+-- Llamada
+CALL sumatorio(10, @resultado);
+SELECT @resultado;

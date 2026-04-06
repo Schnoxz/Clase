@@ -1,0 +1,49 @@
+-- EJERCICIO EJEMPLO para saber que sucede
+CREATE TABLE t (s1 INT, PRIMARY KEY (s1));
+
+DELIMITER $$
+CREATE PROCEDURE test (IN a INT, OUT b INT)
+BEGIN
+    SET b = 0;
+    WHILE a > b DO
+        SET b = b + 1;
+        IF b != 2 THEN
+            INSERT INTO t VALUES (b);
+        END IF;
+    END WHILE;
+END;
+$$
+
+DELIMITER ; 
+CALL test(-10,@value); -- No se ejecuta el bucle porque a es menor que b, por lo que b se mantiene en 0 y no se insertan valores en la tabla t.
+
+SELECT @value;
+CALL test(10,@value); -- Se ejecuta el bucle porque a es mayor que b, por lo que b se incrementa hasta 10. Durante el proceso, se insertan los valores 1, 3, 4, 5, 6, 7, 8, 9 y 10 en la tabla t (se omite el valor 2 debido a la condición IF). Al finalizar el bucle, @value tendrá el valor de 10.
+
+SELECT @value;
+
+
+
+
+
+
+-- EJERCICIO EJEMPLO con parametro de salida
+DELIMITER $$
+CREATE OR REPLACE PROCEDURE incrementor (OUT i INT) -- No tenemos parametro de entrada por lo que el bucle será infinito ya que i no tiene valor.
+BEGIN   
+    REPEAT
+        SET i = i + 1;
+        UNTIL i > 9
+    END REPEAT;
+END;
+
+CREATE OR REPLACE PROCEDORE test()
+BEGIN
+    DECLARE value INT default 0;
+    CALL incrementor (value);
+    SEKLCT value;
+END; 
+$$
+
+DELIMITER ;
+CALL test();

@@ -1,0 +1,20 @@
+-- crear una función para que, a partir de una cantidad económica, nos la devuelva con el IVA 
+
+DELIMITER ??
+
+CREATE OR REPLACE FUNCTION precioConIva(precio decimal(10,2)) RETURNS decimal (10,2)
+BEGIN
+    DECLARE pIva decimal(10,2);
+    SET pIva = precio * 0.21;
+    RETURN pIva
+END ??
+
+DELIMITER ;
+
+-- Llamada al procedimiento
+SELECT precioConIva(100);
+
+
+
+
+

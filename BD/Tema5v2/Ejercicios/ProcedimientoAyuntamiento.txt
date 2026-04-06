@@ -1,0 +1,12 @@
+-- Pasar una funcion a procedimiento de la Base de Datos del Ayuntamiento
+
+DELIMITER ??
+CREATE OR REPLACE PROCEDURE totalUsuariosPorDepartamento(codigo VARCHAR(5)) RETURNS INT
+    COMMENT "Devuelve la cantidad total de usuarios de cada departamento"
+BEGIN
+    DECLARE total int default 0;
+    SELECT COUNT(*) INTO total FROM usuario WHERE departamento = codigo;
+    RETURN total;
+END ??
+DELIMITER ;
+

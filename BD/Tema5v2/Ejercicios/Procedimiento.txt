@@ -1,0 +1,66 @@
+-- procedimiento que categorice a las personas en diferentes rangos de edad: menor 18 junior, menor de 45 senior y mayor de 45 veterano 
+
+DELIMITER ??
+CREATE OR REPLACE PROCEDURE categoriaEdad (edad integer, OUT resultado)
+BEGIN
+    -- DECLARE resultado varchar(50); Con variable declarada
+    -- Si tenemos un OUT en el parámetro podemos operar con él para devolver valores
+    if edad < 18 THEN 
+        set resultado = 'junior';
+    ELSEIF edad < 45 THEN
+        set resultado = 'senior';
+    ELSE 
+        set resultado = 'veterano';
+    END IF;
+    -- SELECT resultado;
+END ??
+DELIMITER ;
+
+
+call categoriaEdad(13);
+call categoriaEdad(42);
+call categoriaEdad(55);
+
+ -- Ejercicio con CASE
+
+DELIMITER ??
+CREATE OR REPLACE PROCEDURE categoriaEdad(edad INTEGER)
+BEGIN
+    DECLARE resultado VARCHAR(50);
+    SET resultado = CASE
+        WHEN edad < 18 THEN 'junior'
+        WHEN edad < 45 THEN 'senior'
+        ELSE 'veterano'
+    END;
+    SELECT resultado;  -- Muestra el resultado en la consola
+END ??
+DELIMITER ;
+
+-- Llamadas 
+CALL categoriaEdad(13);  
+CALL categoriaEdad(42);  
+CALL categoriaEdad(55); 
+
+-- Ejercicio con parámetro de salida
+
+DELIMITER ??
+CREATE OR REPLACE PROCEDURE categoriaEdad(edad INTEGER, OUT resultado VARCHAR(50))
+BEGIN
+    SET resultado = CASE
+        WHEN edad < 18 THEN 'junior'
+        WHEN edad < 45 THEN 'senior'
+        ELSE 'veterano'
+    END;
+END ??
+DELIMITER ;
+
+-- Llamadas con variable de salida
+CALL categoriaEdad(13, @categoria);
+SELECT @categoria;
+
+CALL categoriaEdad(42, @categoria);
+SELECT @categoria;
+
+CALL categoriaEdad(55, @categoria);
+SELECT @categoria;
+
