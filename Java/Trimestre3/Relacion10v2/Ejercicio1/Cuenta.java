@@ -1,6 +1,6 @@
 package Relacion10v2.Ejercicio1;
 
-public class Cuenta {
+public abstract class Cuenta { // Declaro la clase padre Cuenta como abstracta
 	protected String titular;
 	protected double saldo; // Lo defino protected porque se usará en los metodos de CuentaCredito para validacion de credito y saldo
 	// Constructor clase Cuenta
@@ -28,26 +28,13 @@ public class Cuenta {
 		// Validación
 		if (cantidad <= 0) {
 			System.out.println("La cantidad a ingresar no debe ser negativa");
-			return;
+			return; // Valida el dato, imprime el error y devuelve para volver a introducir valor por teclado
 		}
 		this.saldo += cantidad;
 		System.out.println("Se han ingresado: " + cantidad + "€" + " correctamente");
 		System.out.println("Saldo actual: " + this.saldo + "€");
 	}
-
-	public void sacarDinero(double cantidad) {
-		// Validación
-		if (cantidad <= 0) {
-			System.out.println("La cantidad a retirar no debe ser negativa");
-			return;
-	}
-		if(cantidad > this.saldo) { // Esta cuenta no puede estar en números rojos como CuentaCredito por lo que la validación consta solo con el limite del saldo actual
-			System.out.println("Saldo insuficiente");
-			return;
-		}
-
-		this.saldo -= cantidad;
-		System.out.println("Se han retirado: " + cantidad + "€" + " correctamente");
-		System.out.println("Saldo actual: " + this.saldo + "€");
-	}
+	/* El método que se va a reutilizar en otras clases que hereden se crea abstracta porque cada una 
+	tendrá una función diferente y obliga a implementar el método */
+	public abstract void sacarDinero(double cantidad); 
 }

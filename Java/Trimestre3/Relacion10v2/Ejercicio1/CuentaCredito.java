@@ -24,15 +24,16 @@ public class CuentaCredito extends Cuenta {
 		// Validación que no supere 300€
 		if (credito > 300) {
 			System.out.println("El crédito no debe superar los 300€");
-			return;
+			return; // Se devuelve para que vuelva a introducir el valor, tras imprimir el mensaje de error
 		}
 		// Validación para que el saldo no sea inválido
 		if (this.saldo < -credito) { // Pongo el credito en negativo porque nos dice que podemos tener numeros rojos igual a la cantidad de crédito pero este mismo no puede ser mayor al saldo actual
 			System.out.println("El crédito no puede ser menor al saldo actual");
+			return; 
 		}
 		this.credito = credito; }
 
-	// Sobreescribo el metodo de sacar dinero de la clase Cuenta para validar el crédito
+	// Sobreescribo el metodo de sacar dinero de la clase Cuenta que es abstracta y se debe implementara en todas sus hijas con su propioa función para validar el crédito
 	@Override
 	public void sacarDinero(double cantidad) {
 		if (cantidad <= 0) {
