@@ -1,57 +1,56 @@
 package Relacion10v2.Ejercicio1;
 
 public class CuentaCredito extends Cuenta {
+	private double credito;
 
-    private double credito; // cuánto puede quedar en negativo
-    private static final double CREDITO_MAX = 300;
-    private static final double CREDITO_DEFAULT = 100;
+	// Clase constructor Cuenta Credito
+	public CuentaCredito(String titular, double saldo, double credito) {
+		super(titular, saldo);
+		setCredito(credito); // Llamo al setter para cumplir con la validación
+	}
 
-    // Constructor sin crédito indicado → crédito por defecto 100€
-    public CuentaCredito(String titular) {
-        super(titular);
-        this.credito = CREDITO_DEFAULT;
-    }
+	// Sobrecarga para cumplir con la condicion de un constructor si no se indica parametro de saldo o credito
+	// Se cree con saldo inicializado en 0 y credito 100
+	public CuentaCredito(String titular) {
+		super(titular, 0);
+		this.credito = 100;
+	}
 
-    // Constructor con crédito indicado
-    public CuentaCredito(String titular, double credito) {
-        super(titular);
-        setCredito(credito);
-    }
+	// Getter
+	public double getCredito() { return credito; }
 
-    public double getCredito() { return credito; }
+	// Setter
+	public void setCredito (double credito) {
+		// Validación que no supere 300€
+		if (credito > 300) {
+			System.out.println("El crédito no debe superar los 300€");
+			return;
+		}
+		// Validación para que el saldo no sea inválido
+		if (this.saldo < -credito) { // Pongo el credito en negativo porque nos dice que podemos tener numeros rojos igual a la cantidad de crédito pero este mismo no puede ser mayor al saldo actual
+			System.out.println("El crédito no puede ser menor al saldo actual");
+		}
+		this.credito = credito; }
 
-    public void setCredito(double credito) {
-        if (credito > CREDITO_MAX) {
-            System.out.println("El crédito no puede superar " + CREDITO_MAX + "€. Se establece al máximo.");
-            this.credito = CREDITO_MAX;
-        } else if (credito < 0) {
-            System.out.println("El crédito no puede ser negativo.");
-        } else {
-            // Comprobamos que el nuevo crédito no sea menor que la deuda actual
-            if (getSaldo() < 0 && -getSaldo() > credito) {
-                System.out.println("No se puede reducir el crédito por debajo de la deuda actual.");
-            } else {
-                this.credito = credito;
-            }
-        }
-    }
+	// Sobreescribo el metodo de sacar dinero de la clase Cuenta para validar el crédito
+	@Override
+	public void sacarDinero(double cantidad) {
+		if (cantidad <= 0) {
+			System.out.println("La cantidad no puede ser negativa");
+			return;
+		}
 
-    // Sobreescribimos sacarDinero para incluir el crédito
-    @Override
-    public void sacarDinero(double cantidad) {
-        if (cantidad <= 0) {
-            System.out.println("La cantidad a sacar debe ser positiva.");
-        } else if (getSaldo() - cantidad < -credito) {
-            System.out.printf("Operación denegada. Con %.2f€ de crédito el saldo no puede bajar de -%.2f€%n",
-                    credito, credito);
-        } else {
-            setSaldo(getSaldo() - cantidad);
-            System.out.printf("Retirada de %.2f€. Saldo actual: %.2f€%n", cantidad, getSaldo());
-        }
-    }
+		if (this.saldo - cantidad < -credito) { // Puedes tener la misma cantidad de credito como numero rojo en la cuenta  pero no más de ello
+			System.out.println("No se puede retirar esta cantidad, el saldo mínimo debe ser: " + (-credito) + "€");
+			return;
+		}
+		this.saldo -= cantidad;
+		System.out.println("Se han retirado " + cantidad + "€" + " correctamente");
+		System.out.println("Saldo actual: " + this.saldo + "€");
+	}
 
-    @Override
-    public String toString() {
-        return super.toString() + String.format(" | Crédito disponible: %.2f€", credito);
-    }
+	// Método para mostrar información de la cuenta
+	public void mostrarInfo() {
+		System.out.println("Titular: " + this.titular + " ---" + " Saldo: " + this.saldo + "€" + " ---" + " Crédito: " + this.credito + "€");
+	}
 }

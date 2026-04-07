@@ -3,61 +3,59 @@ package Relacion10v2.Ejercicio1;
 import java.util.Scanner;
 
 public class MenuCuentaCredito {
-    private static final Scanner teclado = new Scanner(System.in);
+	private final Scanner teclado = new Scanner(System.in);
+	private CuentaCredito cuenta;
 
-    public static void main(String[] args) {
-        CuentaCredito cuenta = new CuentaCredito("Ana García", 150);
-        int opcion;
+	// Constructor clase Menu para CuentaCredito
+	public MenuCuentaCredito(CuentaCredito cuenta) {
+		this.cuenta = cuenta;
+	}
 
-        do {
-            System.out.println("\n══════ MENÚ CUENTA CRÉDITO ══════");
-            System.out.println("1. Ingresar dinero");
-            System.out.println("2. Sacar dinero");
-            System.out.println("3. Mostrar saldo y crédito");
-            System.out.println("4. Salir");
-            System.out.print("Elige una opción: ");
+	// Método que muestra el menu para el usuairo
+	public void mostrarMenu() {
+		int opcion;
+		do {
+			System.out.println("Cajero automático BBVA");
+			System.out.println("1. Ingresar dinero");
+			System.out.println("2. Sacar dinero");
+			System.out.println("3. Mostrar saldo y crédito");
+			System.out.println("4. Salir");
+			opcion = teclado.nextInt();
 
-            opcion = leerEntero();
-            switch (opcion) {
-                case 1:
-                    System.out.print("Cantidad a ingresar: ");
-                    double ingreso = leerDecimal();
-                    cuenta.ingresarDinero(ingreso);
-                    break;
-                case 2:
-                    System.out.print("Cantidad a sacar: ");
-                    double retirada = leerDecimal();
-                    cuenta.sacarDinero(retirada);
-                    break;
-                case 3:
-                    System.out.println(cuenta);
-                    break;
-                case 4:
-                    System.out.println("Hasta luego.");
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
-            }
-        } while (opcion != 4);
-    }
-
-    private static int leerEntero() {
-        while (!teclado.hasNextInt()) {
-            System.out.print("Introduce un número entero: ");
-            teclado.next();
-        }
-        int valor = teclado.nextInt();
-        teclado.nextLine();
-        return valor;
-    }
-
-    private static double leerDecimal() {
-        while (!teclado.hasNextDouble()) {
-            System.out.print("Introduce un número: ");
-            teclado.next();
-        }
-        double valor = teclado.nextDouble();
-        teclado.nextLine();
-        return valor;
-    }
+		switch(opcion) {
+		case 1:
+			ingresarDinero();
+			break;
+		case 2:
+			sacarDinero();
+			break;
+		case 3:
+			mostrarSaldoCredito();
+			break;
+		case 4:
+			System.out.println("Ha salido correctamente de su cuenta");
+			break;
+		default:
+			System.out.println("Opción no válida");
+		}
+	}while(opcion != 4);
 }
+
+	// Creo los metodos de ingreso, retiro y mostrar informacion adaptadas al menu
+	private void ingresarDinero() {
+		System.out.print("Cantidad a ingresar: ");
+		double cantidad = teclado.nextDouble();
+		cuenta.ingresarDinero(cantidad); // Llamo al metodo de ingresar dinero de la clase CuentaCredito que hereda de Cuenta y le paso la cantidad a ingresar
+	}
+
+	private void sacarDinero() {
+		System.out.print("Cantidad a sacar: ");
+		double cantidad = teclado.nextDouble();
+		cuenta.sacarDinero(cantidad); // Llamo al metodo de sacar dinero de la clase CuentaCredito que hereda de Cuenta pero con validacion de credito y le paso la cantidad a retirar
+	}
+
+	private void mostrarSaldoCredito() {
+		cuenta.mostrarInfo(); // Llamo al metodo mostrarInfo de la clase CuentaCredito que muestra el titular, saldo y credito actual de la cuenta
+	}
+}
+
