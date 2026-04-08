@@ -4,352 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Organigrama PSOE — Estructura completa</title>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-
-    :root {
-      --rojo:          #c0392b;
-      --rojo-dark:     #96281b;
-      --rojo-fondo:    #e00e0e;
-      --negro:         #111318;
-      --gris-fondo:    #f4f4f5;
-      --gris-borde:    #e2e2e6;
-      --gris-medio:    #6b7280;
-      --blanco:        #ffffff;
-      --naranja:       #d97706;
-      --fuente-titulo: 'Oswald', sans-serif;
-      --fuente-cuerpo: 'Source Sans 3', system-ui, sans-serif;
-      --ancho-cargo:   160px;
-      --color-linea:   #d1d5db;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--fuente-cuerpo);
-      background: var(--gris-fondo);
-      color: var(--negro);
-      line-height: 1.5;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    .org-header {
-      background: var(--rojo-fondo);
-      color: var(--blanco);
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .org-header-titulo {
-      font-family: var(--fuente-titulo);
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-
-    .org-header-sub {
-      font-size: 0.82rem;
-      opacity: 0.75;
-      margin-top: 2px;
-    }
-
-    .btn-volver {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(0,0,0,0.25);
-      color: var(--blanco);
-      border: 1.5px solid rgba(255,255,255,0.3);
-      border-radius: 6px;
-      padding: 8px 16px;
-      font-family: var(--fuente-cuerpo);
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      text-decoration: none;
-    }
-
-    .btn-volver:hover { background: rgba(0,0,0,0.4); }
-
-    .leyenda-wrap {
-      background: var(--blanco);
-      border-bottom: 1px solid var(--gris-borde);
-      padding: 12px 32px;
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .leyenda-titulo {
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--gris-medio);
-    }
-
-    .leyenda-items {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .leyenda-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--gris-medio);
-    }
-
-    /* cuadradito de color de cada entrada en la leyenda */
-    .leyenda-punto {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      flex-shrink: 0;
-    }
-
-    .punto-cupula    { background: var(--rojo); }
-    .punto-nacional  { background: #1d4ed8; }
-    .punto-gobierno  { background: #0891b2; }
-    .punto-sospecha  { background: #fbbf24; border: 1.5px solid #d97706; }
-    .punto-condenado { background: #111; }
-    .punto-regional  { background: #059669; }
-
-    /* overflow-x:auto para que en móvil aparezca scroll horizontal
-       en vez de colapsar el árbol */
-    .org-scroll {
-      overflow-x: auto;
-      padding: 40px 32px 60px;
-    }
-
-    .org-arbol {
-      min-width: 1100px;
-      width: max-content;
-      margin: 0 auto;
-    }
-
-    .nivel {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: nowrap;
-      position: relative;
-    }
-
-    .nivel-etiqueta {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--gris-medio);
-      white-space: nowrap;
-    }
-
-    /* línea vertical entre un nivel y el siguiente */
-    .conector {
-      width: 2px;
-      height: 28px;
-      background: var(--color-linea);
-      margin: 0 auto;
-    }
-
-    .conector-h {
-      height: 2px;
-      background: var(--color-linea);
-      margin: 0 auto;
-    }
-
-    .rama {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-    }
-
-    .rama-hijos {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      position: relative;
-    }
-
-    .rama-hijos::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: calc(var(--ancho-cargo) / 2 + 6px);
-      right: calc(var(--ancho-cargo) / 2 + 6px);
-      height: 2px;
-      background: var(--color-linea);
-    }
-
-    .rama-hijo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .rama-hijo-linea {
-      width: 2px;
-      height: 20px;
-      background: var(--color-linea);
-    }
-
-    /* tarjeta base de cada cargo */
-    .cargo {
-      width: var(--ancho-cargo);
-      background: var(--blanco);
-      border: 1px solid var(--gris-borde);
-      border-radius: 8px;
-      padding: 10px 12px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      transition: transform 0.18s, box-shadow 0.18s;
-      cursor: default;
-    }
-
-    .cargo:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-
-    .cargo-rol {
-      font-size: 0.62rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--gris-medio);
-      line-height: 1.2;
-    }
-
-    .cargo-nombre {
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--negro);
-      line-height: 1.3;
-    }
-
-    .cargo-nota {
-      font-size: 0.64rem;
-      color: var(--gris-medio);
-      font-style: italic;
-      margin-top: 1px;
-    }
-
-    /* variantes de color según estado del cargo */
-    .cargo-cupula {
-      background: var(--rojo);
-      border-color: var(--rojo-dark);
-      width: 200px;
-    }
-
-    .cargo-cupula .cargo-rol    { color: rgba(255,255,255,0.7); }
-    .cargo-cupula .cargo-nombre { color: var(--blanco); font-size: 1rem; }
-    .cargo-cupula .cargo-nota   { color: rgba(255,255,255,0.6); }
-
-    .cargo-nacional { background: #eff6ff; border-color: #bfdbfe; }
-    .cargo-nacional .cargo-nombre { color: #1d4ed8; }
-
-    .cargo-gobierno { background: #ecfeff; border-color: #a5f3fc; }
-    .cargo-gobierno .cargo-nombre { color: #0891b2; }
-
-    .cargo-sospechoso { background: #fffbeb; border-color: #fcd34d; }
-    .cargo-sospechoso .cargo-nombre { color: var(--naranja); }
-    .cargo-sospechoso .cargo-nota   { color: #b45309; }
-
-    .cargo-condenado { background: #1f2937; border-color: #111; }
-    .cargo-condenado .cargo-rol    { color: rgba(255,255,255,0.5); }
-    .cargo-condenado .cargo-nombre { color: var(--blanco); }
-    .cargo-condenado .cargo-nota   { color: #9ca3af; }
-
-    .cargo-regional { background: #f0fdf4; border-color: #bbf7d0; }
-    .cargo-regional .cargo-nombre { color: #166534; }
-
-    /* separador horizontal con texto entre bloques del árbol */
-    .separador {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 32px 0 8px;
-      color: var(--gris-medio);
-    }
-
-    .separador::before,
-    .separador::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--gris-borde);
-    }
-
-    .separador span {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-    }
-
-    .org-footer {
-      background: var(--blanco);
-      border-top: 1px solid var(--gris-borde);
-      padding: 20px 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .org-footer p       { font-size: 0.78rem; color: var(--gris-medio); }
-    .org-footer strong  { color: var(--rojo); }
-
-  </style>
+ <!-- PENDIENTE REALIZAR CSS INTEGRADO -->
 </head>
 <body>
 
-  <div class="org-header">
+  <!-- =========================================
+       CABECERA DEL ORGANIGRAMA
+       Título + subtítulo a la izquierda, botón de volver a la derecha
+  ========================================= -->
+  <div class="cabecera-org">
     <div>
-      <h1 class="org-header-titulo">Organigrama PSOE — Estructura completa</h1>
-      <p class="org-header-sub">Cúpula federal · Gobierno · Ministerios · Federaciones territoriales · Causas judiciales · Actualizado 22 marzo 2026</p>
+      <h1 class="cabecera-titulo">Organigrama PSOE — Estructura completa</h1>
+      <p class="cabecera-subtitulo">Cúpula federal · Gobierno · Ministerios · Federaciones territoriales · Causas judiciales · Actualizado 22 marzo 2026</p>
     </div>
+    <!-- Botón que lleva de vuelta a la página principal -->
     <a href="PSOE.html" class="btn-volver">← Volver al portal</a>
   </div>
 
-  <div class="leyenda-wrap">
-    <span class="leyenda-titulo">Leyenda:</span>
-    <div class="leyenda-items">
-      <span class="leyenda-item"><span class="leyenda-punto punto-cupula"></span>Cúpula del partido</span>
-      <span class="leyenda-item"><span class="leyenda-punto punto-nacional"></span>Dirección federal</span>
-      <span class="leyenda-item"><span class="leyenda-punto punto-gobierno"></span>Cargo en el gobierno</span>
-      <span class="leyenda-item"><span class="leyenda-punto punto-sospecha"></span>Investigado / imputado</span>
-      <span class="leyenda-item"><span class="leyenda-punto punto-condenado"></span>Condenado en firme</span>
-      <span class="leyenda-item"><span class="leyenda-punto punto-regional"></span>Federación regional</span>
-    </div>
-  </div>
 
-  <!-- árbol: cada .nivel es una fila horizontal de tarjetas.
-       .conector es la línea vertical que une un nivel con el siguiente.
-       .separador divide los bloques temáticos con una línea y texto. -->
-  <div class="org-scroll">
-    <div class="org-arbol">
+  <!-- =========================================
+       ÁRBOL DEL ORGANIGRAMA
+  ========================================= -->
+  <div class="zona-scroll">
+    <div class="arbol-organigrama">
 
+      <!-- NIVEL 1: Secretario General (el de más arriba) -->
       <div class="nivel">
         <div class="cargo cargo-cupula">
           <span class="cargo-rol">Secretario General</span>
@@ -358,10 +37,13 @@
         </div>
       </div>
 
-      <div class="conector"></div>
+      <!-- Línea vertical que baja al siguiente nivel -->
+      <div class="linea-vertical"></div>
 
+      <!-- NIVEL 2: Ejecutiva federal — cargos que dependen del Secretario General -->
       <div class="nivel">
 
+        <!-- Cada .rama-hijo debe agrupar una rama de cargos con la línea + la tarjeta de cada cargo -->
         <div class="rama-hijo">
           <div class="cargo cargo-nacional">
             <span class="cargo-rol">Presidenta federal</span>
@@ -377,6 +59,7 @@
           </div>
         </div>
 
+        <!-- cargo-sospechoso: fondo amarillo porque tiene causa abierta -->
         <div class="rama-hijo">
           <div class="cargo cargo-sospechoso">
             <span class="cargo-rol">Sec. de Organización</span>
@@ -401,12 +84,10 @@
 
       </div>
 
-      <div class="conector"></div>
-
-      <div class="separador"><span>Representación en el Gobierno de España</span></div>
-
+      <!-- BLOQUE DEL GOBIERNO: tarjetas de ministros del Gobierno -->
       <div class="nivel" style="gap: 8px; flex-wrap: wrap;">
 
+        <!-- cargo-gobierno -->
         <div class="cargo cargo-gobierno">
           <span class="cargo-rol">Presidencia del Gobierno</span>
           <span class="cargo-nombre">Pedro Sánchez</span>
@@ -462,6 +143,7 @@
           <span class="cargo-nombre">Diana Morant</span>
         </div>
 
+        <!-- Ábalos: cargo-sospechoso porque tiene juicio oral -->
         <div class="cargo cargo-sospechoso">
           <span class="cargo-rol">Transportes (ex) · diputado</span>
           <span class="cargo-nombre">José Luis Ábalos</span>
@@ -470,8 +152,10 @@
 
       </div>
 
+      <!-- Separador antes del bloque de investigados y condenados -->
       <div class="separador"><span>Investigados, imputados y condenados — estado a 22 marzo 2026</span></div>
 
+      <!-- BLOQUE DE INVESTIGADOS Y CONDENADOS  -->
       <div class="nivel" style="gap: 8px; flex-wrap: wrap;">
 
         <div class="cargo cargo-sospechoso">
@@ -486,6 +170,7 @@
           <span class="cargo-nota">Prevaricación · tráfico de influencias</span>
         </div>
 
+        <!-- cargo-condenado -->
         <div class="cargo cargo-condenado">
           <span class="cargo-rol">Condenado · nov 2025</span>
           <span class="cargo-nombre">Álvaro García Ortiz</span>
@@ -534,6 +219,7 @@
           <span class="cargo-nota">Prevaricación · caso Extremadura</span>
         </div>
 
+        <!-- Los siguientes son condenados del caso ERE de Andalucía -->
         <div class="cargo cargo-condenado">
           <span class="cargo-rol">Condenado · ERE</span>
           <span class="cargo-nombre">José Antonio Griñán</span>
@@ -596,16 +282,19 @@
 
       </div>
 
-      <div class="separador"><span>Federaciones territoriales</span></div>
 
+
+      <!-- BLOQUE REGIONAL: tarjetas de presidentes autonómicos -->
       <div class="nivel" style="gap: 10px; flex-wrap: wrap;">
 
+        <!-- PSC de Cataluña -->
         <div class="cargo cargo-regional">
           <span class="cargo-rol">PSC — Cataluña</span>
           <span class="cargo-nombre">Salvador Illa</span>
           <span class="cargo-nota">President de la Generalitat</span>
         </div>
 
+        <!-- Montero también lleva el PSOE-A de Andalucía, con ERE pendiente -->
         <div class="cargo cargo-sospechoso">
           <span class="cargo-rol">PSOE-A — Andalucía</span>
           <span class="cargo-nombre">Mª Jesús Montero</span>
@@ -647,6 +336,7 @@
           <span class="cargo-nombre">Luis Tudanca</span>
         </div>
 
+        <!-- Gallardo tiene juicio en mayo 2026, por eso es sospechoso -->
         <div class="cargo cargo-sospechoso">
           <span class="cargo-rol">PSOE-Ex — Extremadura</span>
           <span class="cargo-nombre">Miguel Ángel Gallardo</span>
@@ -693,7 +383,8 @@
     </div>
   </div>
 
-  <div class="org-footer">
+  <!-- PIE DE PÁGINA DEL ORGANIGRAMA -->
+  <div class="pie-organigrama">
     <p>Datos extraídos de fuentes públicas. Última actualización: <strong>22 marzo 2026</strong>. Sitio de carácter satírico e informativo.</p>
     <p><strong>U HAVE BEEN PSOED.</strong></p>
   </div>
