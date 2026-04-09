@@ -183,3 +183,42 @@ DELIMITER ;
 
 CALL ac09upsertHabilidadPlus('31284', 'Cazador Digimon' @error);
 SELECT @error;
+
+
+
+-- CORRECCIÓN CÓDIGO PROFESOR
+
+DELIMITER //
+
+CREATE OR REPLACE PROCEDURE ac09upsertHabilidad(
+    IN cod CHAR(5),
+    IN des VARCHAR(30),
+    OUT mensaje VARCHAR(100)
+)
+BEGIN
+    DECLARE contador INT DEFAULT 0;
+
+    IF CHAR_LENGTH(cod) = 5 THEN
+        SELECT COUNT(*) INTO contador
+        FROM habilidad
+        WHERE CodHab = cod;
+
+        IF contador > 0 THEN -- si existe
+            UPDATE habilidad
+            SET DesHab = des
+            WHERE CodHab = cod;
+            SET mensaje = 'Éxito: habilidad actualizada';
+
+        ELSE -- no existe
+            INSERT INTO habilidad (CodHab, DesHab)
+            VALUES (cod, des);
+            SET mensaje = 'Éxito: nueva habilidad insertada';
+            
+        END IF;
+    ELSE
+        SET mensaje = 'Error: el codigo debe tener 5 caracteres';
+        -- SET mensaje = CONCAT('Error: el código ', cod, 'debe tener 5 caracteres');
+    END IF;
+END //
+
+DELIMITER ;
