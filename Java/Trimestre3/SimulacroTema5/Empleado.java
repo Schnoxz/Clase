@@ -32,8 +32,9 @@ public abstract class Empleado {
 		INFORMATICA, ADMINISTRACION, RRHH, VENTAS
 	}
 	
-    // Método toString que muestra todos los atributos sobre la el objeto
-    public String toString() {
+	// Método toString que muestra todos los atributos sobre la el objeto
+	@Override
+	public String toString() {
         return "Nombre: " + nombre + "--- " +  "ID: " + id + "---" + "Departamento:  " + departamento + "---" + "Horas trabajadas: " + horasTrabajadas;
     }
 	
