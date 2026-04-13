@@ -1,0 +1,44 @@
+Gestión del Centro Pokémon
+La Asociación Sanitaria Pokémon necesita auditar el rendimiento de sus centros de curación repartidos por las regiones. Cada centro lleva un registro semanal de Pokémon atendidos, clasificados por rareza, durante los 5 días laborables.
+
+1 · Enumerado
+Crea un enumerado TipoCentro con los valores: PUEBLO, CIUDAD, GIMNASIO, ELITE_CUATRO.
+
+2 · Interfaz
+Crea una interfaz Auditable con el método: boolean superaAuditoria().
+
+3 · Clase abstracta CentroPokemon (implementa Auditable)
+Atributos: String id, String region, TipoCentro tipoCentro, int[][] registroAtenciones.
+La matriz registroAtenciones es siempre de 5 filas × 3 columnas. Las filas (0–4) son lunes a viernes. La columna 0 = Pokémon comunes, columna 1 = Pokémon raros, columna 2 = Pokémon legendarios.
+Métodos obligatorios:
+Constructor con todos los parámetros e inicialización.
+Getters para todos los atributos.
+toString(): devuelve id, region y tipoCentro.
+int totalPokemonAtendidos(): suma de toda la matriz.
+int atencionesPorRareza(int columna): suma total de una columna concreta (tipo de rareza).
+void mostrarRegistro(): imprime la matriz con el formato "Día X – Comunes: N, Raros: N, Legendarios: N".
+Método abstracto: double calcularEficiencia().
+
+4 · Subclases
+
+CentroNurseJoy
+Atributo propio: int añosExperiencia.
+calcularEficiencia():
+(totalAtendidos * 1.2) + (añosExperiencia * 8)
+
+superaAuditoria(): true si eficiencia >= 90
+
+CentroRobot
+Atributo propio: int nivelesIA.
+calcularEficiencia():
+(totalAtendidos * 1.0) + (nivelesIA * 15)
+
+superaAuditoria(): true si eficiencia >= 110
+
+5 · Programa principal
+
+Crea un array de tipo CentroPokemon con 4 posiciones: 2 CentroNurseJoy y 2 CentroRobot. Define manualmente las matrices 5×3 antes de pasarlas al constructor.
+
+Recorre el array y muestra, para cada centro: toString(), el registro completo, el total de Pokémon atendidos, la eficiencia calculada, y si supera o no la auditoría.
+
+Estadísticas finales: centro con mayor eficiencia (nombre + valor); conteo de CentroNurseJoy vs CentroRobot con instanceof; media de atenciones por cada rareza (columna 0, 1 y 2 de forma separada) contando todos los centros; y el día de la semana en que se atendió el mayor número total de Pokémon sumando todos los centros.

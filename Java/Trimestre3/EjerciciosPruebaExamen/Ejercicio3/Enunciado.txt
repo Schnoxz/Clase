@@ -1,0 +1,44 @@
+Academia de Entrenadores Pokémon
+La Academia Regional Pokémon evalúa a sus alumnos durante 4 semanas de formación. Cada semana se registran las puntuaciones obtenidas en tres asignaturas distintas para decidir si el alumno recibe su certificado oficial.
+
+1 · Enumerado
+Crea un enumerado Especialidad con los valores: AGUA, FUEGO, PLANTA, DRAGON.
+
+2 · Interfaz
+Crea una interfaz Certificable con el método: boolean obtieneCertificado().
+
+3 · Clase abstracta Alumno (implementa Certificable)
+Atributos: String matricula, String nombre, Especialidad especialidad, int[][] notasSemanales.
+La matriz notasSemanales es siempre de 4 filas × 3 columnas. Las filas (0–3) son las semanas 1 a 4. La columna 0 = Combate, columna 1 = Captura, columna 2 = Cuidado Pokémon.
+Métodos obligatorios:
+Constructor con todos los parámetros e inicialización.
+Getters para todos los atributos.
+toString(): devuelve matrícula, nombre y especialidad.
+int calcularPuntuacionTotal(): suma de todos los valores de la matriz.
+double calcularMediaSemana(int semana): recibe el índice de fila (0–3) y devuelve la media de las 3 asignaturas de esa semana.
+void mostrarNotasSemanales(): imprime la tabla con el formato "Semana X – Combate: N, Captura: N, Cuidado: N".
+Método abstracto: double calcularNota().
+
+4 · Subclases
+
+AlumnoTeorico
+Atributo propio: int librosLeidos.
+calcularNota():
+(puntuacionTotal * 0.8) + (librosLeidos * 5)
+
+obtieneCertificado(): true si nota >= 120
+
+AlumnoPractico
+Atributo propio: int pokemonesCapturados.
+calcularNota():
+(puntuacionTotal * 1.1) + (pokemonesCapturados * 3)
+
+obtieneCertificado(): true si nota >= 100
+
+5 · Programa principal
+
+Crea un array de tipo Alumno con 4 posiciones: 2 AlumnoTeorico y 2 AlumnoPractico. Define manualmente las matrices 4×3 antes de pasarlas al constructor.
+
+Recorre el array y muestra para cada alumno: toString(), sus notas semanales, la puntuación total, la nota final calculada y si obtiene o no el certificado.
+
+Estadísticas finales: alumno con la nota más alta (nombre + nota); conteo de AlumnoTeorico vs AlumnoPractico con instanceof; media general de cada asignatura (columna 0, 1 y 2) contando todos los alumnos; y la semana en la que el grupo obtuvo la mejor media global (usando calcularMediaSemana() sumando todos los alumnos).
