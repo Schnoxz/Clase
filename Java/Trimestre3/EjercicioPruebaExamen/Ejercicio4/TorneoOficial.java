@@ -1,6 +1,7 @@
 package EjercicioPruebaExamen.Ejercicio4;
 
 public class TorneoOficial extends Torneo {
+
     private int medallasPremio;
 
     public TorneoOficial(String codigo, String nombre, Region region, int numParticipantes,
@@ -10,8 +11,13 @@ public class TorneoOficial extends Torneo {
         this.medallasPremio = medallasPremio;
     }
 
-    public int getMedallasPremio() { return medallasPremio; }
-    public void setMedallasPremio(int medallasPremio) { this.medallasPremio = medallasPremio; }
+    public int getMedallasPremio() {
+        return medallasPremio;
+    }
+
+    public void setMedallasPremio(int medallasPremio) {
+        this.medallasPremio = medallasPremio;
+    }
 
     @Override
     public String toString() {

@@ -1,6 +1,7 @@
 package EjercicioPruebaExamen.Ejercicio4;
 
 public abstract class Torneo implements Clasificable {
+
     protected String codigo;
     protected String nombre;
     protected Region region;
@@ -14,7 +15,7 @@ public abstract class Torneo implements Clasificable {
         // Comprobamos que haya suficientes participantes
         if (numParticipantes < 2) {
             throw new ParticipantesInsuficientesException(
-                "Participantes insuficientes: hay " + numParticipantes + " y se necesitan al menos 2");
+                    "Participantes insuficientes: hay " + numParticipantes + " y se necesitan al menos 2");
         }
 
         // Comprobamos que no haya puntos negativos en la matriz
@@ -22,7 +23,7 @@ public abstract class Torneo implements Clasificable {
             for (int j = 0; j < puntosPorRonda[i].length; j++) {
                 if (puntosPorRonda[i][j] < 0) {
                     throw new PuntosNegativosException(
-                        "Puntuacion negativa en ronda " + i + ", columna " + j + ": valor " + puntosPorRonda[i][j]);
+                            "Puntuacion negativa en ronda " + i + ", columna " + j + ": valor " + puntosPorRonda[i][j]);
                 }
             }
         }
@@ -35,11 +36,25 @@ public abstract class Torneo implements Clasificable {
     }
 
     // Getters
-    public String getCodigo() { return codigo; }
-    public String getNombre() { return nombre; }
-    public Region getRegion() { return region; }
-    public int getNumParticipantes() { return numParticipantes; }
-    public int[][] getPuntosPorRonda() { return puntosPorRonda; }
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public int getNumParticipantes() {
+        return numParticipantes;
+    }
+
+    public int[][] getPuntosPorRonda() {
+        return puntosPorRonda;
+    }
 
     // toString
     @Override

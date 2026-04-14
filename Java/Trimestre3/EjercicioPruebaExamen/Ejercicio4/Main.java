@@ -1,6 +1,7 @@
 package EjercicioPruebaExamen.Ejercicio4;
 
 public class Main {
+
     public static void main(String[] args) {
 
         // Matrices 4x2 (rondas x modalidad)
@@ -14,10 +15,10 @@ public class Main {
 
         // Creacion con try-catch por separado para cada excepcion
         try {
-            torneos[0] = new TorneoOficial("T01", "Torneo Kanto",  Region.KANTO,  8, t1, 5);
-            torneos[1] = new TorneoOficial("T02", "Torneo Johto",  Region.JOHTO,  6, t2, 3);
-            torneos[2] = new TorneoAmistoso("T03", "Copa Hoenn",   Region.HOENN,  4, t3, 10);
-            torneos[3] = new TorneoAmistoso("T04", "Copa Sinnoh",  Region.SINNOH, 5, t4, 7);
+            torneos[0] = new TorneoOficial("T01", "Torneo Kanto", Region.KANTO, 8, t1, 5);
+            torneos[1] = new TorneoOficial("T02", "Torneo Johto", Region.JOHTO, 6, t2, 3);
+            torneos[2] = new TorneoAmistoso("T03", "Copa Hoenn", Region.HOENN, 4, t3, 10);
+            torneos[3] = new TorneoAmistoso("T04", "Copa Sinnoh", Region.SINNOH, 5, t4, 7);
         } catch (PuntosNegativosException e) {
             System.out.println("Error en puntuaciones: " + e.getMessage());
         } catch (ParticipantesInsuficientesException e) {
@@ -103,8 +104,12 @@ public class Main {
         int numOficial = 0;
         int numAmistoso = 0;
         for (Torneo t : torneos) {
-            if (t instanceof TorneoOficial) numOficial++;
-            if (t instanceof TorneoAmistoso) numAmistoso++;
+            if (t instanceof TorneoOficial) {
+                numOficial++;
+            }
+            if (t instanceof TorneoAmistoso) {
+                numAmistoso++;
+            }
         }
         System.out.println("Torneos Oficiales: " + numOficial);
         System.out.println("Torneos Amistosos: " + numAmistoso);
