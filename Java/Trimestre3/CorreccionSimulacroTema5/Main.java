@@ -41,7 +41,8 @@ public static void main(String[] args) {
 		empleados[1] = new Programador("P02", "Luis", EnumDepartamento.INFORMATICA, horas2, 5);
 		empleados[2] = new Administrativo("A01", "Marta", EnumDepartamento.ADMINISTRACION, horas3, 18);
 		empleados[3] = new Administrativo("A02", "Carlos", EnumDepartamento.RRHH, horas4, 10);
-
+		
+		// Llamada a los métodos definidos en el Main pasando por parámetro el array del objeto empleados
 		mostrarEmpleados(empleados);
 		mostrarMayorProductividad(empleados);
 		contarTipos(empleados);
@@ -66,8 +67,8 @@ public static void main(String[] args) {
 	}
 
 	private static void mostrarMayorProductividad(Empleado[] empleados) {
-		Empleado mejor = empleados[0];
-
+		Empleado mejor = empleados[0]; // Inicializo una variable para ir comparando quien es el mejor, con el array de la clase Empleado llamada empleados posicion 0, es decir la primera 
+		// Recorro la fila de empleados y calculo su productividad, la comparo con el empleado declarado previamente
 		for (int i = 1; i < empleados.length; i++) {
 			if (empleados[i].calcularProductividad() > mejor.calcularProductividad()) {
 				mejor = empleados[i];
@@ -83,7 +84,7 @@ public static void main(String[] args) {
 	private static void contarTipos(Empleado[] empleados) {
 		int numProgramadores = 0;
 		int numAdministrativos = 0;
-
+		// Recorrido de empleados y se valida si el empleado es programador o administrativo, segun lo que encuentre se va sumando 
 		for (int i = 0; i < empleados.length; i++) {
 			if (empleados[i] instanceof Programador) {
 				numProgramadores++;
