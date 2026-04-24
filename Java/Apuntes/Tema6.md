@@ -20,7 +20,7 @@ Object[] toArray() --> Devuelve un array con todos los elementos de la colecció
 
 void clear() --> elimina elementos de la colección
 
-Iterator iterator() --> Devuelve un objeto iterador que nos permite recorrer los elementos de la colección.
+Iterator iterator() --> Devuelve un objeto iterador que nos permite recorrer los elementos de la colección. Como el i del bucle for que hemos usado siempre
 
 para recorrer y/o modificar una colección debemos usar el metodo iterator() que devuelve un objeto que implementa la interfaz con los siguientes metodos:
 
@@ -68,3 +68,74 @@ public class TestHashSet {
 
     }
 }
+
+LISTA ORDENADA
+---
+public class ListaOrdenada {
+    LinkedList<Integer> lista = new LinkedList<Integer>();
+
+    public void insertarEnOrden(Integer nuevo) {
+        int pos = buscarSuSitio(nuevo);
+        lista.add(pos, nuevo);
+    }
+
+    private int buscarSuSitio(Integer nuevo) {
+        boolean encontradoPosicion = false;
+        int pos = 0;
+        Iterator<Integer> it = lista.iterator();
+        Integer elemento;
+
+        while (it.hasNext() && encontradoPosicion == false) {
+            elemento = it.next();
+            if (nuevo.intValue() < elemento.intValue()) <-- Al ser "<" si un numero se repite se colocará delante de el en la lista ordenada, para solucionar esto debemos poner un menor o igual   
+                encontradoPosicion = true;
+            else
+                pos++;
+        }
+        return pos;
+    }
+}
+
+- Una lista puede ordenarse con .sort() (se le pasa la lista por parametro)
+- Para ordenar los elementos tiene que implementar la interfaz Comparable, es decir programar compareTo
+- compareTo debe programarse para comparar el objeto actual con otro objeto devolviendo 0 si son iguales, 1 si es mayor, -1 si es menor
+
+INTERFAZ COMPARABLE VS COMPARATOR
+
+- Comparable define un ordenamiento natural único dentro de la propia clase, mientras que Comparator permite definir múltiples ordenamientos personalizados de forma externa
+- El método de comparator es compare
+- El método de comparable es compareTo
+
+
+INTERFAZ MAP
+
+HashMap
+- TipoClave es unica e identifica a un valor
+- TipoValor es el valor que se le determina a un elemento y puede repetirse 
+
+Métodos importantes:
+- Object get(Object key): Accede al valor de una clave, devuelve null si no existe
+
+- Object put(Object key, Object value): Inserta una pareja, si ya habia un valor para esa clave se lo reemplaza
+
+- Object remove(Object key): Elimina una pareja
+
+- Collection< V > values(): Devuelve una colección con los elementos contenidos en el map
+
+
+PILAS Y COLAS
+---
+
+Pilas
+
+- push(Elemento e): inserta un nuevo elemento
+- pop(): extrae un elemento, el último que se haya insertado
+- peek(): Consulta el último elemento sin tocarlo
+
+
+Colas
+- element(): devuelve, pero no elimina, la cabeza de la cola
+- offer(Elemento e): inserta un elemento en la cola
+- remove(): devuelve y elimina la cabeza de la cola
+
+La interfaz Queue implementa Collection por lo que tiene todo sus métodos
