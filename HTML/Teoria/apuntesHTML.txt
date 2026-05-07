@@ -31,3 +31,13 @@ img{
 	object-fit: contain; // Si usamos una determinada resolucion y el dispositivo es distinto, con object-fit se mantiene el contenedor de una imagen con huecos blancos, con object-fit: cover; intenta cubrir todos los huecos, haciendo zoom.
 }
 
+
+HTML 07/05 apuntes
+
+linear-gradient si le añades un 1 al final en un border image en vez de difuminar un pixel, difuminas todo el bloque
+
+Dentro de position "absolute" puedes implementar inset "top, right, bottom, left" en ese orden
+
+Overflow: sirve para que no se superposicione bloques entre si, si ponemos "overflow: scroll" aparecerá una barra de desplazamiento en cada bloque, con un overflow-y, en eje vertical. Si ponemos hidden no aparecerán
+
+ 

@@ -11,6 +11,10 @@ BEGIN
     -- Sumo el total de cada pago y lo guardo en la variable suma_pagos
     SELECT SUM(total) INTO suma_pagos FROM pago 
     WHERE codigo = codigo_cliente; -- Donde el codigo sea igual al codigo_cliente
+    IF suma_pagos IS NULL THEN -- Para poder usar la funcion en otro procedimiento y que sume el campo donde exista un null, es traducir a un valor 0 y poder crear un sumatorio
+        SET suma_pagos = 0;
+    END IF;
     RETURN suma_pagos; -- Devuelvo el precio_total y se muestra el dato
 END ??
 DELIMITER ;
+
