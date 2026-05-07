@@ -25,7 +25,7 @@ CREATE TRIGGER trigger_notificar_pago
 AFTER INSERT ON pago          -- Se dispara después de insertar en pago
 FOR EACH ROW                  -- Por cada fila insertada
 BEGIN
-    INSERT INTO notificaciones (id, fecha_hora, total, codigo_cliente)
+    INSERT INTO notificaciones (fecha_hora, total, codigo_cliente) -- ID no hace falta la ser autoincrement
     VALUES (NOW(), NEW.total, NEW.codigo_cliente); -- NEW.columna accede al valor recién insertado
 END ??
 DELIMITER ;
