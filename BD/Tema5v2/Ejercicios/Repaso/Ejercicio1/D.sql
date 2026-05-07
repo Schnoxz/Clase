@@ -47,3 +47,39 @@ BEGIN
     CLOSE cursor_clientes;
 END ??
 DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE OR REPLACE PROCEDURE calcular_pagos_pendientes()
+BEGIN
+DECLARE pedidos DECIMAL;
+DECLARE pagos DECIMAL;
+DECLARE pendientes DECIMAL;
+DECLARE cod_cliente INT;
+DECLARE fin INT DEFAULT 0;
+DECLARE cur CURSOR FOR SELECT codigo_cliente FROM cliente;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin = 1;
+OPEN cur;
+bucle: LOOP
+FETCH cur INTO cod_cliente;
+IF fin = 1 THEN
+LEAVE bucle;
+END IF;
+SET pedidos = calcular_suma_pedidos_cliente(cod_cliente);
+SET pagos = calcular_suma_pagos_cliente(cod_cliente);
+SET pendientes = pedidos - pagos;
+IF pedidos > pagos THEN
+INSERT INTO clientes_con_pagos_pendientes(codigo_cliente, suma_total_pedidos,
+suma_total_pagos, pendiente_de_pago) VALUES(cod_cliente, pedidos, pagos, pendientes);
+END IF;
+END LOOP;
+CLOSE cur;
+END //
+DELIMITER ;
+CALL calcular_pagos_pendientes()
