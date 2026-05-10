@@ -1,0 +1,79 @@
+1. Gestion de Usuarios
+
+Crear usuario		CREATE USER 'user'@'localhost' IDENTIFIED BY 'password'; si usamos % en vez de localhost, permite conexion desde cualquier IP
+Eliminar usuario	DROP USER 'user'@'localhost';
+Asignar privilegios GRANT ALL PRIVILEGES ON bd.* TO 'user'@'localhost';
+					GRANT SELECT, INSERT ON bd.* TO 'user'@'localhost'; Usamos el principio de minimo privilegio 
+					
+Quitar privilegios 	REVOKE INSERT ON bd.* FROM 'user'@'localhost'; Aqui usamos FROM y en asignar un TO
+Mostrar privilegios SHOW GRANTS FOR 'user'@'localhost';
+Ver usuarios 		SELECT user, host, db FROM mysql.user
+
+
+2. Transacciones
+Es una unidad atómica de trabajo, si TODOS los cambios tienen exito se hace COMMIT, si alguno falla ROLLBACK y deshace las acciones
+
+Iniciar 	START TRANSACTION o BEGIN
+Confirmar	COMMIT
+Deshacer	ROLLBACK
+Autocommit	SET AUTOCOMMIT = 0/1 Por defecto viene en 1
+DDL 		DDL (CREATE, DORP, ALTER...) NO se pueden revertir y cierran la transaccion implicitamente
+
+3. Procedimientos almacenados y funciones
+Es un bloque de sentencias SQL que se almacenan en el servidor, su primera ejecucion compila y guarda en caché, las siguientes se usan desde la caché
+
+Crear 	DELIMITER $$					Invocar: CALL nombre();
+		CREATE PROCEDURE
+		BEGIN
+		END $$
+		DELIMITER ;
+		
+El delimitador usa ; para separar y enviar instrucciones, hay ; internos por lo que se cambian de forma temporal al delimitador definido en el inicio
+En un DECLARE el valor por DEFAULT es NULL, se asigna con un SET variable = valor o con un SELECT * INTO variable FROM tabla
+
+Hay 3 parametros:
+IN, recibe valor de entrada y no modifica el original
+OUT, devuelve un valor
+INOUT, sirve de entrada y salida a la misma vez
+EN FUNCIONES ALMACENADAS TODOS SON IN, NO PUEDEN EXISTIR NINGUNO DE SALIDA (Funciones)
+
+Una funcion siempre tiene un return y se declara returns en la funcion y return al final del codigo que determina el fin de la ejecucion
+CREATE FUNCTION nombre (p tipo)	RETURNS tipo
+BEGIN
+	-- CODIGO
+	RETURN valor;
+END $$
+
+
+BUCLES 
+
+LOOP	Se comprueba de forma manual con un LEAVE	minimo de ejecuciones 0
+WHILE	Se comprueba al inicio						minimo de ejecuciones 0
+REPEAT	Se comprueba al final						minimo de ejecuciones 1 
+
+CURSORES
+Nos permiten recorrer fila a fila el resultado de una SELECT en un procedimiento almacenados
+Primero se declaran las variables>cursor>handler se abre el bucle OPEN cursor , se lee FETCH cursor INTO variable y se cierra CLOSE cursor
+
+TRIGGERS
+Programa almacenado que se dispara ante un evento, INSERT, UPDATE o DELETE, jamas un SELECT, se activa FOR EACH ROW
+
+Existen dos modificadores OLD y NEW
+			NEW				OLD
+INSERT 		NO				SI
+UPDATE		SI				SI
+DELETE		SI				NO
+
+Consideraciones importantes
+
+Recursividad: Un trigger modifica una tabla que activa otro trigger, se puede generar ciclos infinitos
+Rendimiento: Pueden afectar negativamente si contienen mucho código, limitar operaciones
+Debugging: El código dentro de un trigger es más difícil de depurar y mantener que el de una aplicación
+Coordinación entre capas: Los triggers ejecutan lógicamente directamente en la Base de Datos, si es muy complejo deberá moverse a la capa de controlador de la aplicación
+
+Se suelen usar los triggers para:
+
+Validaciones complejas
+Auditoria de cambios en los registros
+Manejo de errores y validaciones
+Triggers temporales que se eliminan cada cierto tiempo, por ejemplo crear un trigger durante una campaña de descuento
