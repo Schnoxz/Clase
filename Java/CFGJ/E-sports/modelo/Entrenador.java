@@ -1,4 +1,4 @@
-
+package modelo;
 public class Entrenador extends PersonaLiga {
 
     // Atributos que se exigen en el ejercicio

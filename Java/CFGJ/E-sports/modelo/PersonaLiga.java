@@ -1,4 +1,4 @@
-
+package modelo;
 abstract public class PersonaLiga {
 // Atributos de la clase PersonaLiga
     private String identificador;

@@ -1,3 +1,4 @@
+package modelo;
 // Esta clase actua como actor principal en el juego, nos indica el rol que juega, el nivel mecánico, el nivel estrategico, el numero de partidas jugadas, el numero de MVP totales y si esta sancionado
 // Además he implementado el uso de Map con la mecánica del propio personaje que el jugador pickea, teniendo sus respectivas estadísticas
 

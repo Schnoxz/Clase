@@ -1,3 +1,4 @@
+package modelo;
 // Esta clase actua como auxiliar para la clase Jugador, nos indica las estadisticas del pick que juega
 public class EstadisticasDelPickPersonaje {
     private int partidasJugadas;
