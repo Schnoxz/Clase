@@ -1,8 +1,10 @@
 package modelo;
+
+// Representa a cualquier persona que forma parte de la liga de e-sports. Es la clase padre de Jugador y Entrenador, implementando herencia.
 abstract public class PersonaLiga {
 // Atributos de la clase PersonaLiga
-    private String identificador;
-    private String nombre;
+    private  String identificador; // No pueden extistir dos iguales
+    private String nombre; // Contiene el nombre completo
     private String nickname;
     private int edad;
     private Double salarioBase;
