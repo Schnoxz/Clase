@@ -1,3 +1,4 @@
+package modelo;
 // Basado en la mecánica del MOBA smite, tendremos personajes o dioses con sus propios atributos tal y como indica el juego original, su procedencia (panteon), su dificultad de uso, la clase del personaje y su winRate
 
 public class PersonajeJuego {

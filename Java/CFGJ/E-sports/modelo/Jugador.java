@@ -1,3 +1,4 @@
+package modelo;
 // Esta clase actua como actor principal en el juego, nos indica el rol que juega, el nivel mecánico, el nivel estrategico, el numero de partidas jugadas, el numero de MVP totales y si esta sancionado
 // Además he implementado el uso de Map con la mecánica del propio personaje que el jugador pickea, teniendo sus respectivas estadísticas
 
@@ -11,13 +12,13 @@ public class Jugador extends PersonaLiga implements Entrenable {
     // Atributos de clase Jugador
     // He usado wrappers para que puedan ser tratados como objetos
     private Rol rol;
-    private Integer nivelMecanico;
-    private Integer nivelEstrategico;
+    private Integer nivelMecanico; // 0 a 100
+    private Integer nivelEstrategico; // 0 a 100
     private Integer partidasJugadas;
     private Integer mvpTotales;
-    private Boolean sancionado;
+    private Boolean sancionado; // Si el jugador esta sancionado, no puede jugar ni ser convocado como roaster principal
 
-    // Sistema de picks, he querido crear una relación entre jugador y dios/personaje que juegue, ello tendrá sus propias estadisticas
+    // Sistema de picks, he querido crear una relación entre jugador y dios/personaje que juegue, tendrá sus propias estadisticas de winrate dentro de un Map
     private Map<PersonajeJuego, EstadisticasDelPickPersonaje> estadisticasPorPersonaje;
 
     // Constructor de la clase jugador
@@ -65,7 +66,7 @@ public class Jugador extends PersonaLiga implements Entrenable {
     // Método mostrarResumen que muestra por pantalla varios atributos principales del jugador
     @Override
     public void mostrarResumen() {
-        System.out.println("JUGADOR [" + getRol() + "]: " + getNickname() + " | Rendimiento: " + calcularRendimiento());
+        System.out.println("JUGADOR [" + getRol() + "]: " + getNickname() + " | Rendimiento: " + calcularRendimiento() + " | Partidas jugadas: " + getPartidasJugadas() + " | MVP totales: " + getMvpTotales() + " | Sancionado: " + getIsSancionado());
     }
 
     // Implementación de la interfaz Entrenable que nos dice si el jugador puede entrenar
@@ -78,7 +79,7 @@ public class Jugador extends PersonaLiga implements Entrenable {
         if (nivelEstrategico < 100) {
             nivelEstrategico += 1;
         }
-        System.out.println(getNickname() + " ha terminado su entrenamiento.");
+        System.out.println(getNickname() + " ha terminado su entrenamiento." + " Nivel mecánico: " + getNivelMecanico() + " | Nivel estrategico: " + getNivelEstrategico());
     }
 
     @Override
@@ -106,6 +107,6 @@ public class Jugador extends PersonaLiga implements Entrenable {
     // Método toString cib el formato de la clase padre PersonaLiga y se le añaden los datos específicos del Jugador.
     @Override
     public String toString() {
-        return super.toString() + " | Rol: " + rol + " | MVP: " + mvpTotales;
+        return super.toString() + " | Rol: " + rol + " | MVP: " + mvpTotales + " | Rendimiento : " + calcularRendimiento() + " | Sancionado: " + getIsSancionado();
     }
 }

@@ -1,4 +1,4 @@
-
+package modelo;
 public class Partido {
 
     private String id;

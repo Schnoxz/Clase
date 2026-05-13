@@ -1,9 +1,13 @@
-
+package modelo;
+/* Es el coach que dirige al equipo, se extiende de PersonaLiga pero no implementa entrenable al no ser jugador
+	- Tiene una especialidad (Mecánica, Estratega, Motivacion, etc)
+	- Su experiencia repercute en su salario
+*/
 public class Entrenador extends PersonaLiga {
 
     // Atributos que se exigen en el ejercicio
     private int experiencia;
-    private String especialidad; // Estratega, Mecanica, Motivacion, etc
+    private String especialidad; // Estratega, Mecanica, Motivacion, Draft. (Draft se refiere a la eleccion de personajes, el counterpick o el draft de su propio equipo en un partido)
     private int victoriasTotales;
 
     public Entrenador(String id, String nombre, String nickname, Integer edad, Double salarioBase, Integer experiencia, String especialidad) {
@@ -29,8 +33,33 @@ public class Entrenador extends PersonaLiga {
         return getSalarioBase() + (experiencia * 50.0);
     }
 
+	// Métodos únicos de la clase Entrenador
+
+	// Metodo que incrementa las victorias totales al acabar un partido
+	public void incrementarVictorias(){
+		this.victoriasTotales++;
+	}
+
+	// Método que reinicia el recuento de victorias totales cuando comienza una nueva temporada
+	public void reiniciarVictorias(){
+		this.victoriasTotales = 0;
+	}
+
+	// Métodos obligatorios
+
+	// mostrarResumen de la clase Entrenador
     @Override
     public void mostrarResumen() {
-        System.out.println("ENTRENADOR: " + getNombre() + " | Especialidad: " + especialidad);
+        System.out.println("ENTRENADOR: " + getNombre() + " (" + getNickname() + ")");
+        System.out.println("  Especialidad: " + especialidad);
+        System.out.println("  Experiencia: " + experiencia + " años");
+        System.out.println("  Victorias conseguidas: " + victoriasTotales);
+        System.out.println("  Coste mensual: " + String.format("%.2f", calcularCosteMensual()) + "€");
     }
+
+	// toString de la clase Entrenador
+	@Override
+	public String toString() {
+		return super.toString() + " | Especialidad: " + especialidad + " | Experiencia: " + experiencia +  "años" + " | Victorias: " + victoriasTotales;
+	}
 }
