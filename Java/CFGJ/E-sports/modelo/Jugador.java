@@ -7,7 +7,7 @@ import java.util.Map;
 
 // Esta clase actua como actor principal en el juego, nos indica el rol que juega, el nivel mecánico, el nivel estrategico, el numero de partidas jugadas, el numero de MVP totales y si esta sancionado
 // Además he implementado el uso de Map con la mecánica del propio personaje que el jugador pickea, teniendo sus respectivas estadísticas
-public class Jugador extends PersonaLiga implements Entrenable {
+public class Jugador extends PersonaLiga implements Entrenable, Comparable<Jugador> {
 
     // Atributos de clase Jugador
     // He usado wrappers para que puedan ser tratados como objetos
@@ -59,9 +59,7 @@ public class Jugador extends PersonaLiga implements Entrenable {
 
     // Método que calcula el coste del jugador al mes, se le suma el plus de cuántos mvp ha tenido en la temporada
     @Override
-    public Double calcularCosteMensual() { // Se declara como un wrapper para que puedan ser tratados como objetos
-        return getSalarioBase() + (mvpTotales * 10.0);
-    }
+    public Double calcularCosteMensual() {  return getSalarioBase() + (mvpTotales * 10.0); }
 
     // Método mostrarResumen que muestra por pantalla varios atributos principales del jugador
     @Override
@@ -70,16 +68,27 @@ public class Jugador extends PersonaLiga implements Entrenable {
     }
 
     // Implementación de la interfaz Entrenable que nos dice si el jugador puede entrenar
-    @Override
-    public void entrenar() {
-        // Cada vez que un jugador entrena sube 2 en el nivel mecánico y 1 en el nivel estrategico hasta llegar a 100, esto solo ocurre una vez por cada entrenamiento, se observará como funcionará el sistema de entrenar y si habrá limites
-        if (nivelMecanico < 100) {
-            nivelMecanico += 2;
+   @Override
+    public boolean entrenar() {
+        // Math.random() genera un número entre 0.0 y 1.0
+        double suerte = Math.random();
+
+        // 70% de probabilidad de éxito (de 0.3 a 1.0)
+        if (suerte >= 0.30) {
+            // Si tiene éxito sube entre 1 y 5 puntos sus estadísticas
+            this.setNivelMecanico(this.getNivelMecanico() + (int)(Math.random() * 5) + 1);
+            this.setNivelEstrategico(this.getNivelEstrategico() + (int)(Math.random() * 5) + 1);
+
+            // Lñimite de 100 para las estadísticas
+            if (this.getNivelMecanico() > 100) this.setNivelMecanico(100);
+            if (this.getNivelEstrategico() > 100) this.setNivelEstrategico(100);
+
+            return true; // Ha funcionado
+
+        } else {
+            // No funcionó: El jugador no mejora
+            return false;
         }
-        if (nivelEstrategico < 100) {
-            nivelEstrategico += 1;
-        }
-        System.out.println(getNickname() + " ha terminado su entrenamiento." + " Nivel mecánico: " + getNivelMecanico() + " | Nivel estrategico: " + getNivelEstrategico());
     }
 
     @Override
@@ -104,9 +113,27 @@ public class Jugador extends PersonaLiga implements Entrenable {
         stats.incrementarPartida(victoria);
     }
 
+	// Método que incrementa el contador de partidas jugadas en 1, se llama desde la clase Partido cuando se juega una partida
+	public void incrementarPartidas() { this.partidasJugadas++; }
+
+    // Método que incrementa el contador de MVPs en 1, se llama cuando el jugador es elegido MVP
+    public void incrementarMVP() { this.mvpTotales++; }
+
     // Método toString cib el formato de la clase padre PersonaLiga y se le añaden los datos específicos del Jugador.
     @Override
     public String toString() {
         return super.toString() + " | Rol: " + rol + " | MVP: " + mvpTotales + " | Rendimiento : " + calcularRendimiento() + " | Sancionado: " + getIsSancionado();
+    }
+
+	// Método compareTo para comparar jugadores por su rendimiento, se ordenarán de mayor a menor rendimiento
+	@Override
+	public int compareTo(Jugador otro) {
+        if (this.calcularRendimiento() == otro.calcularRendimiento()) {
+            return 0;
+        } else if (this.calcularRendimiento() > otro.calcularRendimiento()) {
+            return -1; // -1 para orden descendente
+        } else {
+            return 1;
+        }
     }
 }
