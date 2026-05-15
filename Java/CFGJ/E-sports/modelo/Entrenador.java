@@ -33,7 +33,7 @@ public class Entrenador extends PersonaLiga {
         return getSalarioBase() + (experiencia * 50.0);
     }
 
-	// Métodos únicos de la clase Entrenador
+	// METODOS UNICOS DE LA CLASE ENTRENADOR
 
 	// Metodo que incrementa las victorias totales al acabar un partido
 	public void incrementarVictorias(){

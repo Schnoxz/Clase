@@ -16,15 +16,15 @@ Esta clase implementa las estructuras obligatorias para el proyecto:
 	- Queue para gestionar partidos pendientes
 	- Stack para tener un log o historial de acciones
 	- Matrices bidimensionales para el calendario
-	- ArralyList para listas dinámicas
+	- ArrayList para listas dinámicas
 */
 import excepciones.*;
-import modelo.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import modelo.*;
 
 public class Liga {
 	// Atributos de clase para la gestión
@@ -179,14 +179,17 @@ public class Liga {
                 }
             }
 
-            // Verificar si es suplente
-            if (eq.getSuplentes().contains(persona)) {
-                System.out.println("No se puede eliminar: es suplente de " + eq.getNombre());
-                return false;
+            // Verificar si es suplente (solo si sabemos que la persona es un Jugador)
+            if (persona instanceof Jugador) {
+                Jugador posibleSuplente = (Jugador) persona;
+                if (eq.getSuplentes().contains(posibleSuplente)) {
+                    System.out.println("No se puede eliminar: es suplente de " + eq.getNombre());
+                    return false;
+                }
             }
-        }
+		}
 
-        // Eliminar de las estructuras
+       	// Eliminar de las estructuras
         personas.remove(persona);
         idsPersonasRegistradas.remove(id);
 
@@ -194,6 +197,7 @@ public class Liga {
         System.out.println("Persona eliminada: " + persona.getNickname());
         return true;
     }
+
 
     // GESTIÓN DE EQUIPOS =
     public void crearEquipo(Equipo equipo) throws EquipoDuplicadoException {
@@ -215,7 +219,7 @@ public class Liga {
 	// Método para buscar un equipo por nombre
     public Equipo buscarEquipoPorNombre(String nombre) {
         for (Equipo e : equipos) {
-            if (e.getNombre().equalsIgnoreCase(nombre)) {
+            if (e.getNombre().equalsIgnoreCase(nombre)) { // Comparación sin distinguir mayúsculas/minúsculas
                 return e;
             }
         }
@@ -233,7 +237,7 @@ public class Liga {
         System.out.println("Total: " + equipos.size() + " equipos\n");
 
         for (Equipo eq : equipos) {
-            System.out.println("📋 " + eq.getNombre() + " (" + eq.getCiudad() + ")");
+            System.out.println("• " + eq.getNombre() + " (" + eq.getCiudad() + ")");
             System.out.println("   Entrenador: " + (eq.getEntrenador() != null ? eq.getEntrenador().getNickname() : "Sin asignar"));
             System.out.println("   Estadísticas: " + eq.getVictorias() + "V - " + eq.getDerrotas() + "D");
             System.out.println("   Presupuesto: " + eq.getPresupuesto() + "€");
@@ -257,17 +261,17 @@ public class Liga {
         int jornadaActual = 0;
         int partidoEnJornada = 0;
 
-        // Generar enfrentamientos: cada equipo juega contra todos los demás
+        // Genera enfrentamientos: cada equipo juega contra todos los demás
         for (int i = 0; i < equipos.size(); i++) {
             for (int j = i + 1; j < equipos.size(); j++) {
                 try {
-                    // Crear ID único para el partido
+                    // Crea un ID único para el partido
                     String idPartido = "P" + (partidosProgramados + 1);
 
-                    // Crear el partido
+                    // Crea el partido
                     Partido partido = new Partido(idPartido, jornadaActual + 1, equipos.get(i), equipos.get(j)); // Las jornadas empiezan en 1
 
-                    // Añadir a la matriz de calendario
+                    // Añade el partido a la matriz de calendario
                     if (jornadaActual < numeroJornadas && partidoEnJornada < partidosPorJornada) {
         				calendario[jornadaActual][partidoEnJornada] = partido;
                     }
@@ -285,7 +289,7 @@ public class Liga {
                         jornadaActual++;
                     }
 
-                } catch (PartidoInvalidoException e) {
+                } catch (PartidoInvalidoException e) { // Lanza PartidoInvalidoException si falla
                     System.out.println("Error al crear partido: " + e.getMessage());
                 }
             }
@@ -340,7 +344,7 @@ public class Liga {
         int indiceJornada = numJornada - 1; // Para que se muestre un enumerado real, le resto 1, si no nos mostraria siempre una jornada adicional según el indice de la que realmente es
 
         System.out.println("\n=== JORNADA " + numJornada + " ===\n");
-
+		// Recorre el calendario y muestra los partidos de la jornada especificada, si no se encuentra ningún partido programado para esa jornada se muestra un mensaje indicando que no hay partidos programados para esa jornada, si se encuentra un partido programado se muestra su información
         boolean hayPartidos = false;
         for (int p = 0; p < partidosPorJornada; p++) {
             if (calendario[indiceJornada][p] != null) {
@@ -362,89 +366,41 @@ public class Liga {
             System.out.println("No hay partidos pendientes en la cola.");
             return;
         }
-
+		// Muestra el partido pendiente siguiente de la cola
         Partido siguiente = colaPartidosPendientes.peek();
         System.out.println("\n🎮 SIGUIENTE PARTIDO A DISPUTAR:");
         siguiente.mostrarInfo();
     }
 
 	// Disputa el siguiente partido pendiente
-    public void disputarSiguientePartido() throws JugadorSancionadoException {
+	// Método que consulta el primer partido de la cola sin borrarlo
+    public Partido disputarSiguientePartido() {
         if (colaPartidosPendientes.isEmpty()) {
-            System.out.println("No hay partidos pendientes para disputar.");
-            return;
+            return null;
         }
+        return colaPartidosPendientes.peek();
+    }
 
-        // Extrae el primer partido de la cola
-        Partido partido = colaPartidosPendientes.poll();
+    // Método que ejecuta la lógica de registrar el partido en el sistema
+    public void registrarDisputaPartido(Partido partido, int puntosLocal, int puntosVisitante, Jugador mvp) throws JugadorSancionadoException, PartidoInvalidoException {
 
-        System.out.println("\n DISPUTANDO PARTIDO ");
-        partido.mostrarInfo();
-
-        // Se verifican las convocatorias
+        // Verificación de convocatorias (Lanza JugadorSancionadoException si falla)
         if (!partido.getLocal().convocatoriaValida()) {
-            System.out.println("❌ Convocatoria inválida del equipo local");
-            return;
+            throw new PartidoInvalidoException("La convocatoria del equipo local (" + partido.getLocal().getNombre() + ") no es válida.");
         }
         if (!partido.getVisitante().convocatoriaValida()) {
-            System.out.println("❌ Convocatoria inválida del equipo visitante");
-            return;
+            throw new PartidoInvalidoException("La convocatoria del equipo visitante (" + partido.getVisitante().getNombre() + ") no es válida.");
         }
 
-        // Simular resultado (en un programa real, aquí iría la entrada del usuario)
-        Scanner teclado = new Scanner(System.in);
+        // Registra el resultado en el objeto partido (Lanza PartidoInvalidoException si ya estaba jugado)
+        partido.registrarResultado(puntosLocal, puntosVisitante, mvp);
 
-        System.out.print("\nPuntos del equipo local (" + partido.getLocal().getNombre() + "): ");
-        int puntosLocal = teclado.nextInt();
+        // Actualiza las estructuras que hemos definido para la gestión de partidos, como la cola de partidos pendientes y el historial de partidos jugados
+        colaPartidosPendientes.poll(); // Extrae y elimina definitivamente el partido de la cola
+        partidosJugados.add(partido);  // Lo añade al historial de jugados
 
-        System.out.print("Puntos del equipo visitante (" + partido.getVisitante().getNombre() + "): ");
-        int puntosVisitante = teclado.nextInt();
-
-        // Seleccionar MVP
-        System.out.println("\n¿Quién fue el MVP del partido?");
-        System.out.println("1. Jugador del equipo local");
-        System.out.println("2. Jugador del equipo visitante");
-        int opcionMVP = teclado.nextInt();
-
-        Jugador mvp = null;
-        if (opcionMVP == 1) {
-            // Mostrar titulares del local
-            System.out.println("\nTitulares de " + partido.getLocal().getNombre() + ":");
-            Jugador[] titularesLocal = partido.getLocal().getTitulares();
-            for (int i = 0; i < titularesLocal.length; i++) {
-                if (titularesLocal[i] != null) {
-                    System.out.println((i+1) + ". " + titularesLocal[i].getNickname());
-                }
-            }
-            System.out.print("Seleccione el MVP: ");
-            int indexMVP = teclado.nextInt() - 1;
-            mvp = titularesLocal[indexMVP];
-        } else {
-            // Similar para visitante
-            Jugador[] titularesVisitante = partido.getVisitante().getTitulares();
-            System.out.println("\nTitulares de " + partido.getVisitante().getNombre() + ":");
-            for (int i = 0; i < titularesVisitante.length; i++) {
-                if (titularesVisitante[i] != null) {
-                    System.out.println((i+1) + ". " + titularesVisitante[i].getNickname());
-                }
-            }
-            System.out.print("Seleccione el MVP: ");
-            int indexMVP = teclado.nextInt() - 1;
-            mvp = titularesVisitante[indexMVP];
-        }
-
-        try {
-            // Registrar el resultado
-            partido.registrarResultado(puntosLocal, puntosVisitante, mvp);
-            partidosJugados.add(partido);
-
-            registrarAccion("Partido disputado: " + partido.toString());
-
-            System.out.println("\n✓ Partido registrado exitosamente");
-
-        } catch (PartidoInvalidoException e) {
-            System.out.println("Error al registrar partido: " + e.getMessage());
-        }
+        // Registra la acción en el historial
+        registrarAccion("Partido disputado: " + partido.getId() + " | Resultado: " + puntosLocal + "-" + puntosVisitante);
     }
 
 	// Muestra la cola de partidos pendientes
@@ -467,10 +423,10 @@ public class Liga {
 	// Vacia la cola de partidos pendientes
     public void vaciarColaPartidos() {
         int cantidadEliminada = colaPartidosPendientes.size();
-        colaPartidosPendientes.clear();
-
+        colaPartidosPendientes.clear(); // Vacía la cola de partidos pendientes
+		// Registra la acción de vaciar la cola en el historial y muestra un mensaje indicando que la cola ha sido vaciada y cuántos partidos se eliminaron
         registrarAccion("Cola de partidos vaciada: " + cantidadEliminada + " partidos eliminados");
-        System.out.println("✓ Cola vaciada. Se eliminaron " + cantidadEliminada + " partidos.");
+        System.out.println("Cola vaciada. Se eliminaron " + cantidadEliminada + " partidos.");
     }
 
     // GESTIÓN DE INCIDENCIAS
@@ -488,7 +444,7 @@ public class Liga {
             System.out.println("No hay incidencias registradas.");
             return;
         }
-
+		// Muestra el total de incidencias registradas y luego recorre la lista de incidencias mostrando su información, si no se encuentra ninguna incidencia se muestra un mensaje indicando que no hay incidencias registradas
         System.out.println("\n=== INCIDENCIAS REGISTRADAS ===");
         System.out.println("Total: " + incidencias.size() + "\n");
 
@@ -500,7 +456,7 @@ public class Liga {
 	// Busca incidencias relacionadas con un jugador en particular
     public void buscarIncidenciasPorJugador(Jugador jugador) {
         System.out.println("\n=== INCIDENCIAS DE " + jugador.getNickname() + " ===\n");
-
+		// Recorre la lista de incidencias y muestra solo las que estén relacionadas con el jugador especificado, si no se encuentra ninguna incidencia relacionada se muestra un mensaje indicando que no se encontraron incidencias para ese jugador
         boolean encontradas = false;
         for (IncidenciaLog inc : incidencias) {
             if (inc.getJugador() != null && inc.getJugador().equals(jugador)) {
@@ -517,7 +473,7 @@ public class Liga {
 	// Busca incidencias relacionadas con un equipo en particular
     public void buscarIncidenciasPorEquipo(Equipo equipo) {
         System.out.println("\n=== INCIDENCIAS DE " + equipo.getNombre() + " ===\n");
-
+		// Recorre la lista de incidencias y muestra solo las que estén relacionadas con el equipo especificado, si no se encuentra ninguna incidencia relacionada se muestra un mensaje indicando que no se encontraron incidencias para ese equipo
         boolean encontradas = false;
         for (IncidenciaLog inc : incidencias) {
             if (inc.getEquipo() != null && inc.getEquipo().equals(equipo)) {
@@ -534,11 +490,11 @@ public class Liga {
     // HISTORIAL DE ACCIONES
 
 	// Registra una nueva acción en el historial
-    private void registrarAccion(String accion) {
+    public void registrarAccion(String accion) {
         String timestamp = java.time.LocalDateTime.now().format(
             java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         );
-        pilaHistorialAcciones.push("[" + timestamp + "] " + accion);
+        pilaHistorialAcciones.push("[" + timestamp + "] " + accion); // Se añade la acción a la pila con un formato de timestamp para tener un registro temporal de las acciones realizadas
     }
 
 	// Muestra la última accion registrada
@@ -564,8 +520,9 @@ public class Liga {
         System.out.println("╚════════════════════════════════════════════╝\n");
         System.out.println("Total de acciones: " + pilaHistorialAcciones.size() + "\n");
 
-        // Crear copia para no modificar la pila original
-        Stack<String> copiaTemp = (Stack<String>) pilaHistorialAcciones.clone();
+        // Crea una copia temporal de la pila para mostrarla sin modificar el orden original, ya que al usar pop se eliminarían las acciones del historial, con esta copia podemos mostrar el historial completo sin perder los datos ademñas no uso .clone porque java no puede comprobar la pila original, tendría que hacer pop en la pila original para mostrar el historial pero eso eliminaría las acciones del historial, con esta copia temporal puedo mostrar el historial completo sin perder los datos originales
+        Stack<String> copiaTemp = new Stack<>();
+		copiaTemp.addAll(pilaHistorialAcciones);
 
         int contador = 1;
         while (!copiaTemp.isEmpty()) {
@@ -600,17 +557,17 @@ public class Liga {
 
         // Ordenar usando Comparator con criterios múltiples
         clasificacion.sort((e1, e2) -> {
-            // Criterio 1: Victorias (descendente)
+            // Victorias (descendente)
             int compVictorias = Integer.compare(e2.getVictorias(), e1.getVictorias());
             if (compVictorias != 0) return compVictorias;
 
-            // Criterio 2: Diferencia de puntos (descendente)
+            // Diferencia de puntos (descendente)
             int diff1 = e1.getPuntosAFavor() - e1.getPuntosEnContra();
             int diff2 = e2.getPuntosAFavor() - e2.getPuntosEnContra();
             int compDiferencia = Integer.compare(diff2, diff1);
             if (compDiferencia != 0) return compDiferencia;
 
-            // Criterio 3: Nombre alfabético
+            // Nombre en orden alfabético (ascendente)
             return e1.getNombre().compareTo(e2.getNombre());
         });
 
@@ -620,16 +577,13 @@ public class Liga {
         System.out.println("╠═══════════════════════════════════════════════════════════════════╣");
         System.out.println("║ Pos │ Equipo                  │  PJ │  V │  D │  PF │  PC │ Diff ║");
         System.out.println("╠═════╪═════════════════════════╪═════╪════╪════╪═════╪═════╪══════╣");
-
+		// Recorre la lista de equipos ordenada y muestra su posición, nombre, partidos jugados, victorias, derrotas, puntos a favor, puntos en contra y diferencia de puntos
         for (int i = 0; i < clasificacion.size(); i++) {
             Equipo e = clasificacion.get(i);
-            int partidosJugados = e.getVictorias() + e.getDerrotas();
+            int totalPartidos = e.getVictorias() + e.getDerrotas();
             int diferencia = e.getPuntosAFavor() - e.getPuntosEnContra();
-
-            System.out.printf("║ %3d │ %-23s │ %3d │ %2d │ %2d │ %3d │ %3d │ %+4d ║%n",
-                (i + 1),
-                e.getNombre().length() > 23 ? e.getNombre().substring(0, 23) : e.getNombre(),
-                partidosJugados, e.getVictorias(), e.getDerrotas(), e.getPuntosAFavor(), e.getPuntosEnContra(), diferencia);
+			// Para que el formato de la tabla se mantenga, se limita el nombre del equipo a 23 caracteres y si es mayor se muestra solo los primeros 23 caracteres, el formato de lo demás se mantiene 3d para números enteros y 4d con signo para la diferencia, además de mostrar el encabezado de la tabla con los nombres de cada columna
+            System.out.printf("║ %3d │ %-23s │ %3d │ %2d │ %2d │ %3d │ %3d │ %+4d ║%n", (i + 1), e.getNombre().length() > 23 ? e.getNombre().substring(0, 23) : e.getNombre(), totalPartidos, e.getVictorias(), e.getDerrotas(), e.getPuntosAFavor(), e.getPuntosEnContra(), diferencia);
         }
 
         System.out.println("╚═════╧═════════════════════════╧═════╧════╧════╧═════╧═════╧══════╝");
