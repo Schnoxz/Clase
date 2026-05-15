@@ -1,0 +1,114 @@
+ PMA_token |s:32:"46242f21306b3267223a383c4b762479"; HMAC_secret |s:16:"dx,3=Vtde!mPr:<U";browser_access_time|a:3:{s:7:"default";i:1776962652;s:36:"da0f67c9-f9b0-9892-8682-e067372c26eb";i:1776960894;s:36:"b240e306-ec88-3a9c-c06e-1c9dc6fe13d7";i:1776963744;}relation|a:1:{i:1;a:41:{s:7:"version";s:5:"5.2.1";s:4:"user";s:4:"root";s:2:"db";s:10:"phpmyadmin";s:8:"bookmark";s:13:"pma__bookmark";s:15:"central_columns";s:20:"pma__central_columns";s:11:"column_info";s:16:"pma__column_info";s:17:"designer_settings";s:22:"pma__designer_settings";s:16:"export_templates";s:21:"pma__export_templates";s:8:"favorite";s:13:"pma__favorite";s:7:"history";s:12:"pma__history";s:16:"navigationhiding";s:21:"pma__navigationhiding";s:9:"pdf_pages";s:14:"pma__pdf_pages";s:6:"recent";s:11:"pma__recent";s:8:"relation";s:13:"pma__relation";s:13:"savedsearches";s:18:"pma__savedsearches";s:12:"table_coords";s:17:"pma__table_coords";s:10:"table_info";s:15:"pma__table_info";s:13:"table_uiprefs";s:18:"pma__table_uiprefs";s:8:"tracking";s:13:"pma__tracking";s:10:"userconfig";s:15:"pma__userconfig";s:10:"usergroups";s:15:"pma__usergroups";s:5:"users";s:10:"pma__users";s:12:"bookmarkwork";b:1;s:8:"mimework";b:1;s:18:"centralcolumnswork";b:1;s:8:"commwork";b:1;s:9:"menuswork";b:1;s:20:"designersettingswork";b:1;s:11:"displaywork";b:1;s:19:"exporttemplateswork";b:1;s:12:"favoritework";b:1;s:7:"navwork";b:1;s:7:"pdfwork";b:1;s:10:"recentwork";b:1;s:7:"relwork";b:1;s:17:"savedsearcheswork";b:1;s:11:"historywork";b:1;s:12:"trackingwork";b:1;s:11:"uiprefswork";b:1;s:14:"userconfigwork";b:1;s:8:"allworks";b:1;}}tmpval|a:16:{s:14:"favoriteTables";a:1:{i:1;a:0:{}}s:12:"recentTables";a:1:{i:1;a:10:{i:0;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";}i:1;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";}i:2;a:2:{s:2:"db";s:7:"pruebas";s:5:"table";s:20:"logAlumnosEliminados";}i:3;a:2:{s:2:"db";s:7:"pruebas";s:5:"table";s:15:"logCambiosEmail";}i:4;a:2:{s:2:"db";s:7:"pruebas";s:5:"table";s:8:"alumnado";}i:5;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:2:"t1";}i:6;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:2:"t2";}i:7;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:2:"t3";}i:8;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:16:"informe_salarial";}i:9;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:12:"departamento";}}}s:18:"table_limit_offset";i:0;s:21:"table_limit_offset_db";s:7:"empresa";s:5:"query";a:10:{s:32:"9d49d5a24650b3ab35a734bd959d5e95";a:8:{s:3:"sql";s:24:"SELECT * FROM `empleado`";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"0d2e9c69cedf5b3cc6f6814e5c2b35fe";a:8:{s:3:"sql";s:14:"SHOW TRIGGERS;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"5ae0b832a9c7981752cf578b2bcef87e";a:8:{s:3:"sql";s:720:"CREATE TRIGGER triggerSalariosEmpleadoAfterUpdate
+-- AFTER UPDATE porque voy a insertar un registro en la tabla salarios despues de que se actualice una fila en la tabla empleado, for each row porque quiero que se ejecute para cada fila
+AFTER UPDATE ON empleado FOR EACH ROW
+BEGIN
+    -- Solo actúa si el salario ha cambiado previamente, comparo el nuevo salario con el antiguo, si son diferentes entonces inserto el registro en la tabla salarios
+    IF NEW.salEmp <> OLD.SalEmp THEN
+        -- Inserto el registro en la tabla salarios
+        INSERT INTO salarios (salario, codigo_empleado)
+        -- Introduzco el nuevo salario y el codigo del empleado
+        VALUES (NEW.SalEmp, NEW.CodEmp);
+    END IF;;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"251d2ae36c4da89f22eac6cc44dfebd1";a:8:{s:3:"sql";s:136:"-- 5. triggerSalariosEmpleadoAfterUpdate
+-- Borro el trigger si ya existias
+DROP TRIGGER IF EXISTS triggerSalariosEmpleadoAfterUpdate;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"0d0cd4da74ca4107ecf6c0554e67feb0";a:8:{s:3:"sql";s:725:"CREATE TRIGGER triggerSalariosEmpleadoAfterUpdate
+-- AFTER UPDATE porque voy a insertar un registro en la tabla salarios despues de que se actualice una fila en la tabla empleado, for each row porque quiero que se ejecute para cada fila
+AFTER UPDATE ON empleado FOR EACH ROW
+BEGIN
+    -- Solo actúa si el salario ha cambiado previamente, comparo el nuevo salario con el antiguo, si son diferentes entonces inserto el registro en la tabla salarios
+    IF NEW.salEmp <> OLD.SalEmp THEN
+        -- Inserto el registro en la tabla salarios
+        INSERT INTO salarios (salario, codigo_empleado)
+        -- Introduzco el nuevo salario y el codigo del empleado
+        VALUES (NEW.SalEmp, NEW.CodEmp);
+    END IF;
+END;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"1cbfcce12a72af81b4fc58aca07f4dce";a:8:{s:3:"sql";s:91:"INSERT INTO empleado (CodDep, NomEmp, SalEmp)
+VALUES ('PROZS', 'Prueba Trigger', 2000000);";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"e69e5003373b9e9405f530fcef4d7f1f";a:8:{s:3:"sql";s:49:"-- Consulto los salarios
+SELECT * FROM salarios;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"e0858bd69db127f2e82e26b097fa0641";a:8:{s:3:"sql";s:141:"-- Actualizo el salario del nuevo empleado (debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger';";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"f301b4c95e7902c62b0fc8b6eef6e9ed";a:8:{s:3:"sql";s:164:"-- Hago otro update pero con el mismo salario (no debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger'
+AND CodEmp = 11;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"d8f4bdd408573513a46da60c77c7b84d";a:8:{s:3:"sql";s:153:"-- Consulto nuevamente los salarios, debe haber un registro del salario inicial y otro del cambio, pero no del update sin cambio
+SELECT * FROM salarios;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}}s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;s:12:"display_blob";b:0;s:19:"hide_transformation";b:0;s:3:"pos";i:0;s:8:"max_rows";i:25;s:12:"repeat_cells";i:100;s:20:"possible_as_geometry";b:1;s:13:"table_uiprefs";a:1:{i:1;a:2:{s:7:"pruebas";a:3:{s:8:"alumnado";a:0:{}s:15:"logCambiosEmail";a:0:{}s:20:"logAlumnosEliminados";a:0:{}}s:7:"empresa";a:2:{s:8:"empleado";a:0:{}s:8:"salarios";a:0:{}}}}}two_factor_check|b:1;cache|a:3:{s:8:"server_1";a:4:{s:15:"userprefs_mtime";i:1776959391;s:14:"userprefs_type";s:2:"db";s:12:"config_mtime";i:1447170388;s:9:"userprefs";a:2:{s:7:"Console";a:1:{s:4:"Mode";s:8:"collapse";}s:4:"lang";s:2:"es";}}s:13:"server_1_root";a:17:{s:17:"is_create_db_priv";b:1;s:14:"is_reload_priv";b:1;s:12:"db_to_create";s:0:"";s:30:"dbs_where_create_table_allowed";a:1:{i:0;s:1:"*";}s:11:"dbs_to_test";b:0;s:9:"proc_priv";b:1;s:10:"table_priv";b:1;s:8:"col_priv";b:1;s:7:"db_priv";b:1;s:11:"binary_logs";a:0:{}s:18:"menu-levels-server";a:13:{s:9:"databases";s:14:"Bases de datos";s:3:"sql";s:3:"SQL";s:6:"status";s:13:"Estado actual";s:6:"rights";s:8:"Usuarios";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:8:"settings";s:14:"Configuración";s:6:"binlog";s:16:"Registro binario";s:11:"replication";s:12:"Replicación";s:4:"vars";s:9:"Variables";s:7:"charset";s:20:"Juegos de caracteres";s:7:"plugins";s:12:"Complementos";s:6:"engine";s:7:"Motores";}s:14:"menu-levels-db";a:14:{s:9:"structure";s:10:"Estructura";s:3:"sql";s:3:"SQL";s:6:"search";s:6:"Buscar";s:5:"query";s:20:"Generar una consulta";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:9:"operation";s:11:"Operaciones";s:10:"privileges";s:11:"Privilegios";s:8:"routines";s:7:"Rutinas";s:6:"events";s:7:"Eventos";s:8:"triggers";s:12:"Disparadores";s:8:"tracking";s:11:"Seguimiento";s:8:"designer";s:10:"Diseñador";s:15:"central_columns";s:18:"Columnas centrales";}s:17:"menu-levels-table";a:11:{s:6:"browse";s:8:"Examinar";s:9:"structure";s:10:"Estructura";s:3:"sql";s:3:"SQL";s:6:"search";s:6:"Buscar";s:6:"insert";s:8:"Insertar";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:10:"privileges";s:11:"Privilegios";s:9:"operation";s:11:"Operaciones";s:8:"tracking";s:11:"Seguimiento";s:8:"triggers";s:12:"Disparadores";}s:19:"profiling_supported";b:1;s:12:"is_superuser";b:1;s:14:"mysql_cur_user";s:14:"root@localhost";s:12:"is_grantuser";b:1;}s:13:"version_check";a:2:{s:8:"response";s:411:"{
+    "version": "5.2.3",
+    "date": "2025-10-08",
+    "releases": [
+        {
+            "version": "5.2.3",
+            "date": "2025-10-08",
+            "php_versions": ">=7.2,<8.4",
+            "mysql_versions": ">=5.5"
+        },
+        {
+            "version": "4.9.11",
+            "date": "2023-02-08",
+            "php_versions": ">=5.5,<8.0",
+            "mysql_versions": ">=5.5"
+        }
+    ]
+}";s:9:"timestamp";i:1776949517;}}git_location|N;is_git_revision|b:0;ConfigFile1|a:2:{s:7:"Console";a:1:{s:4:"Mode";s:8:"collapse";}s:7:"Servers";a:1:{i:1;a:2:{s:7:"only_db";s:0:"";s:7:"hide_db";s:0:"";}}}debug|a:0:{}flashMessages|a:0:{}Import_message|a:2:{s:7:"message";N;s:11:"go_back_url";s:58:"index.php?route=/table/structure&db=empresa&table=empleado";}is_multi_query|b:0;sql_history|a:25:{i:0;a:3:{s:2:"db";s:7:"pruebas";s:5:"table";s:20:"logAlumnosEliminados";s:8:"sqlquery";s:95:"-- Compruebo que se ha añadido el alumno eliminado al log
+SELECT * FROM logAlumnosEliminados;";}i:1;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:466:"CREATE TRIGGER triggerHolaHijo
+-- AFTER INSERT porque quiero modificar el valor del email despues de que se inserte la fila en la tabla alumnado, for each row porque quiero que se ejecute para cada fila
+AFTER INSERT ON hijo FOR EACH ROW
+BEGIN
+    -- Actualizo de la tabla empleado el campo NumHi donde CodEmp sea igual al CodEmp del hijo insertado, le sumo 1 al valor original
+    UPDATE empleado
+    SET NumHi = NumHi + 1
+    WHERE CodEmp = NEW.CodEmp;
+END;";}i:2;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:99:"-- Compruebo el estado del empleado 7
+SELECT CodEmp, NomEmp, NumHi FROM empleado WHERE CodEmp = 7;";}i:3;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:93:"-- Compruebo que NumHi pasa a 1
+SELECT CodEmp, NomEmp, NumHi FROM empleado WHERE CodEmp = 7;";}i:4;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:419:"CREATE TRIGGER triggerAdiosHijo
+-- AFTER DELETE porque quiero modificar el valor del email despues de que se elimine la fila en la tabla alumnado, for each row porque quiero que se ejecute para cada fila
+AFTER DELETE ON hijo FOR EACH ROW
+BEGIN
+    -- Igual que antes pero le resto 1 y CodEmp es igual al CodEmp del hijo eliminado
+    UPDATE empleado
+    SET NumHi = NumHi - 1
+    WHERE CodEmp = OLD.CodEmp;
+END;";}i:5;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:93:"-- Compruebo que NumHi pasa a 0
+SELECT CodEmp, NomEmp, NumHi FROM empleado WHERE CodEmp = 7;";}i:6;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:324:"-- 3. Creación de la tabla salarios
+CREATE TABLE IF NOT EXISTS salarios (id INT AUTO_INCREMENT PRIMARY KEY, fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP, salario DECIMAL(12,2) NOT NULL CHECK (salario > 0), codigo_empleado INT(10), CONSTRAINT fk_salarios_empleado  FOREIGN KEY (codigo_empleado) REFERENCES empleado(CodEmp)
+);";}i:7;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:482:"CREATE TRIGGER triggerSalariosEmpleadoAfterInsert
+-- AFTER INSERT porque voy a insertar un registro en la tabla salarios despues de que se inserte una fila en la tabla empleado, for each row porque quiero que se ejecute para cada fila
+AFTER INSERT ON empleado FOR EACH ROW
+BEGIN
+    -- Inserto el registro en la tabla salarios
+    INSERT INTO salarios (salario, codigo_empleado)
+    -- Introduzco el salario y el codigo del empleado
+    VALUES (NEW.SalEmp, NEW.CodEmp);
+END;";}i:8;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:141:"-- Actualizo el salario del nuevo empleado (debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger';";}i:9;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:122:"-- Consulto nuevamente los salarios, debe haber un registro del salario inicial y otro del cambio
+SELECT * FROM salarios;";}i:10;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:147:"-- Hago otro update pero con el mismo salario (no debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger';";}i:11;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:24:"SELECT * FROM `empleado`";}i:12;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:24:"SELECT * FROM `empleado`";}i:13;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:24:"SELECT * FROM `salarios`";}i:14;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:24:"SELECT * FROM `empleado`";}i:15;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:164:"-- Hago otro update pero con el mismo salario (no debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger'
+AND CodEmp = 11;";}i:16;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:24:"SELECT * FROM `salarios`";}i:17;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:141:"-- Actualizo el salario del nuevo empleado (debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger';";}i:18;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:24:"SELECT * FROM `salarios`";}i:19;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:24:"SELECT * FROM `empleado`";}i:20;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:14:"SHOW TRIGGERS;";}i:21;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:725:"CREATE TRIGGER triggerSalariosEmpleadoAfterUpdate
+-- AFTER UPDATE porque voy a insertar un registro en la tabla salarios despues de que se actualice una fila en la tabla empleado, for each row porque quiero que se ejecute para cada fila
+AFTER UPDATE ON empleado FOR EACH ROW
+BEGIN
+    -- Solo actúa si el salario ha cambiado previamente, comparo el nuevo salario con el antiguo, si son diferentes entonces inserto el registro en la tabla salarios
+    IF NEW.salEmp <> OLD.SalEmp THEN
+        -- Inserto el registro en la tabla salarios
+        INSERT INTO salarios (salario, codigo_empleado)
+        -- Introduzco el nuevo salario y el codigo del empleado
+        VALUES (NEW.SalEmp, NEW.CodEmp);
+    END IF;
+END;";}i:22;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:141:"-- Actualizo el salario del nuevo empleado (debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger';";}i:23;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";s:8:"sqlquery";s:164:"-- Hago otro update pero con el mismo salario (no debe registrarse cambio)
+UPDATE empleado
+SET SalEmp = 2500000
+WHERE NomEmp = 'Prueba Trigger'
+AND CodEmp = 11;";}i:24;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"salarios";s:8:"sqlquery";s:153:"-- Consulto nuevamente los salarios, debe haber un registro del salario inicial y otro del cambio, pero no del update sin cambio
+SELECT * FROM salarios;";}}errors|a:0:{}
