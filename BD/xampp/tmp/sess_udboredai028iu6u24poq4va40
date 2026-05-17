@@ -1,0 +1,155 @@
+ PMA_token |s:32:"6949756e3e3d2222414e442534214767"; HMAC_secret |s:16:"=1g1GS@boj3>lxz4";browser_access_time|a:2:{s:7:"default";i:1776093104;s:36:"88057cc1-e91e-99c8-1a51-c16abb58a623";i:1776096798;}relation|a:1:{i:1;a:41:{s:7:"version";s:5:"5.2.1";s:4:"user";s:4:"root";s:2:"db";s:10:"phpmyadmin";s:8:"bookmark";s:13:"pma__bookmark";s:15:"central_columns";s:20:"pma__central_columns";s:11:"column_info";s:16:"pma__column_info";s:17:"designer_settings";s:22:"pma__designer_settings";s:16:"export_templates";s:21:"pma__export_templates";s:8:"favorite";s:13:"pma__favorite";s:7:"history";s:12:"pma__history";s:16:"navigationhiding";s:21:"pma__navigationhiding";s:9:"pdf_pages";s:14:"pma__pdf_pages";s:6:"recent";s:11:"pma__recent";s:8:"relation";s:13:"pma__relation";s:13:"savedsearches";s:18:"pma__savedsearches";s:12:"table_coords";s:17:"pma__table_coords";s:10:"table_info";s:15:"pma__table_info";s:13:"table_uiprefs";s:18:"pma__table_uiprefs";s:8:"tracking";s:13:"pma__tracking";s:10:"userconfig";s:15:"pma__userconfig";s:10:"usergroups";s:15:"pma__usergroups";s:5:"users";s:10:"pma__users";s:12:"bookmarkwork";b:1;s:8:"mimework";b:1;s:18:"centralcolumnswork";b:1;s:8:"commwork";b:1;s:9:"menuswork";b:1;s:20:"designersettingswork";b:1;s:11:"displaywork";b:1;s:19:"exporttemplateswork";b:1;s:12:"favoritework";b:1;s:7:"navwork";b:1;s:7:"pdfwork";b:1;s:10:"recentwork";b:1;s:7:"relwork";b:1;s:17:"savedsearcheswork";b:1;s:11:"historywork";b:1;s:12:"trackingwork";b:1;s:11:"uiprefswork";b:1;s:14:"userconfigwork";b:1;s:8:"allworks";b:1;}}tmpval|a:16:{s:14:"favoriteTables";a:1:{i:1;a:0:{}}s:12:"recentTables";a:1:{i:1;a:10:{i:0;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:16:"informe_salarial";}i:1;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:12:"departamento";}i:2;a:2:{s:2:"db";s:7:"pruebas";s:5:"table";s:8:"alumnado";}i:3;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:8:"empleado";}i:4;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:6:"centro";}i:5;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:6:"habemp";}i:6;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:9:"habilidad";}i:7;a:2:{s:2:"db";s:5:"mysql";s:5:"table";s:4:"user";}i:8;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:16:"dashboard_centro";}i:9;a:2:{s:2:"db";s:7:"empresa";s:5:"table";s:14:"dashboard_dpto";}}}s:5:"query";a:10:{s:32:"e308bdae95faca95360636d3937ca1a9";a:8:{s:3:"sql";s:70:"-- Selecciono los datos de la tabla alumnado 
+SELECT * FROM alumnado;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"859d13e445f8a2559a6078496da39180";a:8:{s:3:"sql";s:268:"CREATE PROCEDURE ac12mediaSalarial(IN pCodDep CHAR(5), OUT media DECIMAL(12,2))
+BEGIN
+    -- Consulto la media del salario y guardo el valor en el parámetro de salida/variable media
+    SELECT AVG(SalEmp) INTO media FROM empleado
+    WHERE CodDep = pCodDep;
+END;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"e3077516a3d213199512e576823683f7";a:8:{s:3:"sql";s:610:"CREATE FUNCTION ac12categoriaDepartamento(pCodDep CHAR(5))
+RETURNS VARCHAR(20)
+BEGIN
+    -- Declaro dos variables, la de la media y la de caregoria
+    DECLARE media DECIMAL(12,2);
+    DECLARE categoria VARCHAR(10);
+    -- Llamo al procedimiento que calcula la media
+    CALL ac12mediaSalarial(pCodDep, media);
+    -- Valido la media con un IF
+    IF media < 2000000 THEN SET categoria = 'bajo';
+    ELSE
+        IF media <= 5000000 THEN SET categoria = 'medio';
+        ELSE
+            SET categoria = 'alto';
+        END IF;
+    END IF;
+
+    RETURN categoria; -- Devuelvo la caregoria
+END;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"442c47fa2a5275918c0fd4bdae3a5417";a:8:{s:3:"sql";s:206:"-- Creacion de la tabla informe_salarial
+CREATE TABLE informe_salarial (
+    CodDep CHAR(5),
+    NomDep VARCHAR(40),
+    NumEmpleados INT,
+    SalarioMedio DECIMAL(12,2),
+    Categoria VARCHAR(10)
+);";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"6c4df6a3eda3d720e853f6a6e4deb0cb";a:8:{s:3:"sql";s:913:"CREATE PROCEDURE ac12actualizaInforme(IN pCodDep CHAR(5))
+BEGIN
+    -- Declaro la variable media, numero de empleados y categoria
+    DECLARE media  DECIMAL(12,2);
+    DECLARE numEmp INT;
+    DECLARE cattegoria VARCHAR(10);
+    -- Llam al procedimiento para saber la media del salario en el departamento
+    CALL ac12mediaSalarial(pCodDep, media);
+    -- Cuento el numero de empleados de ese departamento
+    SELECT COUNT(*) INTO numEmp FROM empleado
+    WHERE CodDep = pCodDep;
+    -- A la variable categoria le otorgo la categoría que merece el departamento con la función anterior
+    SET categoria = ac12categoriaDepartamento(pCodDep);
+    -- Actualizo la tabla con el salario medio, la cantidad de empleados y la categoria en el departamento en concreto
+    UPDATE informe_salarial
+    SET NumEmpleados = numEmp, SalarioMedio = media, Categoria = categoria
+    WHERE CodDep = pCodDep;
+END;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"468ef565ae0b83f01b80dbd6ec474001";a:8:{s:3:"sql";s:912:"CREATE PROCEDURE ac12actualizaInforme(IN pCodDep CHAR(5))
+BEGIN
+    -- Declaro la variable media, numero de empleados y categoria
+    DECLARE media  DECIMAL(12,2);
+    DECLARE numEmp INT;
+    DECLARE categoria VARCHAR(10);
+    -- Llam al procedimiento para saber la media del salario en el departamento
+    CALL ac12mediaSalarial(pCodDep, media);
+    -- Cuento el numero de empleados de ese departamento
+    SELECT COUNT(*) INTO numEmp FROM empleado
+    WHERE CodDep = pCodDep;
+    -- A la variable categoria le otorgo la categoría que merece el departamento con la función anterior
+    SET categoria = ac12categoriaDepartamento(pCodDep);
+    -- Actualizo la tabla con el salario medio, la cantidad de empleados y la categoria en el departamento en concreto
+    UPDATE informe_salarial
+    SET NumEmpleados = numEmp, SalarioMedio = media, Categoria = categoria
+    WHERE CodDep = pCodDep;
+END;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"4877275aeed3c77c2f781ce118476b39";a:8:{s:3:"sql";s:153:"-- Insertar fila solo con CodDep y NomDep (el resto queda NULL)
+INSERT INTO informe_salarial (CodDep, NomDep)
+VALUES ('PROZS', 'Producción Zona Sur');";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"d9a83fbe343cfb863dbfb916f96ea9d0";a:8:{s:3:"sql";s:28:"SELECT * FROM `departamento`";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"79162720c5d4f3fc3cfcb34221e17b7e";a:8:{s:3:"sql";s:78:"-- Rellenar el resto con el procedimiento
+CALL ac12actualizaInforme('PROZS');";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}s:32:"77283718e9a44abb3ee1718c6faafc52";a:8:{s:3:"sql";s:57:"-- Verifica el resultado
+SELECT * FROM informe_salarial;";s:12:"repeat_cells";i:100;s:8:"max_rows";i:25;s:3:"pos";i:0;s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:4:"GEOM";s:14:"display_binary";b:1;}}s:6:"pftext";s:1:"P";s:18:"relational_display";s:1:"K";s:9:"geoOption";s:3:"WKT";s:14:"display_binary";b:1;s:12:"display_blob";b:0;s:19:"hide_transformation";b:0;s:3:"pos";i:0;s:8:"max_rows";i:25;s:12:"repeat_cells";i:100;s:18:"table_limit_offset";i:0;s:21:"table_limit_offset_db";s:7:"empresa";s:20:"possible_as_geometry";b:0;s:13:"table_uiprefs";a:1:{i:1;a:2:{s:7:"pruebas";a:1:{s:8:"alumnado";a:0:{}}s:7:"empresa";a:2:{s:12:"departamento";a:0:{}s:16:"informe_salarial";a:0:{}}}}}two_factor_check|b:1;cache|a:3:{s:8:"server_1";a:4:{s:15:"userprefs_mtime";i:1776092703;s:14:"userprefs_type";s:2:"db";s:12:"config_mtime";i:1447170388;s:9:"userprefs";a:2:{s:7:"Console";a:1:{s:4:"Mode";s:8:"collapse";}s:4:"lang";s:2:"es";}}s:13:"server_1_root";a:17:{s:17:"is_create_db_priv";b:1;s:14:"is_reload_priv";b:1;s:12:"db_to_create";s:0:"";s:30:"dbs_where_create_table_allowed";a:1:{i:0;s:1:"*";}s:11:"dbs_to_test";b:0;s:9:"proc_priv";b:1;s:10:"table_priv";b:1;s:8:"col_priv";b:1;s:7:"db_priv";b:1;s:11:"binary_logs";a:0:{}s:18:"menu-levels-server";a:13:{s:9:"databases";s:14:"Bases de datos";s:3:"sql";s:3:"SQL";s:6:"status";s:13:"Estado actual";s:6:"rights";s:8:"Usuarios";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:8:"settings";s:14:"Configuración";s:6:"binlog";s:16:"Registro binario";s:11:"replication";s:12:"Replicación";s:4:"vars";s:9:"Variables";s:7:"charset";s:20:"Juegos de caracteres";s:7:"plugins";s:12:"Complementos";s:6:"engine";s:7:"Motores";}s:14:"menu-levels-db";a:14:{s:9:"structure";s:10:"Estructura";s:3:"sql";s:3:"SQL";s:6:"search";s:6:"Buscar";s:5:"query";s:20:"Generar una consulta";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:9:"operation";s:11:"Operaciones";s:10:"privileges";s:11:"Privilegios";s:8:"routines";s:7:"Rutinas";s:6:"events";s:7:"Eventos";s:8:"triggers";s:12:"Disparadores";s:8:"tracking";s:11:"Seguimiento";s:8:"designer";s:10:"Diseñador";s:15:"central_columns";s:18:"Columnas centrales";}s:19:"profiling_supported";b:1;s:17:"menu-levels-table";a:11:{s:6:"browse";s:8:"Examinar";s:9:"structure";s:10:"Estructura";s:3:"sql";s:3:"SQL";s:6:"search";s:6:"Buscar";s:6:"insert";s:8:"Insertar";s:6:"export";s:8:"Exportar";s:6:"import";s:8:"Importar";s:10:"privileges";s:11:"Privilegios";s:9:"operation";s:11:"Operaciones";s:8:"tracking";s:11:"Seguimiento";s:8:"triggers";s:12:"Disparadores";}s:12:"is_superuser";b:1;s:14:"mysql_cur_user";s:14:"root@localhost";s:12:"is_grantuser";b:1;}s:13:"version_check";a:2:{s:8:"response";s:411:"{
+    "version": "5.2.3",
+    "date": "2025-10-08",
+    "releases": [
+        {
+            "version": "5.2.3",
+            "date": "2025-10-08",
+            "php_versions": ">=7.2,<8.4",
+            "mysql_versions": ">=5.5"
+        },
+        {
+            "version": "4.9.11",
+            "date": "2023-02-08",
+            "php_versions": ">=5.5,<8.0",
+            "mysql_versions": ">=5.5"
+        }
+    ]
+}";s:9:"timestamp";i:1776082941;}}git_location|N;is_git_revision|b:0;ConfigFile1|a:2:{s:7:"Console";a:1:{s:4:"Mode";s:8:"collapse";}s:7:"Servers";a:1:{i:1;a:2:{s:7:"only_db";s:0:"";s:7:"hide_db";s:0:"";}}}debug|a:0:{}Import_message|a:2:{s:7:"message";N;s:11:"go_back_url";s:46:"index.php?route=/database/structure&db=empresa";}is_multi_query|b:0;sql_history|a:14:{i:0;a:3:{s:2:"db";s:0:"";s:5:"table";s:0:"";s:8:"sqlquery";s:325:"-- Inserciones de los 5 registros, con la id nombre, apellidos y curso
+INSERT INTO alumnado VALUES
+(1, 'Alberto',  'Morales',         'BD'),
+(2, 'Laura',    'García López',    'DAW'),
+(3, 'Carlos',   'Fernández Ruiz',  'DAM'),
+(4, 'María',    'Rodríguez',       'ASIR'),
+(5, 'Javier',   'Martínez',        'SMR');";}i:1;a:3:{s:2:"db";s:7:"pruebas";s:5:"table";s:0:"";s:8:"sqlquery";s:452:"CREATE FUNCTION crearEmail(nombre VARCHAR(50), apellidos VARCHAR(50), curso VARCHAR(50))
+RETURNS VARCHAR(100)
+BEGIN
+    -- El email debe ser el primer caracter del nombre en minúscula, los cinco primeros apellidos en minúscula, el número de letras del apellido en el curso en minúscula, @ y la extensión .kursal.es
+    RETURN CONCAT( LOWER(LEFT(nombre, 1)), LOWER(LEFT(apellidos, 5)), LENGTH(apellidos), '@', LOWER(curso), '.kursal.es');
+END;";}i:2;a:3:{s:2:"db";s:7:"pruebas";s:5:"table";s:0:"";s:8:"sqlquery";s:50:"ALTER TABLE alumnado ADD COLUMN email VARCHAR(50);";}i:3;a:3:{s:2:"db";s:7:"pruebas";s:5:"table";s:0:"";s:8:"sqlquery";s:195:"CREATE PROCEDURE ac11actualizarColumnaEmail()
+BEGIN
+    UPDATE alumnado
+    -- Se actualiza la columna email con la función creada
+    SET email = crearEmail(nombre, apellidos, curso);
+END;";}i:4;a:3:{s:2:"db";s:7:"pruebas";s:5:"table";s:8:"alumnado";s:8:"sqlquery";s:24:"SELECT * FROM `alumnado`";}i:5;a:3:{s:2:"db";s:7:"pruebas";s:5:"table";s:8:"alumnado";s:8:"sqlquery";s:70:"-- Selecciono los datos de la tabla alumnado 
+SELECT * FROM alumnado;";}i:6;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:268:"CREATE PROCEDURE ac12mediaSalarial(IN pCodDep CHAR(5), OUT media DECIMAL(12,2))
+BEGIN
+    -- Consulto la media del salario y guardo el valor en el parámetro de salida/variable media
+    SELECT AVG(SalEmp) INTO media FROM empleado
+    WHERE CodDep = pCodDep;
+END;";}i:7;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:610:"CREATE FUNCTION ac12categoriaDepartamento(pCodDep CHAR(5))
+RETURNS VARCHAR(20)
+BEGIN
+    -- Declaro dos variables, la de la media y la de caregoria
+    DECLARE media DECIMAL(12,2);
+    DECLARE categoria VARCHAR(10);
+    -- Llamo al procedimiento que calcula la media
+    CALL ac12mediaSalarial(pCodDep, media);
+    -- Valido la media con un IF
+    IF media < 2000000 THEN SET categoria = 'bajo';
+    ELSE
+        IF media <= 5000000 THEN SET categoria = 'medio';
+        ELSE
+            SET categoria = 'alto';
+        END IF;
+    END IF;
+
+    RETURN categoria; -- Devuelvo la caregoria
+END;";}i:8;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:206:"-- Creacion de la tabla informe_salarial
+CREATE TABLE informe_salarial (
+    CodDep CHAR(5),
+    NomDep VARCHAR(40),
+    NumEmpleados INT,
+    SalarioMedio DECIMAL(12,2),
+    Categoria VARCHAR(10)
+);";}i:9;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:912:"CREATE PROCEDURE ac12actualizaInforme(IN pCodDep CHAR(5))
+BEGIN
+    -- Declaro la variable media, numero de empleados y categoria
+    DECLARE media  DECIMAL(12,2);
+    DECLARE numEmp INT;
+    DECLARE categoria VARCHAR(10);
+    -- Llam al procedimiento para saber la media del salario en el departamento
+    CALL ac12mediaSalarial(pCodDep, media);
+    -- Cuento el numero de empleados de ese departamento
+    SELECT COUNT(*) INTO numEmp FROM empleado
+    WHERE CodDep = pCodDep;
+    -- A la variable categoria le otorgo la categoría que merece el departamento con la función anterior
+    SET categoria = ac12categoriaDepartamento(pCodDep);
+    -- Actualizo la tabla con el salario medio, la cantidad de empleados y la categoria en el departamento en concreto
+    UPDATE informe_salarial
+    SET NumEmpleados = numEmp, SalarioMedio = media, Categoria = categoria
+    WHERE CodDep = pCodDep;
+END;";}i:10;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:153:"-- Insertar fila solo con CodDep y NomDep (el resto queda NULL)
+INSERT INTO informe_salarial (CodDep, NomDep)
+VALUES ('PROZS', 'Producción Zona Sur');";}i:11;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:12:"departamento";s:8:"sqlquery";s:28:"SELECT * FROM `departamento`";}i:12;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:0:"";s:8:"sqlquery";s:78:"-- Rellenar el resto con el procedimiento
+CALL ac12actualizaInforme('PROZS');";}i:13;a:3:{s:2:"db";s:7:"empresa";s:5:"table";s:16:"informe_salarial";s:8:"sqlquery";s:57:"-- Verifica el resultado
+SELECT * FROM informe_salarial;";}}flashMessages|a:0:{}errors|a:0:{}
