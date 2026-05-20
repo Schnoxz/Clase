@@ -1,0 +1,73 @@
+-- Creacion de la colección 
+
+db.peliculas.insertMany([
+  {
+    titulo: "Batman Begins",
+    director: "Christopher Nolan",
+    año: 2005,
+    genero: ["Acción", "Crimen", "Drama"],
+    puntuacion: 8.2,
+    oscar: false
+  },
+  {
+    titulo: "The Dark Knight",
+    director: "Christopher Nolan",
+    año: 2008,
+    genero: ["Acción", "Crimen", "Drama"],
+    puntuacion: 9.0,
+    oscar: true
+  },
+  {
+    titulo: "The Dark Knight Rises",
+    director: "Christopher Nolan",
+    año: 2012,
+    genero: ["Acción", "Crimen", "Drama"],
+    puntuacion: 8.4,
+    oscar: false
+  },
+  {
+    titulo: "Batman v Superman: Dawn of Justice",
+    director: "Zack Snyder",
+    año: 2016,
+    genero: ["Acción", "Aventura", "Ciencia Ficción"],
+    puntuacion: 6.4,
+    oscar: false
+  },
+  {
+    titulo: "Batman & Robin",
+    director: "Joel Schumacher",
+    año: 1997,
+    genero: ["Acción", "Aventura"],
+    puntuacion: 3.7,
+    oscar: false
+  }
+])
+
+-- Encuentra todas las películas que se hayan estrenado después (o igual) del año 2010
+
+Se usa $gte greaterThanOrEquals
+
+db.peliculas.find({
+  año: { $gte: 2010 }
+})
+
+-- Encuentra todas las películas que pertenezcan al género "Drama"
+Se busca el array de genero
+
+db.peliculas.find({
+  genero: "Drama"   // MongoDB busca dentro del array automáticamente
+})
+
+Tambien puedo usar un filtro para que solo devuelva el titulo y no todos los valores
+
+db.peliculas.find(
+  { genero: "Drama" },   
+  { titulo: 1 }  
+)
+
+
+-- Encuentra las películas que NO hayan ganado un Oscar
+
+db.peliculas.find({
+  oscar: false
+})
