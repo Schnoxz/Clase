@@ -32,8 +32,8 @@ CREATE TABLE Socio (
 -- Se crea antes que Socio para permitir la FK en Socio
 CREATE TABLE Membresia (
     id_membresia INT PRIMARY KEY AUTO_INCREMENT,
-    id_socio INT NOT NULL, 
-    id_plan INT NOT NULL, 
+    id_socio INT NOT NULL,
+    id_plan INT NOT NULL,
     fecha_inicio DATE NOT NULL,
     fecha_fin DATE NOT NULL,
     estado VARCHAR(50) DEFAULT 'Vigente', -- Ej: Vigente, Caducada, Suspendida
@@ -136,8 +136,8 @@ INSERT INTO Plan (id_plan, nombre, duracion_meses, precio_BASE) VALUES
 (2, 'Trimestral', 3, 69.99),
 (3, 'Anual', 12, 129.99),
 (4, 'Mensual VIP', 1, 49.99), -- Plan VIP + 20e
-(5, 'Trimestral VIP', 3, 89.99), 
-(6, 'Anual VIP', 12, 149.99); 
+(5, 'Trimestral VIP', 3, 89.99),
+(6, 'Anual VIP', 12, 149.99);
 
 -- 3. Tabla socio
 INSERT INTO Socio (id_socio, fecha_registro, estado) VALUES
@@ -145,16 +145,16 @@ INSERT INTO Socio (id_socio, fecha_registro, estado) VALUES
 (2, '2025-02-01', 'Activo'),    -- María
 (3, '2024-11-20', 'Activo'),    -- Juan
 (4, '2025-06-10', 'Activo'),    -- Ana
-(5, '2025-12-10', 'Inactivo'),  -- Pedro 
+(5, '2025-12-10', 'Inactivo'),  -- Pedro
 (6, '2025-12-01', 'Activo'),    -- Laura
-(7, '2026-01-10', 'Activo'),    -- Diego 
+(7, '2026-01-10', 'Activo'),    -- Diego
 (8, '2025-02-15', 'Activo'),    -- Sofia
-(9, '2025-03-01', 'Inactivo'),  -- Miguel 
-(10, '2025-03-01', 'Activo'),   -- Elena 
-(11, '2025-08-20', 'Inactivo'), -- Andrés 
+(9, '2025-03-01', 'Inactivo'),  -- Miguel
+(10, '2025-03-01', 'Activo'),   -- Elena
+(11, '2025-08-20', 'Inactivo'), -- Andrés
 (12, '2026-01-20', 'Activo'),   -- Valentina
 (13, '2025-04-10', 'Activo'),   -- Lucas
-(14, '2025-10-25', 'Inactivo'), -- Daniela 
+(14, '2025-10-25', 'Inactivo'), -- Daniela
 (15, '2025-07-05', 'Activo');   -- Oscar
 
 -- 4. Tabla membresia
@@ -283,7 +283,7 @@ INSERT INTO Clase_Equipamiento (id_clase, id_equipamiento) VALUES
 -- 1. Selecciona los usuarios que tengan una suscripción VIP (Activa o caducada) y que no sean entrenadores. (He usado INNER JOIN + LEFT JOIN + WHERE + AND)
 
 SELECT CONCAT(u.nombre, ' ', u.apellido) AS UsuariosVIP FROM usuario u
-INNER JOIN socio s ON u.id_usuario = s.id_socio 
+INNER JOIN socio s ON u.id_usuario = s.id_socio
 INNER JOIN membresia m ON s.id_socio = m.id_socio
 INNER JOIN plan p ON m.id_plan = p.id_plan
 LEFT JOIN entrenador e ON u.id_usuario = e.id_entrenador
@@ -293,7 +293,7 @@ AND e.id_entrenador IS NULL; -- Solo muestro los usuarios que no son entrenadore
 -- 2. Dime el nombre y correo de los usuarios (Activos) que tienen una membresía mensual. (He usado INNER JOIN + WHERE + LIKE + AND)
 
 SELECT CONCAT(u.nombre, ' ', u.apellido) AS NombreCompleto, u.email FROM usuario u
-INNER JOIN socio s ON u.id_usuario = s.id_socio 
+INNER JOIN socio s ON u.id_usuario = s.id_socio
 INNER JOIN membresia m ON s.id_socio = m.id_socio
 INNER JOIN plan p ON m.id_plan = p.id_plan
 WHERE p.nombre LIKE '%Mensual%' -- Aparecen tambien los VIP mensuales que tienen id_plan 4
@@ -310,20 +310,20 @@ SELECT CONCAT(u.nombre, ' ', u.apellido) AS NombreCompleto, u.email, COUNT(a.id_
 INNER JOIN socio s ON u.id_usuario = s.id_socio -- Saco los socios para luego sacar sus asistencias
 INNER JOIN asistencia a ON s.id_socio = a.id_socio -- Saco las asistencias del socio y saber cuantas clases tiene
 INNER JOIN clase c ON a.id_clase = c.id_clase -- Saco las clases a la que asiste el socio
-GROUP BY u.id_usuario 
+GROUP BY u.id_usuario
 ORDER BY COUNT(a.id_clase) DESC
 LIMIT 1; -- Solo muestro 1 usuario
 
 -- 5. Muestra los usuarios VIP y los usuarios Anual, en una misma consulta. (Aqui muestro un ejemplo de UNION con dos consultas separadas)
 
-SELECT CONCAT(u.nombre, ' ', u.apellido) AS NombreCompleto, u.email, p.nombre AS Tipo, m.estado 
+SELECT CONCAT(u.nombre, ' ', u.apellido) AS NombreCompleto, u.email, p.nombre AS Tipo, m.estado
 FROM usuario u
 INNER JOIN socio s ON u.id_usuario = s.id_socio -- Saco los socios para luego sacar sus membresias
 INNER JOIN membresia m ON s.id_socio = m.id_socio -- Saco las membresias de los socios (¡Cambiada la dirección!)
 INNER JOIN plan p ON m.id_plan = p.id_plan -- Saco el catálogo para ver el tipo de membresia (¡Nuevo JOIN!)
 WHERE p.nombre LIKE '%VIP%'
 UNION -- Con el UNION uno ambas consultas y muestro usuarios VIP y Anuales
-SELECT CONCAT(u.nombre, ' ', u.apellido) AS NombreCompleto, u.email, p.nombre AS Tipo, m.estado 
+SELECT CONCAT(u.nombre, ' ', u.apellido) AS NombreCompleto, u.email, p.nombre AS Tipo, m.estado
 FROM usuario u
 INNER JOIN socio s ON u.id_usuario = s.id_socio
 INNER JOIN membresia m ON s.id_socio = m.id_socio
@@ -343,7 +343,7 @@ WHERE p.nombre LIKE '%Mensual%'; -- Aparecen tambien los VIP mensuales que tiene
 SELECT CONCAT(u.nombre, ' ', u.apellido) AS NombreCompleto, COUNT(c.id_clase) AS ClasesCrossFit FROM usuario u
 INNER JOIN entrenador e ON u.id_usuario = e.id_entrenador --
 INNER JOIN clase c ON e.id_entrenador = c.id_entrenador
-WHERE c.nombre_clase LIKE '%CrossFit%' 
+WHERE c.nombre_clase LIKE '%CrossFit%'
 GROUP BY e.id_entrenador;
 
 -- 8. Muestra el equipamiento de cada clase (He usado INNER JOIN + ORDER BY)
@@ -351,7 +351,7 @@ GROUP BY e.id_entrenador;
 SELECT c.nombre_clase AS Clase, eq.nombre_equipo AS Equipamiento FROM clase c
 INNER JOIN clase_equipamiento ce ON c.id_clase = ce.id_clase -- Saco el equipamiento de cada clase
 INNER JOIN equipamiento eq ON ce.id_equipamiento = eq.id_equipamiento -- Saco el nombre del equpamiento
-ORDER BY c.nombre_clase ASC; 
+ORDER BY c.nombre_clase ASC;
 
 
 -- 9. Muestra el nombre de los usuarios que han asistido a clases de Yoga y el nombre del entrenador que imparte esa clase (He usado INNER JOIN + WHERE + LIKE)
@@ -361,7 +361,7 @@ INNER JOIN socio s ON u.id_usuario = s.id_socio -- Saco los socios para luego sa
 INNER JOIN asistencia a ON s.id_socio = a.id_socio -- Saco las asistencias del socio para luego sacar las clases a las que asiste
 INNER JOIN clase c ON a.id_clase = c.id_clase -- Saco las clases a las que asiste el socio para luego sacar el entrenador de esa clase
 INNER JOIN entrenador e ON c.id_entrenador = e.id_entrenador -- Saco el entrenador de la clase para mostrar su nombre
-WHERE c.nombre_clase LIKE '%Yoga%'; 
+WHERE c.nombre_clase LIKE '%Yoga%';
 
 -- 10. Muestra los usuarios que hayan pagado solo 1 membresía y el tipo de membresía que han pagado (He usado COUNT + GROUP BY + HAVING)
 
@@ -369,7 +369,7 @@ SELECT CONCAT(u.nombre, ' ', u.apellido) AS Usuario, pl.nombre AS TipoMembresia,
 INNER JOIN socio s ON u.id_usuario = s.id_socio -- Saco los socios para luego sacar sus membresias
 INNER JOIN membresia m ON s.id_socio = m.id_socio -- Saco las membresias de los socios
 INNER JOIN plan pl ON m.id_plan = pl.id_plan -- Saco el plan para mostrar el tipo
-INNER JOIN pago pa ON m.id_membresia = pa.id_membresia -- Saco la cantidad de pagos 
+INNER JOIN pago pa ON m.id_membresia = pa.id_membresia -- Saco la cantidad de pagos
 GROUP BY u.id_usuario, pl.nombre -- Muestra los usuarios y el tipo de membresia que han pagado
 HAVING COUNT(pa.id_pago) = 1; -- Solo muestra usuarios con un pago
 
@@ -388,7 +388,7 @@ AND m.estado = 'Vigente';
 
 -- 1. Elimina un socio que tenga una membresia caducada (Se usa DELETE FROM)
 DELETE FROM socio WHERE id_socio = (SELECT id_socio FROM membresia WHERE estado = 'Caducada' LIMIT 1);
--- Como elijo borrar solo a uno le meto un LIMIT 1, de forma aleatoria. 
+-- Como elijo borrar solo a uno le meto un LIMIT 1, de forma aleatoria.
 
 -- 1. Cambia el entrenador de la clase de yoga con el entrenador de la clase de Boxeo (Como no sé el nombre completo de la clase uso LIKE y tampoco sé que entrenador es cual hago una subconsulta)
 -- Puede que no cambie ningun dato en la base de datos actual porque he tenido que retocar campos e igual no existe entrenadores para intercambiar con la clase de yoga o boxeo
