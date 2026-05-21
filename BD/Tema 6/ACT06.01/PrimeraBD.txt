@@ -1,0 +1,6 @@
+Crea una base de datos llamada cine_db y una colección llamada peliculas., con los siguientes campos: titulo, director año, genero (de tipo array), puntuacion, oscar (boolean) y añade 5 documentos.
+
+Encuentra todas las películas que se hayan estrenado después (o igual) del año 2010.
+Encuentra todas las películas que pertenezcan al género "Drama"
+Encuentra las películas que NO hayan ganado un Oscar
+Encuentra las películas que sean del género "Sci-Fi" Y que tengan una puntuación superior a 8.6.
