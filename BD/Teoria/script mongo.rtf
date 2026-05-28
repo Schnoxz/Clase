@@ -1,0 +1,20 @@
+function a(pregunta) {
+    const { execSync } = require('child_process');
+    const fs = require('fs');
+    const os = require('os');
+    const path = require('path');
+    const archivoTemporal = path.join(os.homedir(), '.mongo_ia_res.txt');
+    
+    if (fs.existsSync(archivoTemporal)) fs.unlinkSync(archivoTemporal);
+    
+    try {
+        execSync(`python "C:\\Users\\javie\\OneDrive\\Escritorio\\asistente.py" "${pregunta}"`);
+        
+        if (fs.existsSync(archivoTemporal)) {
+            // Retornamos directamente el comando para que el shell lo imprima una sola vez
+            return fs.readFileSync(archivoTemporal, 'utf8').trim();
+        }
+    } catch (e) { 
+        return "Error al ejecutar."; 
+    }
+}
