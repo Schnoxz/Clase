@@ -1,0 +1,32 @@
+Recupera los viajes realizados con la bicicleta con ID 14785
+db.trips.find({ bikeid: 14785})
+
+Encuentra los viajes que duraron más de 1 hora.
+db.trips.find({ duration: { $gt: 3600 } })
+
+Mostrar solo el ID de la bicicleta, la duración del viaje y los nombres de las estaciones de los viajes realizados por usuarios nacidos después de 1990.
+db.trips.find({ birth_year: { $gt: 1990 } }, { bikeid: 1, duration: 1, start_station_name: 1 })
+
+Recupera los viajes realizados desde la estación Huron St & Franklin St y con duración menor a 500 segundos
+db.trips.find({ start_station_name: "Huron St & Franklin St", duration: { $lt: 500 } })
+
+Encontrar los 10 viajes más largos, ordenados de mayor a menor duración.
+db.trips.find().sort({ duration: -1 }).limit(10)
+
+Encontrar viajes con estaciones que contengan Ave en su nombre.
+db.trips.find({ start_station_name: { $regex: "Ave" } })
+
+¿Cuántos viajes han realizado los usuarios de tipo Customer?.
+db.trips.find({ usertype: "Customer" }).count()
+
+Recuperar los viajes realizados entre el 1 de enero y el 31 de marzo de 2016.
+db.trips.find({ start_time: { $gte: new Date("2016-01-01"), $lte: new Date("2016-03-31") } })
+
+Encontrar viajes con duración entre 10 y 20 minutos, hechos por usuarios nacidos antes de 1980.
+db.trips.find({ duration: { $gte: 600, $lte: 1200 }, birth_year: { $lt: 1980 } })
+
+Encontrar los viajes que duraron más de una hora o que fueron realizados por usuarios nacidos después del año 2000.
+db.trips.find({ $or: [{ duration: { $gt: 3600 } }, { birth_year: { $gt: 2000 } }] })
+
+Mostrar los 5 viajes más recientes, pero saltando los primeros 10 resultados.
+db.trips.find().sort({ start_time: -1 }).skip(10).limit(5)

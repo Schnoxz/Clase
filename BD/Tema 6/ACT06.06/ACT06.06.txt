@@ -1,0 +1,42 @@
+Haciendo uso de mongosh, escribe los comandos necesarios y adjunta el resultados de los comandos sobre la colección zips de la base de datos sample_training:
+
+Crea una entrada con los siguientes datos: { city: 'ELX',
+  zip: '03206',
+  loc: {  x: 38.265500, y: -0.698459 },
+  pop: 230224,
+  state: 'España' }
+
+
+
+Crea una entrada con los datos del código postal donde vives (si es el mismo código postal, crea uno diferente), con el valor de state a España.
+db.zips.insertOne({
+  city: 'ELX',
+  zip: '11204',
+  loc: { x: 38.265500, y: -0.698459 },
+  pop: 230224,
+  state: 'España'
+})
+
+Modifica la población de tu código postal a 1.000.000.
+db.zips.updateOne({ zip: '11204' }, { $set: { pop: 1000000 } })
+
+Incrementa la población de todos los documentos de España en 666 personas.
+db.zips.updateMany({ state: 'España' }, { $inc: { pop: 666 } })
+
+Añade un campo prov a ambos documentos con valor Alicante.
+db.zips.updateMany(
+  { state: 'España' },
+  { $set: { prov: 'Alicante' } }
+)
+
+Renombra en los documentos de la provincia de Alicante el atributo prov por provincia
+db.zips.updateMany(
+  { prov: 'Alicante' },
+  { $rename: { prov: 'provincia' } }
+)
+
+Elimina las coordenadas del zip 03206.
+db.zips.updateOne({ zip: '03206' }, { $unset: { loc: "" } })
+
+Elimina tu entrada.
+db.zips.deleteOne({ zip: '11204' })
