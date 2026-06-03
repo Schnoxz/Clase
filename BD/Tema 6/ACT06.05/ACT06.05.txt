@@ -1,0 +1,18 @@
+Recupera los documentos que han vendido algún producto (forma parte del array items) de nombre notepad.
+db.sales.find({"items.name": "notepad"})
+Recupera los documentos donde el primer producto sea notepad.
+db.sales.find({"items.0.name": "notepad"})
+Recupera los documentos donde el primer producto sea notepad y haya vendido un mínimo de 5 (quantity) unidades.
+db.sales.find({"items.0.name": "notepad", "items.0.quantity": {$gte: 5}})
+Recupera los documentos que han vendido exactamente dos productos.
+db.sales.find({"items": {$size: 2}})
+Recupera las ventas donde sus productos tengan las etiquetas stationary, office y general.
+db.sales.find({"items.tags": {"$all": ["stationary", "office", "general"]}})
+Recupera las ventas donde sus productos tengan las etiquetas writing, office o electronics.
+db.sales.find({"items.tags": {"$in": ["writing", "office", "electronics"]}})
+Para las ventas que sean notepad o laptop, recuperar el primer producto.
+db.sales.find({"$or": [{"items.0.name": "notepad"}, {"items.0.name": "laptop"}]})
+Recupera la ventas realizadas por hombres de más de 40 años que hayan comprado dos productos.
+db.sales.find({"customer.gender": "M", "customer.age": {"$gt": 40}, "items": {"$size": 2}})
+Para las ventas realizadas por mujeres y realizadas por teléfono (purchaseMethod), recupera dos de los productos adquiridos.
+db.sales.find({"customer.gender": "F", "customer.purchaseMethod": "Phone"}, {"items": {"$slice": 2}})

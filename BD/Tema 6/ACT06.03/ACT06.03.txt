@@ -1,0 +1,11 @@
+Haciendo uso de mongosh, escribe los comandos necesarios y adjunta el resultado de las consultas sobre la colección zips de la base de datos sample_training:
+
+Recupera los documentos que tienen menos de 50 personas (campo pop).		db.zips.find({ pop: {$lt: 50} })
+Recupera los documentos que tienen entre 50 y 100 personas.					db.zips.find({ pop: { $gte: 50, $lte: 100} })
+Averigua cuántos documentos hay de la ciudad de SAN DIEGO.					db.zips.countDocuments({ city: "SAN DIEGO" })
+Averigua cuántos documentos tienen menos de 100 personas.					db.zips.countDocuments({ pop: { $lt: 100 } })
+Recupera los documentos donde el nombre de la ciudad contenga la palabra BEACH.		db.zips.find({ city: { $regex: "BEACH"} })
+Obtén los estados de la ciudad de SAN DIEGO (Solución: [ 'CA', 'TX' ]).			db.zips.distinct("state", { city: "SAN DIEGO" })
+Listado con los 5 códigos postales más poblados (muestra los documentos completos).		db.zips.find().sort({ pop: -1 }).limit(5)
+Cantidad de documentos que no tienen menos de 5.000 habitantes ni más de 1.000.000 (debes utilizar el operador $nor).
+db.zips.countDocuments({ $nor: [{ pop: { $lt: 5000 } }, { pop: { $gt: 1000000 } }] })
